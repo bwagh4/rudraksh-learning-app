@@ -1,0 +1,1109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Rudraksh's IT Geek Academy</title>
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no,viewport-fit=cover">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="IT Geek">
+<meta name="theme-color" content="#7c4dff">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;500;600;700&display=swap" rel="stylesheet">
+<script defer src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/jsqr@1.4.0/dist/jsQR.min.js"></script>
+<script defer src="https://cdnjs.cloudflare.com/ajax/libs/canvas-confetti/1.9.3/confetti.browser.min.js"></script>
+<style>
+:root{--ink:#26214f;--soft:#6b66a3;--eng:#ff5c8a;--mth:#3d8bff;--cs:#7c4dff;--ok:#2fbf71;--bad:#ff6b57;--sun:#ffc833;--glass:rgba(255,255,255,.82);--r:26px}
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent;-webkit-touch-callout:none}
+html,body{margin:0;height:100%;font-family:'Fredoka',ui-rounded,-apple-system,'SF Pro Rounded',system-ui,sans-serif;color:var(--ink);-webkit-text-size-adjust:100%;touch-action:manipulation}
+body{background:radial-gradient(circle at 15% 10%,#ffd9ec 0,transparent 45%),radial-gradient(circle at 90% 20%,#cfe3ff 0,transparent 45%),radial-gradient(circle at 50% 100%,#e2d6ff 0,transparent 55%),#f4f0ff;overflow:hidden;-webkit-user-select:none;user-select:none}
+button{font-family:inherit;color:inherit;border:0;cursor:pointer;background:none}
+input,select,textarea{font-family:inherit;-webkit-user-select:text;user-select:text}
+h1,h2,h3,h4{margin:.2em 0}
+b{font-weight:700}
+#app{position:fixed;left:0;top:0;right:0;bottom:0;display:flex;flex-direction:column}
+#stage{flex:1;position:relative;overflow:hidden}
+.screen{position:absolute;left:0;top:0;right:0;bottom:0;overflow-y:auto;-webkit-overflow-scrolling:touch;padding:calc(env(safe-area-inset-top) + 16px) 22px 26px;display:none}
+.screen.active{display:block;animation:pop .35s ease}
+.wrap{max-width:900px;margin:0 auto}
+.center{text-align:center}
+.sub{color:var(--soft);font-size:20px;margin:.3em 0 1em}
+small{color:var(--soft)}
+#tabs{display:flex;height:calc(80px + env(safe-area-inset-bottom));padding-bottom:env(safe-area-inset-bottom);background:var(--glass);-webkit-backdrop-filter:blur(18px);backdrop-filter:blur(18px);border-top:1px solid rgba(124,77,255,.15);box-shadow:0 -6px 24px rgba(80,60,160,.08)}
+.tab{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;font-size:14px;font-weight:600;color:var(--soft)}
+.tab i{font-style:normal;font-size:30px;line-height:1.1;transition:transform .2s}
+.tab.on{color:var(--cs)}
+.tab.on i{transform:scale(1.2) translateY(-2px)}
+.card{background:var(--glass);-webkit-backdrop-filter:blur(16px);backdrop-filter:blur(16px);border-radius:var(--r);padding:20px;margin:0 0 16px;box-shadow:0 8px 28px rgba(80,60,160,.12);border:1px solid rgba(255,255,255,.7)}
+.btn{display:inline-flex;align-items:center;justify-content:center;min-height:60px;padding:0 28px;border-radius:22px;font-size:22px;font-weight:700;color:#fff;background:linear-gradient(135deg,#8f5bff,#5a8bff);box-shadow:0 8px 18px rgba(100,80,220,.35);transition:transform .12s}
+.btn:active{transform:scale(.96)}
+.btn.big{min-height:72px;font-size:26px;padding:0 40px}
+.btn.ok{background:linear-gradient(135deg,#34c77b,#1fa3a3);box-shadow:0 8px 18px rgba(30,160,120,.35)}
+.btn.warn{background:linear-gradient(135deg,#ff8a5c,#ff5c8a);box-shadow:0 8px 18px rgba(255,92,120,.3)}
+.btn.ghost{background:#fff;color:var(--ink);box-shadow:0 4px 12px rgba(80,60,160,.15)}
+.btn[disabled]{opacity:.4;box-shadow:none}
+.btn.sm{min-height:46px;font-size:17px;padding:0 18px;border-radius:16px}
+.icon{width:54px;height:54px;border-radius:18px;background:#fff;font-size:24px;box-shadow:0 4px 12px rgba(80,60,160,.15);flex:none}
+.pill{display:inline-block;padding:6px 14px;border-radius:99px;font-weight:600;font-size:16px;background:#fff}
+.row{display:flex;flex-wrap:wrap;align-items:center}
+.row>*{margin:6px}
+@keyframes pop{from{opacity:0;transform:translateY(10px) scale(.98)}to{opacity:1;transform:none}}
+@keyframes shake{0%,100%{transform:translateX(0)}20%{transform:translateX(-9px)}40%{transform:translateX(9px)}60%{transform:translateX(-6px)}80%{transform:translateX(6px)}}
+@keyframes bounce{0%,100%{transform:translateY(0)}50%{transform:translateY(-14px)}}
+@keyframes pulse{0%,100%{box-shadow:0 0 0 0 rgba(255,200,51,.9)}50%{box-shadow:0 0 0 12px rgba(255,200,51,0)}}
+@keyframes floaty{0%,100%{transform:translateY(0) rotate(-6deg)}50%{transform:translateY(-22px) rotate(6deg)}}
+@keyframes scanl{0%{top:6%}100%{top:90%}}
+@keyframes fadeUp{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:none}}
+/* splash */
+.splash{min-height:100%;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;position:relative}
+.byte{font-size:150px;line-height:1;animation:bounce 2s ease-in-out infinite;filter:drop-shadow(0 14px 14px rgba(80,60,160,.3))}
+.title{font-size:54px;margin:.1em 0;background:linear-gradient(90deg,#ff5c8a,#7c4dff,#3d8bff);-webkit-background-clip:text;background-clip:text;color:transparent;-webkit-text-fill-color:transparent}
+.floaty{position:absolute;font-size:54px;animation:floaty 5s ease-in-out infinite;opacity:.85}
+.f1{left:10%;top:12%}.f2{right:12%;top:16%;animation-delay:.8s}.f3{left:14%;bottom:16%;animation-delay:1.6s}.f4{right:16%;bottom:20%;animation-delay:2.4s}.f5{left:46%;top:6%;animation-delay:3s}
+/* home */
+.hero{display:flex;align-items:center}
+.hero .byte{font-size:92px;animation-duration:2.6s}
+.bubble{background:#fff;border-radius:24px 24px 24px 6px;padding:14px 20px;font-size:21px;margin-left:12px;box-shadow:0 6px 18px rgba(80,60,160,.12)}
+.stats{display:flex;flex-wrap:wrap;margin:0 -6px 6px}
+.stat{flex:1;min-width:150px;margin:6px;padding:14px 16px;border-radius:22px;background:var(--glass);box-shadow:0 6px 18px rgba(80,60,160,.1);text-align:center}
+.stat b{font-size:30px;display:block}
+.bar{height:14px;border-radius:99px;background:rgba(124,77,255,.15);overflow:hidden;margin-top:6px}
+.bar i{display:block;height:100%;background:linear-gradient(90deg,#ffc833,#ff5c8a);border-radius:99px;transition:width .6s}
+.todayc{background:linear-gradient(135deg,#7c4dff,#3d8bff);color:#fff}
+.todayc .sub{color:#e8e2ff}
+.doms{display:flex;flex-wrap:wrap;margin:10px -5px 0}
+.dchip{flex:1;min-width:130px;margin:5px;padding:12px;border-radius:18px;background:rgba(255,255,255,.2);text-align:center;font-weight:600;font-size:18px}
+.badges{display:flex;flex-wrap:wrap}
+.bdg{font-size:38px;margin:4px 10px 4px 0;filter:grayscale(1);opacity:.35}
+.bdg.on{filter:none;opacity:1}
+/* worksheet */
+.wtop{display:flex;align-items:center;margin-bottom:10px}
+.wtop>*{margin-right:10px}
+.pillD{padding:8px 16px;border-radius:99px;color:#fff;font-weight:700;font-size:18px;white-space:nowrap}
+.dots{flex:1;display:flex;flex-wrap:wrap;justify-content:center}
+.dot{width:16px;height:16px;border-radius:50%;background:rgba(38,33,79,.15);margin:3px}
+.dot.ok{background:var(--ok)}.dot.no{background:var(--sun)}.dot.cur{outline:3px solid var(--cs);outline-offset:2px}
+.qcard{background:var(--glass);border-radius:30px;padding:22px;box-shadow:0 10px 30px rgba(80,60,160,.14)}
+.qprompt{font-size:29px;font-weight:600;text-align:center;line-height:1.25}
+.qvis{margin:12px 0;text-align:center}
+.bigemoji{font-size:90px;line-height:1.1}
+.svgi{width:96px;height:96px}
+.sent{font-size:34px;font-weight:600;margin:6px 0}
+.blank{display:inline-block;min-width:90px;border-bottom:5px solid var(--cs);color:var(--cs);text-align:center;margin:0 6px}
+.opts{display:grid;grid-template-columns:repeat(2,1fr);grid-gap:14px;margin-top:10px}
+.opts.c1{grid-template-columns:1fr}.opts.c3{grid-template-columns:repeat(3,1fr)}
+.opt{min-height:92px;border-radius:24px;background:#fff;font-size:36px;font-weight:700;padding:10px;border:4px solid transparent;box-shadow:0 6px 16px rgba(80,60,160,.14);transition:transform .12s,background .2s}
+.opt:active{transform:scale(.96)}
+.opt .em{font-size:60px;display:block;line-height:1.1}
+.opt .nm{font-size:22px;display:block}
+.opt .svgi{width:68px;height:68px}
+.opt.ok{background:#d6f8e5;border-color:var(--ok);animation:bounce .5s}
+.opt.bad{background:#ffe1dc;border-color:var(--bad);animation:shake .4s}
+.opt.dim{opacity:.35;pointer-events:none}
+.fb{min-height:54px;margin-top:12px;border-radius:18px;padding:10px 16px;font-size:21px;font-weight:600;text-align:center;display:none}
+.fb.show{display:block;animation:fadeUp .25s}
+.fb.ok{background:#d6f8e5;color:#127a47}.fb.bad{background:#ffe9e4;color:#b8412f}.fb.info{background:#e8e2ff;color:#4a3bb0}
+.wfoot{display:flex;justify-content:space-between;align-items:center;margin-top:16px}
+.emojirow{font-size:44px;line-height:1.25;max-width:640px;margin:0 auto}
+.emojirow .g{display:inline-block;margin:4px 12px;white-space:nowrap}
+.emojirow .out{opacity:.25;position:relative}
+.emojirow .out:after{content:'\274C';position:absolute;left:4px;top:4px;font-size:30px;opacity:1}
+.lineup{font-size:60px;white-space:nowrap}.lineup small{font-size:20px}
+.seq{display:flex;justify-content:center;flex-wrap:wrap}
+.sb{min-width:76px;height:76px;margin:5px;border-radius:18px;background:#fff;display:flex;align-items:center;justify-content:center;font-size:44px;font-weight:700;box-shadow:0 4px 12px rgba(80,60,160,.14)}
+.sb.q{background:#fff6cf;border:4px dashed var(--sun);color:var(--sun)}
+.numcard{font-size:64px}
+.eq{font-size:58px;font-weight:700;margin-top:6px}
+.passage{background:#fffdf3;border:3px dashed #ffd978;border-radius:22px;padding:14px 20px;text-align:left;font-size:25px;line-height:1.5;max-width:700px;margin:0 auto}
+.passage h4{font-size:24px;color:var(--eng)}
+.sayb{margin-top:6px;background:#fff;padding:8px 16px;border-radius:14px;font-size:18px;font-weight:600;box-shadow:0 3px 8px rgba(0,0,0,.1)}
+.scene{position:relative;width:270px;height:190px;margin:0 auto}
+.scene span{position:absolute;line-height:1;transform:translate(-50%,-50%)}
+.sc-in .L{left:50%;top:60%;font-size:120px;z-index:2}.sc-in .S{left:50%;top:32%;font-size:64px;z-index:1}
+.sc-on .L{left:50%;top:70%;font-size:110px}.sc-on .S{left:50%;top:24%;font-size:72px}
+.sc-under .L{left:50%;top:28%;font-size:110px}.sc-under .S{left:50%;top:80%;font-size:60px}
+.sc-behind .L{left:38%;top:55%;font-size:120px;z-index:2}.sc-behind .S{left:62%;top:58%;font-size:80px;z-index:1}
+.sc-nextto .L{left:26%;top:55%;font-size:100px}.sc-nextto .S{left:74%;top:60%;font-size:80px}
+/* grid */
+.gridq{display:grid;grid-template-columns:repeat(3,1fr);grid-gap:8px;width:330px;margin:10px auto}
+.gcell{height:96px;border-radius:18px;background:#fff;font-size:52px;box-shadow:0 4px 10px rgba(80,60,160,.14);border:4px solid transparent}
+.gcell.ok{background:#d6f8e5;border-color:var(--ok)}.gcell.bad{background:#ffe1dc;animation:shake .4s}
+/* keyboard */
+.kb{background:#3a3566;border-radius:22px;padding:10px 8px 4px;margin:12px auto 0;max-width:860px}
+.kr{display:flex;justify-content:center;margin-bottom:7px}
+.k{position:relative;flex:1;min-width:0;height:62px;margin:0 3px;border-radius:12px;font-size:24px;font-weight:700;color:var(--ink);border-bottom:4px solid rgba(0,0,0,.28);display:flex;align-items:center;justify-content:center}
+.k:active{transform:translateY(3px);border-bottom-width:1px}
+.k.bump:after{content:'';position:absolute;bottom:7px;width:16px;height:4px;border-radius:2px;background:rgba(38,33,79,.5)}
+.k.sp{font-size:15px;flex:1.7}.k.sp-SPACE{flex:7;font-size:18px}.k.sp-BACK{flex:1.9}.k.sp-SHIFT{flex:2}.k.sp-ENTER{flex:2.2}
+.f0{background:#ffb3cc}.f1{background:#ffcc99}.f2{background:#fff0a0}.f3{background:#b5f0c0}.f4{background:#aeeaf5}.f5{background:#b9c8ff}.f6{background:#d8bcff}.f7{background:#f3b8f0}.f8{background:#e3e1f7}
+.k.hint{animation:pulse 1s infinite;transform:scale(1.08);z-index:2}
+.k.ok{background:var(--ok);color:#fff}.k.no{animation:shake .35s;background:var(--bad);color:#fff}
+.tcopy{font-size:54px;font-weight:700;letter-spacing:8px;color:var(--cs)}
+.tbox{display:flex;justify-content:center;margin:8px 0}
+.tb{width:56px;height:68px;margin:0 5px;border-radius:14px;background:#fff;border-bottom:6px solid #c9c4ee;font-size:42px;font-weight:700;display:flex;align-items:center;justify-content:center}
+.tb.cur{border-color:var(--sun);animation:pulse 1.2s infinite}.tb.done{background:#d6f8e5;border-color:var(--ok);color:#127a47}
+/* drag */
+.slots{display:grid;grid-gap:12px;margin-bottom:12px}
+.slots.s2{grid-template-columns:1fr 1fr}.slots.s1{grid-template-columns:1fr}
+.slot{border:4px dashed #b9b3e8;border-radius:22px;background:rgba(255,255,255,.7);padding:10px;text-align:center;min-height:100px}
+.slot.over{border-color:var(--sun);background:#fff8dc}
+.slot .sl{font-size:48px;line-height:1.1;font-weight:700}
+.slot .sl .svgi{width:70px;height:70px}
+.slot .sl small{font-size:17px;font-weight:600;display:block}
+.drop{min-height:62px;display:flex;flex-wrap:wrap;justify-content:center;align-items:center}
+.slots.s1 .slot{display:flex;align-items:center}.slots.s1 .slot .sl{flex:none;margin-right:16px;min-width:120px}.slots.s1 .slot .drop{flex:1}
+.tray{display:flex;flex-wrap:wrap;justify-content:center;min-height:80px;padding:8px;border-radius:20px;background:rgba(124,77,255,.08)}
+.chip{display:inline-flex;align-items:center;margin:6px;padding:10px 20px;border-radius:18px;background:#fff;font-size:28px;font-weight:700;box-shadow:0 5px 12px rgba(80,60,160,.2);touch-action:none;-webkit-user-select:none}
+.chip .ci{font-size:38px;margin-right:8px}.chip .svgi{width:44px;height:44px;margin-right:8px}
+.chip.sel{outline:5px solid var(--sun)}.chip.lock{background:#d6f8e5;pointer-events:none}.chip.ghost{opacity:.25}.chip.no{animation:shake .4s;background:#ffe1dc}
+.chip.fly{position:fixed;z-index:999;pointer-events:none;transform:scale(1.12) rotate(-3deg);margin:0}
+.dzfoot{text-align:center;margin-top:12px}
+/* done */
+.trophy{font-size:110px;animation:bounce 1.6s infinite}
+.starsRow{display:flex;flex-wrap:wrap;justify-content:center}
+.sc{margin:6px;padding:14px 22px;border-radius:22px;color:#fff;font-weight:700;text-align:center;font-size:20px}
+.sc b{display:block;font-size:32px;letter-spacing:3px}
+.qrCard{text-align:center}
+#qrBox{display:inline-block;padding:16px;background:#fff;border-radius:24px;box-shadow:0 8px 22px rgba(80,60,160,.2)}
+#qrBox img,#qrBox canvas{display:block}
+.lockq{padding:34px 10px;font-size:22px}
+.lockq .big{font-size:80px}
+/* scan */
+.camwrap{position:relative;max-width:560px;min-height:300px;margin:0 auto;border-radius:28px;overflow:hidden;background:#1d1a3d;aspect-ratio:1/1;box-shadow:0 10px 30px rgba(80,60,160,.3)}
+.camwrap video{width:100%;height:100%;object-fit:cover;display:block}
+.camwrap .ph{position:absolute;left:0;top:0;right:0;bottom:0;display:flex;flex-direction:column;align-items:center;justify-content:center;color:#cfcdf5;font-size:22px;text-align:center;padding:20px}
+.frame{position:absolute;left:14%;top:14%;right:14%;bottom:14%;border:5px solid rgba(255,255,255,.9);border-radius:26px;display:none}
+.frame i{position:absolute;left:6%;right:6%;height:4px;background:var(--sun);box-shadow:0 0 12px var(--sun);animation:scanl 1.8s linear infinite alternate}
+.camwrap.live .frame{display:block}.camwrap.live .ph{display:none}
+/* lab */
+.fact{text-align:center;min-height:250px;display:flex;flex-direction:column;justify-content:center}
+.fact .e{font-size:84px}.fact p{font-size:23px;margin:.3em 0}
+.steps{display:flex;flex-wrap:wrap;justify-content:center}
+.stp{width:150px;margin:8px;padding:12px;border-radius:20px;background:#fff;text-align:center;font-size:17px;box-shadow:0 5px 14px rgba(80,60,160,.12);opacity:0;animation:fadeUp .5s forwards}
+.stp i{font-style:normal;font-size:48px;display:block}
+.games{display:flex;flex-wrap:wrap}
+.game{flex:1;min-width:200px;margin:6px;padding:18px;border-radius:22px;color:#fff;font-weight:700;font-size:21px;text-align:center}
+.game i{font-style:normal;font-size:46px;display:block}
+/* parent */
+.field{display:block;margin:10px 0}
+.field span{display:block;font-weight:600;margin-bottom:4px;font-size:17px}
+.field input[type=text],.field input[type=email],.field input[type=password],.field input[type=number],.field input[type=url],.field select{width:100%;height:54px;border-radius:16px;border:2px solid #d9d4f5;padding:0 14px;font-size:19px;background:#fff;color:var(--ink)}
+.chrow{display:flex;align-items:center;padding:8px 0;border-bottom:1px solid rgba(0,0,0,.06)}
+.chrow input[type=text]{flex:1;height:44px;font-size:15px;margin-left:10px;border-radius:12px;border:2px solid #d9d4f5;padding:0 10px}
+.chrow input[type=checkbox]{width:28px;height:28px;margin-right:10px}
+.note{font-size:16px;padding:12px 16px;border-radius:16px;background:#fff5d6;color:#7a5a00;margin:8px 0}
+.good{background:#d6f8e5;color:#127a47}.badn{background:#ffe9e4;color:#b8412f}
+/* modal/video/toast */
+.ov{position:fixed;left:0;top:0;right:0;bottom:0;z-index:100;background:rgba(38,33,79,.55);-webkit-backdrop-filter:blur(6px);backdrop-filter:blur(6px);display:flex;align-items:center;justify-content:center;padding:16px;animation:pop .25s}
+.sheet{background:#fff;border-radius:32px;padding:26px;max-width:640px;width:100%;max-height:92%;overflow-y:auto;-webkit-overflow-scrolling:touch;box-shadow:0 20px 60px rgba(0,0,0,.35)}
+.sheet h2{font-size:30px}
+.sheet .big{font-size:92px;text-align:center;line-height:1.1}
+.sheet p{font-size:21px;line-height:1.4}
+.sheet .row{justify-content:center;margin-top:10px}
+#vid{position:fixed;left:0;top:0;right:0;bottom:0;z-index:200;background:#0c0a22;display:none;flex-direction:column}
+#vid.on{display:flex}
+.vbar{display:flex;align-items:center;padding:calc(env(safe-area-inset-top) + 8px) 16px 8px;color:#fff;font-size:20px;font-weight:600}
+.vbar #vTitle{flex:1}.vbar #vTime{margin-right:14px;background:rgba(255,255,255,.15);padding:6px 14px;border-radius:99px;font-size:17px}
+.vbox{flex:1;position:relative;display:flex}
+#ytWrap{flex:1}#ytWrap iframe{width:100%;height:100%;border:0}
+#vMsg{position:absolute;left:0;top:0;right:0;bottom:0;display:flex;align-items:center;justify-content:center;flex-direction:column;color:#fff;font-size:26px;text-align:center;padding:30px;background:#0c0a22}
+#toast{position:fixed;left:50%;bottom:110px;transform:translateX(-50%);z-index:300;background:#26214f;color:#fff;padding:14px 26px;border-radius:99px;font-size:20px;font-weight:600;display:none;max-width:90%;text-align:center}
+</style>
+</head>
+<body>
+<div id="app">
+  <div id="stage">
+    <section class="screen" id="s-splash"></section>
+    <section class="screen" id="s-home"></section>
+    <section class="screen" id="s-work"></section>
+    <section class="screen" id="s-done"></section>
+    <section class="screen" id="s-scan"></section>
+    <section class="screen" id="s-lab"></section>
+    <section class="screen" id="s-parent"></section>
+  </div>
+  <nav id="tabs"></nav>
+</div>
+<div id="modal"></div>
+<div id="vid">
+  <div class="vbar"><div id="vTitle"></div><div id="vTime"></div><button class="icon" id="vClose" type="button">&#10005;</button></div>
+  <div class="vbox"><div id="ytWrap"><div id="ytMount"></div></div><div id="vMsg"></div></div>
+</div>
+<div id="toast"></div>
+
+<script>
+'use strict';
+/* =====================================================================
+   RUDRAKSH'S IT GEEK ACADEMY  -  single-file app (vanilla JS, iOS 12+ Safari)
+   Sections:  1 CONFIG   2 QUESTION ENGINE   3 STATE   4 UI helpers
+              5 Question renderers   6 Screens   7 QR + tokens   8 Scanner
+              9 Video player   10 Parent panel   11 Boot
+   ===================================================================== */
+
+/* ---------- 1. CONFIG (edit freely) ---------- */
+const PROFILE={
+  first:'Rudraksh', last:'Wagh',
+  typeItems:[
+    {label:'your first name',text:'RUDRAKSH',e:'👦'},
+    {label:'your last name',text:'WAGH',e:'👨‍👩‍👦'},
+    {label:"Mom's name",text:'ROSHNI',e:'👩'},
+    {label:"Dad's name",text:'BHUSHAN',e:'👨'},
+    {label:"Granny's name",text:'ARUNA',e:'👵'},
+    {label:"your cousin brother's name",text:'OM',e:'🧒'},
+    {label:'your school (short name)',text:'SNBP',e:'🏫'},
+    {label:'your area',text:'RAHATANI',e:'🏙️'}
+  ]
+};
+/* Uploads playlist of a channel = "UU" + channelId without its leading "UC". */
+const CHANNELS=[
+  {key:'hsp',n:'Homeschool Pop',e:'🏠',id:'UCfPyVJEBD7Di1YYjTdS2v8g'},
+  {key:'ngk',n:'Nat Geo Kids',e:'🌍',id:'UCXVCgDuD_QCkI7gTKU7-tpg'},
+  {key:'lbr',n:'LearnBright',e:'💡',id:'UCKCsVSA5THlkHbnkZTPm6-g'},
+  {key:'fsc',n:'Free School',e:'🎨',id:'UCebMFnw6WxozGmqGekJHOJg'},
+  {key:'kac',n:'Kids Academy',e:'🎓',id:'UCqb89GqploCXgz4lsdR-_ww'},
+  {key:'ppg',n:'Peppa Pig',e:'🐷',id:'UCAOtE1V7Ots4DjM8JLlrYgg'}
+];
+/* Short practice passages (original text). Swap in the school-book text here if you like. */
+const READING={
+  poem:{title:'Oliver Twist (practice rhyme)',lines:['Oliver loves to clap, clap, clap,','Oliver loves to tap, tap, tap.','Oliver jumps up high, high, high,','Oliver waves to the sky!'],
+    qs:[{q:'What does Oliver wave to?',a:'The sky',o:['The sky','The sea','The tree']},
+        {q:'Which word rhymes with <b>clap</b>?',a:'tap',o:['tap','jump','wave']},
+        {q:'What does Oliver love to do?',a:'clap',o:['clap','sleep','read']}]},
+  story:{title:'A Trip to a Theme Park',lines:['Rudraksh went to a theme park with Mom and Dad.','He rode a big red train.','He ate a sweet ice cream.','At the end of the day, he was very happy.'],
+    qs:[{q:'Who went with Rudraksh?',a:'Mom and Dad',o:['Mom and Dad','Granny and Om','His teacher']},
+        {q:'What did he ride?',a:'A red train',o:['A red train','A blue boat','A yellow plane']},
+        {q:'What did he eat?',a:'Ice cream',o:['Ice cream','Pizza','An apple']},
+        {q:'How did he feel at the end?',a:'Happy',o:['Happy','Sad','Sleepy']}]}
+};
+
+/* ---------- 2. QUESTION ENGINE (pure, seeded, testable) ---------- */
+// <GEN>
+function hashStr(s){var h=2166136261;for(var i=0;i<s.length;i++){h^=s.charCodeAt(i);h=Math.imul(h,16777619);}return h>>>0;}
+function makeRng(seed){
+  var a=seed>>>0;
+  var r=function(){a|=0;a=a+0x6D2B79F5|0;var t=Math.imul(a^a>>>15,1|a);t=t+Math.imul(t^t>>>7,61|t)^t;return((t^t>>>14)>>>0)/4294967296;};
+  r.int=function(lo,hi){return lo+Math.floor(r()*(hi-lo+1));};
+  r.pick=function(x){return x[Math.floor(r()*x.length)];};
+  r.chance=function(p){return r()<p;};
+  r.shuffle=function(x){x=x.slice();for(var i=x.length-1;i>0;i--){var j=Math.floor(r()*(i+1));var t=x[i];x[i]=x[j];x[j]=t;}return x;};
+  return r;
+}
+const NUMW=['zero','one','two','three','four','five','six','seven','eight','nine','ten','eleven','twelve','thirteen','fourteen','fifteen','sixteen','seventeen','eighteen','nineteen','twenty'];
+const ICON={
+  cpu:'<svg viewBox="0 0 64 64" class="svgi"><rect x="16" y="4" width="32" height="56" rx="6" fill="#8d8bd6"/><rect x="22" y="12" width="20" height="4" rx="2" fill="#2b2750"/><rect x="22" y="20" width="20" height="4" rx="2" fill="#2b2750"/><circle cx="32" cy="46" r="6" fill="#ffd23f" stroke="#2b2750" stroke-width="2"/></svg>',
+  tablet:'<svg viewBox="0 0 64 64" class="svgi"><rect x="8" y="6" width="48" height="52" rx="7" fill="#3a3566"/><rect x="13" y="12" width="38" height="36" rx="3" fill="#7fd8ff"/><circle cx="32" cy="53" r="2.6" fill="#cfcdf5"/></svg>',
+  router:'<svg viewBox="0 0 64 64" class="svgi"><rect x="6" y="34" width="52" height="18" rx="6" fill="#3a3566"/><rect x="14" y="14" width="4" height="22" rx="2" fill="#3a3566"/><rect x="46" y="14" width="4" height="22" rx="2" fill="#3a3566"/><circle cx="16" cy="43" r="2.5" fill="#5ccf7a"/><circle cx="24" cy="43" r="2.5" fill="#ffd23f"/><circle cx="32" cy="43" r="2.5" fill="#5ccf7a"/></svg>'
+};
+const DEV={
+  monitor:{n:'Monitor',i:'🖥️',io:'out'},keyboard:{n:'Keyboard',i:'⌨️',io:'in'},mouse:{n:'Mouse',i:'🖱️',io:'in'},
+  cpu:{n:'CPU',i:ICON.cpu,io:null},printer:{n:'Printer',i:'🖨️',io:'out'},speaker:{n:'Speaker',i:'🔊',io:'out'},
+  headphones:{n:'Headphones',i:'🎧',io:'out'},mic:{n:'Microphone',i:'🎤',io:'in'},camera:{n:'Camera',i:'📷',io:'in'},
+  laptop:{n:'Laptop',i:'💻',io:null},joystick:{n:'Joystick',i:'🕹️',io:'in'}
+};
+const NET_Y={tablet:{n:'Tablet',i:ICON.tablet},tv:{n:'Smart TV',i:'📺'},router:{n:'Router',i:ICON.router},phone:{n:'Smartphone',i:'📱'},laptop:{n:'Laptop',i:'💻'},watch:{n:'Smartwatch',i:'⌚'}};
+const NET_N={ball:{n:'Ball',i:'⚽'},chair:{n:'Chair',i:'🪑'},teddy:{n:'Teddy',i:'🧸'},hammer:{n:'Hammer',i:'🔨'},apple:{n:'Apple',i:'🍎'},book:{n:'Book',i:'📖'},spoon:{n:'Spoon',i:'🥄'},bike:{n:'Bicycle',i:'🚲'}};
+
+function mkOpt(v,html){return {v:String(v),html:html||String(v)};}
+function pickOpts(r,correct,pool,n,fn){
+  var ds=r.shuffle(pool.filter(function(x){return String(x)!==String(correct);})).slice(0,n-1);
+  return r.shuffle([correct].concat(ds)).map(function(x){return fn?mkOpt(x,fn(x)):mkOpt(x);});
+}
+function numOpts(r,ans,lo,hi,n){
+  var c=[];[-3,-2,-1,1,2,3].forEach(function(d){var v=ans+d;if(v>=lo&&v<=hi)c.push(v);});
+  return pickOpts(r,ans,c,n||4,function(x){return '<span class="numcard">'+x+'</span>';});
+}
+function blankHtml(t){return t.replace('___','<span class="blank">&nbsp;</span>');}
+function emHtml(e,t){return '<span class="em">'+e+'</span>'+(t?'<span class="nm">'+t+'</span>':'');}
+function rowOf(ch){if('QWERTYUIOP'.indexOf(ch)>=0)return 'top letter row';if('ASDFGHJKL'.indexOf(ch)>=0)return 'middle letter row (home row)';if('ZXCVBNM'.indexOf(ch)>=0)return 'bottom letter row';return 'number row at the very top';}
+
+/* ---- English ---- */
+function qVerb(r){
+  var P=[['I ___ Rudraksh.','am','👦'],['I ___ happy today.','am','😊'],['I ___ a good boy.','am','🌟'],['Mom ___ cooking food.','is','👩‍🍳'],['Granny ___ reading a book.','is','👵'],['Dad ___ at work.','is','👨‍💼'],['Om ___ my cousin brother.','is','🧒'],['The sun ___ hot.','is','☀️'],['Mom and Dad ___ at home.','are','🏠'],['You ___ my friend.','are','🤝'],['The birds ___ singing.','are','🐦'],['We ___ in school.','are','🏫']];
+  var p=r.pick(P);
+  return {topic:'Verbs: is, am, are',kind:'choice',fill:1,prompt:'Pick the right word: <b>is</b>, <b>am</b> or <b>are</b>',say:p[0].replace('___','blank')+' Which word fits? is, am or are?',
+    visual:'<div class="bigemoji">'+p[2]+'</div><div class="sent">'+blankHtml(p[0])+'</div>',options:r.shuffle(['is','am','are']).map(function(x){return mkOpt(x);}),answer:p[1],
+    hint:'Use "am" with I. Use "is" for one person or thing. Use "are" for many, or with you.'};
+}
+function qPronoun(r){
+  var P=[['Mom and Dad are home. ___ are home.','They','👩👨'],['Granny and I read. ___ read.','We','👵👦'],['Om and I play. ___ play.','We','🧒👦'],['___ am Rudraksh.','I','👦'],['Roshni and Bhushan are happy. ___ are happy.','They','😊'],['Om and Rudraksh run. ___ run fast.','They','🏃'],['Dad and I ride a bike. ___ ride a bike.','We','🚲'],['___ am in Senior KG.','I','🎒']];
+  var p=r.pick(P);
+  return {topic:'Pronouns: they, we, I',kind:'choice',fill:1,prompt:'Which word fits? <b>They</b>, <b>We</b> or <b>I</b>',say:p[0].replace('___','blank')+' Which word fits? They, we or I?',
+    visual:'<div class="bigemoji">'+p[2]+'</div><div class="sent">'+blankHtml(p[0])+'</div>',options:r.shuffle(['They','We','I']).map(function(x){return mkOpt(x);}),answer:p[1],
+    hint:'"We" means me and others. "They" means other people. "I" means just me.'};
+}
+const DG={oo:[['moon','🌙'],['book','📖'],['spoon','🥄'],['zoo','🦁'],['foot','🦶'],['broom','🧹'],['boot','🥾']],ee:[['tree','🌳'],['bee','🐝'],['sheep','🐑'],['jeep','🚙'],['feet','👣'],['seed','🌱'],['cheese','🧀']],ay:[['day','☀️'],['hay','🌾'],['tray','🍽️'],['clay','🏺'],['jay','🐦'],['spray','🧴']]};
+function qDigraph(r){
+  var ks=['oo','ee','ay'],d=r.pick(ks),w=r.pick(DG[d]);
+  if(r.chance(.5)){
+    var gap=w[0].replace(d,'|').split('|');
+    return {topic:'Digraphs: oo, ee, ay',kind:'choice',prompt:'Which letters finish the word?',say:'Which letters finish the word '+w[0]+'?',
+      visual:'<div class="bigemoji">'+w[1]+'</div><div class="sent">'+gap[0]+'<span class="blank">&nbsp;</span>'+gap[1]+'</div>',fill:1,
+      options:r.shuffle(ks).map(function(x){return mkOpt(x);}),answer:d,hint:'Say the word slowly: "'+w[0]+'". Listen to the middle sound.'};
+  }
+  var others=r.shuffle(ks.filter(function(k){return k!==d;})).map(function(k){return r.pick(DG[k]);});
+  var all=r.shuffle([w].concat(others));
+  return {topic:'Digraphs: oo, ee, ay',kind:'choice',prompt:'Which word has <b>'+d+'</b> in it?',say:'Which word has '+d+' in it?',visual:'<div class="bigemoji">🔤</div>',cols:3,
+    options:all.map(function(x){return mkOpt(x[0],emHtml(x[1],x[0]));}),answer:w[0],hint:'Look for the letters "'+d+'" inside the word.'};
+}
+function qReading(r){
+  var key=r.chance(.5)?'poem':'story',P=READING[key],q=r.pick(P.qs);
+  var all=P.lines.join(' ');
+  var vis='<div class="passage"><h4>📖 '+P.title+'</h4>'+P.lines.join('<br>')+'<br><button type="button" class="sayb" data-say="'+all.replace(/"/g,'&quot;')+'">🔊 Read to me</button></div>';
+  return {topic:'Reading: '+(key==='poem'?'Poem':'Story'),kind:'choice',prompt:q.q,say:q.q.replace(/<[^>]+>/g,''),visual:vis,
+    options:r.shuffle(q.o).map(function(x){return mkOpt(x);}),answer:q.a,hint:'Read the '+(key==='poem'?'poem':'story')+' again. The answer is in there!'};
+}
+const PREP=[['in','🧺','basket','sc-in'],['on','📦','box','sc-on'],['under','🪑','chair','sc-under'],['behind','🌳','tree','sc-behind'],['next to','🏠','house','sc-nextto']];
+const THINGS=[['🐱','cat'],['⚽','ball'],['🐶','dog'],['🐰','rabbit'],['🧸','teddy']];
+function qPrep(r){
+  var p=r.pick(PREP),t=r.pick(THINGS),sent='The '+t[1]+' is ___ the '+p[2]+'.';
+  return {topic:'Prepositions',kind:'choice',fill:1,prompt:'Where is the <b>'+t[1]+'</b>?',say:'Where is the '+t[1]+'? The '+t[1]+' is blank the '+p[2]+'.',
+    visual:'<div class="scene '+p[3]+'"><span class="L">'+p[1]+'</span><span class="S">'+t[0]+'</span></div><div class="sent">'+blankHtml(sent)+'</div>',
+    options:pickOpts(r,p[0],PREP.map(function(x){return x[0];}),3,function(x){return '<b>'+x+'</b>';}),answer:p[0],
+    hint:'Look at where the '+t[1]+' is compared to the '+p[2]+'.'};
+}
+
+/* ---- Maths ---- */
+const EM=['🍎','⭐','🐞','🎈','🍪','🚗','🌼','🐟'];
+function groups(e,n,outFrom){
+  var h='<div class="emojirow">',i;
+  for(i=0;i<n;i++){
+    if(i%5===0)h+=(i?'</span>':'')+'<span class="g">';
+    h+=(outFrom!==undefined&&i>=outFrom)?'<span class="out">'+e+'</span>':e;
+  }
+  return h+'</span></div>';
+}
+function qNumbers(r){
+  var v=r.int(0,3),n,e;
+  if(v===0){
+    n=r.int(3,20);e=r.pick(EM);
+    return {topic:'Numbers to 20: counting',kind:'choice',cols:2,prompt:'How many do you see?',say:'How many do you see? Count them.',visual:groups(e,n),options:numOpts(r,n,1,20),answer:String(n),hint:'Touch each one and count: 1, 2, 3 ... Groups of 5 help!'};
+  }
+  if(v===1){
+    var s=r.int(1,16),hide=r.int(0,4),seq=[],i;
+    for(i=0;i<5;i++)seq.push(s+i);
+    var ans=seq[hide];
+    return {topic:'Numbers to 20: missing number',kind:'choice',cols:2,prompt:'What number is missing?',say:'What number is missing?',
+      visual:'<div class="seq">'+seq.map(function(x,j){return '<div class="sb'+(j===hide?' q':'')+'">'+(j===hide?'?':x)+'</div>';}).join('')+'</div>',options:numOpts(r,ans,1,20),answer:String(ans),hint:'Count in order. What comes between its neighbours?'};
+  }
+  if(v===2){
+    var a=r.int(1,20),b;do{b=r.int(1,20);}while(b===a);
+    var big=r.chance(.5),ans2=big?Math.max(a,b):Math.min(a,b);
+    return {topic:'Numbers to 20: compare',kind:'choice',cols:2,prompt:'Which number is <b>'+(big?'BIGGER':'SMALLER')+'</b>?',say:'Which number is '+(big?'bigger':'smaller')+'?',visual:'<div class="bigemoji">⚖️</div>',
+      options:r.shuffle([a,b]).map(function(x){return mkOpt(x,'<span class="numcard">'+x+'</span>');}),answer:String(ans2),hint:'The number that comes later when you count is bigger.'};
+  }
+  var m=r.int(2,19),after=r.chance(.5),ans3=after?m+1:m-1;
+  return {topic:'Numbers to 20: before & after',kind:'choice',cols:2,prompt:'What comes <b>'+(after?'AFTER':'BEFORE')+'</b> '+m+'?',say:'What comes '+(after?'after':'before')+' '+m+'?',visual:'<div class="eq">'+(after?m+' ➡️ ?':'? ⬅️ '+m)+'</div>',
+    options:numOpts(r,ans3,0,20),answer:String(ans3),hint:'Count '+(after?'forward':'backward')+' by one.'};
+}
+const ANIMALS=['🐶','🐱','🐰','🦊','🐼','🐸','🐵','🦁'];
+const ORD=[['1st','first'],['2nd','second'],['3rd','third'],['4th','fourth'],['5th','last']];
+function qPosition(r){
+  if(r.chance(.5)){
+    var line=r.shuffle(ANIMALS).slice(0,5),idx=r.int(0,4),o=ORD[idx];
+    return {topic:'Positions',kind:'choice',cols:3,prompt:'Which animal is <b>'+o[1]+'</b> ('+o[0]+') in the line?',say:'Which animal is '+o[1]+' in the line?',
+      visual:'<div class="lineup"><small>START</small> ➡️ '+line.join(' ')+' 🏁</div>',options:pickOpts(r,line[idx],line,3,function(x){return '<span class="em">'+x+'</span>';}),answer:line[idx],hint:'Start counting from the START flag: 1st, 2nd, 3rd...'};
+  }
+  var piece=r.pick(['🐢','🐞','🚗','🐥','🚀']),dirs=[['LEFT ⬅️',0,-1],['RIGHT ➡️',0,1],['UP ⬆️',-1,0],['DOWN ⬇️',1,0]],pr,pc,d,tr,tc;
+  do{pr=r.int(0,2);pc=r.int(0,2);d=r.pick(dirs);tr=pr+d[1];tc=pc+d[2];}while(tr<0||tr>2||tc<0||tc>2);
+  return {topic:'Directions',kind:'grid',prompt:'Tap the box that is <b>'+d[0]+'</b> of the '+piece,say:'Tap the box that is '+d[0].split(' ')[0].toLowerCase()+' of the '+piece,visual:'',piece:piece,from:[pr,pc],target:[tr,tc],
+    hint:'Left is your left hand. Right is your right hand. Up is the sky. Down is the floor.'};
+}
+const SYM=['🔴','🔵','🟡','🟢','⭐','❤️','🔶','🟣'];
+function qPattern(r){
+  if(r.chance(.6)){
+    var units=['AB','AAB','ABB','ABC'],u=r.pick(units),syms=r.shuffle(SYM),map={A:syms[0],B:syms[1],C:syms[2]},L=u.length*2+1,seq=[],i;
+    for(i=0;i<L;i++)seq.push(map[u.charAt(i%u.length)]);
+    var ans=seq[L-1],used=u.split('').filter(function(c,j,a){return a.indexOf(c)===j;}).map(function(c){return map[c];});
+    return {topic:'Patterns',kind:'choice',cols:used.length+1>3?2:3,prompt:'What comes <b>next</b> in the pattern?',say:'What comes next in the pattern?',
+      visual:'<div class="seq">'+seq.slice(0,L-1).map(function(x){return '<div class="sb">'+x+'</div>';}).join('')+'<div class="sb q">?</div></div>',
+      options:r.shuffle(used.concat([syms[3]])).map(function(x){return mkOpt(x,'<span class="em">'+x+'</span>');}),answer:ans,hint:'Say the pattern out loud. It repeats again and again.'};
+  }
+  var step=r.pick([1,2,2,5]),maxStart=20-3*step,st=r.int(1,Math.max(1,maxStart)),s2=[st,st+step,st+2*step],a4=st+3*step;
+  return {topic:'Patterns: number pattern',kind:'choice',cols:2,prompt:'Which number comes <b>next</b>?',say:'Which number comes next?',
+    visual:'<div class="seq">'+s2.map(function(x){return '<div class="sb">'+x+'</div>';}).join('')+'<div class="sb q">?</div></div>',options:numOpts(r,a4,1,20),answer:String(a4),hint:'See how much the numbers go up each time. Add that again!'};
+}
+function qSpelling(r){
+  var n=r.int(1,20),v=r.int(0,9);
+  if(v<3)return {topic:'Number spelling',kind:'choice',cols:3,prompt:'Which is the spelling of <b>'+n+'</b>?',say:'Which is the spelling of '+n+'?',visual:'<div class="eq">'+n+'</div>',
+    options:pickOpts(r,NUMW[n],NUMW.slice(1),3,function(x){return '<b>'+x+'</b>';}),answer:NUMW[n],hint:'Sound it out: '+NUMW[n].split('').join(' - ')};
+  if(v<5)return {topic:'Number spelling',kind:'choice',cols:2,prompt:'Which number is this word?',say:'Which number is the word '+NUMW[n]+'?',visual:'<div class="eq" style="letter-spacing:4px">'+NUMW[n]+'</div>',
+    options:numOpts(r,n,1,20),answer:String(n),hint:'Count up to find the number that sounds like the word.'};
+  if(v<8)return {topic:'Writing numbers',kind:'typeText',target:NUMW[n].toUpperCase(),prompt:'Write the number word for <b>'+n+'</b>',say:'Type the number word for '+n,
+    visual:'<div class="eq">'+n+'</div>',hint:'Follow the glowing keys!'};
+  var ns=r.shuffle([1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20]).slice(0,3),mp={};
+  ns.forEach(function(x){mp['w'+x]='n'+x;});
+  return {topic:'Number spelling',kind:'drag',multi:false,prompt:'Drag each <b>word</b> to its <b>number</b>',say:'Drag each word to its number.',visual:'',
+    items:ns.map(function(x){return {id:'w'+x,html:NUMW[x]};}),targets:ns.map(function(x){return {id:'n'+x,html:String(x)};}),map:mp,hint:'Sound out the word and think of the number.'};
+}
+function qAddSub(r){
+  var e=r.pick(EM),add=r.chance(.55),a,b,ans;
+  if(add){
+    if(r.chance(.6)){a=r.int(1,6);b=r.int(1,Math.min(6,10-a));}else{a=r.int(5,12);b=r.int(1,20-a);}
+    ans=a+b;
+    return {topic:'Addition',kind:'choice',cols:2,prompt:'What is <b>'+a+' + '+b+'</b>?',say:'What is '+a+' plus '+b+'?',visual:groups(e,a)+'<div class="eq">➕</div>'+groups(e,b)+'<div class="eq">'+a+' + '+b+' = ?</div>',
+      options:numOpts(r,ans,0,20),answer:String(ans),hint:'Count all of them together: start at '+a+' and count on '+b+' more.'};
+  }
+  if(r.chance(.6)){a=r.int(3,10);b=r.int(1,a-1);}else{a=r.int(8,20);b=r.int(1,Math.min(9,a-1));}
+  ans=a-b;
+  return {topic:'Subtraction',kind:'choice',cols:2,prompt:'What is <b>'+a+' − '+b+'</b>?',say:'What is '+a+' minus '+b+'?',visual:groups(e,a,a-b)+'<div class="eq">'+a+' − '+b+' = ?</div>',
+    options:numOpts(r,ans,0,20),answer:String(ans),hint:'The faded ones go away. Count the ones left.'};
+}
+
+/* ---- Computer Science ---- */
+function qKey(r){
+  var v=r.int(0,9),L='ABCDEFGHIJKLMNOPQRSTUVWXYZ'.split(''),t;
+  if(v<3){t=r.pick(L);return {topic:'Keyboard: letters',kind:'tapKey',target:t,prompt:'Find the letter <b>'+t+'</b> on the keyboard',say:'Find the letter '+t+' on the keyboard.',visual:'<div class="bigemoji" style="font-weight:700;color:var(--cs)">'+t+'</div>',hint:'It is on the '+rowOf(t)+'.'};}
+  if(v<5){t=String(r.int(0,9));return {topic:'Keyboard: numbers',kind:'tapKey',target:t,prompt:'Find the number <b>'+t+'</b> on the keyboard',say:'Find the number '+t+' on the keyboard.',visual:'<div class="bigemoji" style="font-weight:700;color:var(--cs)">'+t+'</div>',hint:'Numbers are on the very top row.'};}
+  if(v<7){
+    var S=[['SPACE','the <b>SPACE BAR</b>','It makes a space between words.'],['ENTER','the <b>ENTER</b> key','It starts a new line.'],['BACK','the <b>BACKSPACE</b> key ⌫','It erases the last letter.'],['SHIFT','the <b>SHIFT</b> key ⇧','It helps make BIG letters.']],s=r.pick(S);
+    return {topic:'Keyboard: special keys',kind:'tapKey',target:s[0],prompt:'Find '+s[1],say:'Find '+s[1].replace(/<[^>]+>/g,'')+'. '+s[2],visual:'<div class="sent">'+s[2]+'</div>',hint:s[2]};
+  }
+  if(v<9){var n=r.int(1,20);return {topic:'Typing: numbers 1-20',kind:'typeText',target:String(n),prompt:'Type the number <b>'+n+'</b>',say:'Type the number '+n,visual:'',hint:'Look for the glowing keys on the number row.'};}
+  var seqs=['ABC','DEF','GHI','JKL','MNO','PQR','STU','VWX','XYZ'],q=r.pick(seqs);
+  return {topic:'Typing: alphabet',kind:'typeText',target:q,prompt:'Type these letters: <b>'+q.split('').join(' ')+'</b>',say:'Type these letters: '+q.split('').join(', '),visual:'',hint:'Find each letter on the keyboard.'};
+}
+function qTyping(r){
+  var it=r.pick(PROFILE.typeItems);
+  return {topic:'Typing: my world',kind:'typeText',target:it.text,prompt:'Type <b>'+it.label+'</b>',say:'Type '+it.label,visual:'<div class="bigemoji">'+it.e+'</div>',hint:'Follow the glowing keys. You can do it!'};
+}
+function qHardware(r,variant){
+  var keys=['monitor','keyboard','mouse','cpu','printer','speaker','headphones','mic','camera','laptop'],v=variant||r.pick(['id','fn','match','id','fn']);
+  if(v==='id'){
+    var k=r.pick(keys),d=DEV[k];
+    return {topic:'Computer parts',kind:'choice',cols:3,prompt:'What is this computer part?',say:'What is this computer part?',visual:'<div class="bigemoji">'+d.i+'</div>',
+      options:pickOpts(r,k,keys,3,function(x){return '<b>'+DEV[x].n+'</b>';}),answer:k,hint:'It is called the '+d.n+'.'};
+  }
+  if(v==='fn'){
+    var F=[['keyboard','Which one do we use to <b>type</b>?'],['mouse','Which one moves the <b>pointer</b> (arrow) on the screen?'],['monitor','Which one is the <b>screen</b> that shows pictures and words?'],['printer','Which one <b>prints</b> on paper?'],['cpu','Which one is the <b>brain</b> of the computer?'],['speaker','Which one plays <b>sound</b> so we can hear?'],['mic','Which one <b>listens</b> to our voice?'],['camera','Which one takes <b>photos</b> and <b>scans QR codes</b>?']],f=r.pick(F);
+    return {topic:'What does it do?',kind:'choice',cols:3,prompt:f[1],say:f[1].replace(/<[^>]+>/g,''),visual:'',options:pickOpts(r,f[0],keys,3,function(x){return emHtml(DEV[x].i,DEV[x].n);}),answer:f[0],hint:'Think about what each part does for the computer.'};
+  }
+  var pk=r.shuffle(keys).slice(0,3),mp={};
+  pk.forEach(function(x){mp['d_'+x]='p_'+x;});
+  return {topic:'Match the parts',kind:'drag',multi:false,prompt:'Drag each <b>name</b> to its <b>picture</b>',say:'Drag each name to its picture.',visual:'',
+    items:pk.map(function(x){return {id:'d_'+x,html:DEV[x].n};}),targets:pk.map(function(x){return {id:'p_'+x,html:DEV[x].i};}),map:mp,hint:'Look at the picture and read the name.'};
+}
+function qNetwork(r,variant){
+  var ys=Object.keys(NET_Y),ns=Object.keys(NET_N),v=variant||r.pick(['sort','sort','yes','no']);
+  if(v==='sort'){
+    var ny=r.int(2,3),a=r.shuffle(ys).slice(0,ny),b=r.shuffle(ns).slice(0,5-ny),items=[],mp={};
+    a.forEach(function(x){items.push({id:'y_'+x,html:'<span class="ci">'+NET_Y[x].i+'</span>'+NET_Y[x].n});mp['y_'+x]='y';});
+    b.forEach(function(x){items.push({id:'n_'+x,html:'<span class="ci">'+NET_N[x].i+'</span>'+NET_N[x].n});mp['n_'+x]='n';});
+    return {topic:'Network: connected devices',kind:'drag',multi:true,prompt:'Which things can connect to <b>Wi-Fi</b>? Sort them!',say:'Which things can connect to Wi-Fi? Drag them to the right box.',visual:'',
+      items:r.shuffle(items),targets:[{id:'y',html:'📶<small>Connects to Wi-Fi</small>'},{id:'n',html:'🚫<small>No Wi-Fi</small>'}],map:mp,hint:'Devices with a screen or chip that can go online connect to Wi-Fi.'};
+  }
+  var yk=r.pick(ys),nk=r.shuffle(ns).slice(0,2);
+  if(v==='yes')return {topic:'Network: connected devices',kind:'choice',cols:3,prompt:'Which one can connect to <b>Wi-Fi</b>?',say:'Which one can connect to Wi-Fi?',visual:'<div class="bigemoji">📶</div>',
+    options:r.shuffle([['y_'+yk,NET_Y[yk]],['n_'+nk[0],NET_N[nk[0]]],['n_'+nk[1],NET_N[nk[1]]]]).map(function(x){return mkOpt(x[0],emHtml(x[1].i,x[1].n));}),answer:'y_'+yk,hint:'A ball or a chair cannot go online!'};
+  var yk2=r.shuffle(ys).slice(0,2),nk2=r.pick(ns);
+  return {topic:'Network: connected devices',kind:'choice',cols:3,prompt:'Which one does <b>NOT</b> connect to Wi-Fi?',say:'Which one does not connect to Wi-Fi?',visual:'<div class="bigemoji">🚫📶</div>',
+    options:r.shuffle([['n_'+nk2,NET_N[nk2]],['y_'+yk2[0],NET_Y[yk2[0]]],['y_'+yk2[1],NET_Y[yk2[1]]]]).map(function(x){return mkOpt(x[0],emHtml(x[1].i,x[1].n));}),answer:'n_'+nk2,hint:'Which one is not a smart device?'};
+}
+function qIO(r,variant){
+  var v=variant||r.pick(['sort','sort','choice']),ins=[],outs=[];
+  Object.keys(DEV).forEach(function(k){if(DEV[k].io==='in')ins.push(k);else if(DEV[k].io==='out')outs.push(k);});
+  if(v==='sort'){
+    var a=r.shuffle(ins).slice(0,2),b=r.shuffle(outs).slice(0,2),items=[],mp={};
+    a.forEach(function(x){items.push({id:'i_'+x,html:'<span class="ci">'+DEV[x].i+'</span>'+DEV[x].n});mp['i_'+x]='in';});
+    b.forEach(function(x){items.push({id:'o_'+x,html:'<span class="ci">'+DEV[x].i+'</span>'+DEV[x].n});mp['o_'+x]='out';});
+    return {topic:'Input & Output',kind:'drag',multi:true,prompt:'Sort the devices: <b>INPUT</b> or <b>OUTPUT</b>?',say:'Sort the devices. Input devices send things into the computer. Output devices show or play things to us.',visual:'',
+      items:r.shuffle(items),targets:[{id:'in',html:'⬇️ INPUT<small>we give to the computer</small>'},{id:'out',html:'⬆️ OUTPUT<small>computer shows or plays to us</small>'}],map:mp,hint:'Keyboard, mouse, mic and camera send things IN. Screen, printer and speaker send things OUT.'};
+  }
+  var k=r.pick(ins.concat(outs)),d=DEV[k];
+  return {topic:'Input & Output',kind:'choice',cols:2,prompt:'Is the <b>'+d.n+'</b> an <b>INPUT</b> or an <b>OUTPUT</b> device?',say:'Is the '+d.n+' an input or an output device?',visual:'<div class="bigemoji">'+d.i+'</div>',
+    options:[mkOpt('in','⬇️ INPUT'),mkOpt('out','⬆️ OUTPUT')],answer:d.io,hint:'Input = we send TO the computer. Output = the computer shows or plays TO us.'};
+}
+
+function buildWorksheet(date,n){
+  var r=makeRng(hashStr('rudra-it|'+date+'|'+(n||0))),qs=[];
+  function dom(name,fns){r.shuffle(fns).forEach(function(f){var q=f(r);q.domain=name;qs.push(q);});}
+  dom('english',[qVerb,qPronoun,qDigraph,qReading,qPrep]);
+  dom('math',[qNumbers,qPosition,qPattern,qSpelling,qAddSub]);
+  dom('cs',[qKey,qTyping,qHardware,qNetwork,qIO]);
+  qs.forEach(function(q,i){q.id='q'+i;});
+  return qs;
+}
+function buildMini(type,seed){
+  var r=makeRng(hashStr('mini|'+type+'|'+seed)),qs=[],i;
+  if(type==='typing'){for(i=0;i<3;i++)qs.push(qKey(r));for(i=0;i<2;i++)qs.push(qTyping(r));qs.push(qKey(r));}
+  else if(type==='io'){for(i=0;i<3;i++)qs.push(qIO(r,i<2?'sort':'choice'));}
+  else if(type==='net'){for(i=0;i<3;i++)qs.push(qNetwork(r,['sort','yes','no'][i]));}
+  else{for(i=0;i<4;i++)qs.push(qHardware(r,['id','fn','match','fn'][i]));}
+  qs.forEach(function(q,j){q.domain='cs';q.id='m'+j;});
+  return qs;
+}
+// </GEN>
+
+/* ---------- 3. STATE (localStorage) ---------- */
+const KEY='rudra_it_geek_v1';
+const DEF={setup:{done:false,momEmail:'phandroshni@gmail.com',dadEmail:'bwagh4@gmail.com',sendTo:'dad',pin:'',appUrl:'',qrMode:'pin',maxMin:15,sound:true,speak:true},
+  xp:0,streak:0,lastDone:'',days:{},resets:{},tokens:{},pending:'',lastChannel:'',ch:{},badges:[],pinFail:0,pinLock:0};
+let S=loadState();
+function loadState(){
+  var j=null;try{j=JSON.parse(localStorage.getItem(KEY));}catch(e){}
+  var s=JSON.parse(JSON.stringify(DEF));
+  if(j){Object.keys(j).forEach(function(k){if(k==='setup'){Object.keys(j.setup||{}).forEach(function(q){s.setup[q]=j.setup[q];});}else s[k]=j[k];});}
+  CHANNELS.forEach(function(c){if(!s.ch[c.key])s.ch[c.key]={on:true,id:c.id};});
+  return s;
+}
+function save(){try{localStorage.setItem(KEY,JSON.stringify(S));}catch(e){}}
+function ymd(d){var m=d.getMonth()+1,x=d.getDate();return d.getFullYear()+'-'+(m<10?'0':'')+m+'-'+(x<10?'0':'')+x;}
+function todayStr(){return ymd(new Date());}
+function prune(){var ks=Object.keys(S.days).sort();while(ks.length>21){delete S.days[ks.shift()];}}
+function rid(n){var a='abcdefghjkmnpqrstuvwxyz23456789',o='',i,b;try{b=new Uint8Array(n);crypto.getRandomValues(b);}catch(e){b=[];for(i=0;i<n;i++)b.push(Math.floor(Math.random()*256));}for(i=0;i<n;i++)o+=a.charAt(b[i]%a.length);return o;}
+const LV=[['Bit 🔹',0],['Byte 🔸',60],['Keyboard Ninja ⌨️',150],['Mouse Master 🖱️',280],['Network Wizard 📶',450],['Chip Champion 🧠',700],['Cyber Hero 🦸',1000],['Tech Legend 🏆',1400]];
+function lvInfo(){var i=0;while(i<LV.length-1&&S.xp>=LV[i+1][1])i++;var nx=LV[i+1];return {i:i,name:LV[i][0],next:nx?nx[1]:null,pct:nx?Math.round((S.xp-LV[i][1])/(nx[1]-LV[i][1])*100):100};}
+const BADGES=[['first','🥇','First worksheet'],['streak3','🔥','3-day streak'],['streak7','🚀','7-day streak'],['typist','⌨️','Typing star'],['perfect','🏆','Perfect day']];
+
+/* ---------- 4. UI helpers: DOM, sound, speech ---------- */
+const $=function(s,root){return (root||document).querySelector(s);};
+function el(h){var d=document.createElement('div');d.innerHTML=h.trim();return d.firstChild;}
+function esc(s){return String(s).replace(/&/g,'&amp;').replace(/"/g,'&quot;').replace(/</g,'&lt;').replace(/>/g,'&gt;');}
+function pick(a){return a[Math.floor(Math.random()*a.length)];}
+let AC=null;
+function ac(){if(!AC){var C=window.AudioContext||window.webkitAudioContext;if(C){try{AC=new C();}catch(e){}}}if(AC&&AC.state==='suspended'){try{AC.resume();}catch(e){}}return AC;}
+function tone(f,t,d,type,v){var a=ac();if(!a||!S.setup.sound)return;try{var o=a.createOscillator(),g=a.createGain(),n=a.currentTime+t;o.type=type||'sine';o.frequency.value=f;g.gain.setValueAtTime(0.0001,n);g.gain.exponentialRampToValueAtTime(v||.2,n+.02);g.gain.exponentialRampToValueAtTime(.0001,n+d);o.connect(g);g.connect(a.destination);o.start(n);o.stop(n+d+.05);}catch(e){}}
+const SFX={ok:function(){tone(660,0,.15);tone(880,.12,.25);},bad:function(){tone(220,0,.18,'triangle');tone(170,.14,.25,'triangle');},key:function(){tone(700,0,.04,'square',.05);},win:function(){[523,659,784,1047,784,1047].forEach(function(f,i){tone(f,i*.14,.3,'triangle',.22);});},pop:function(){tone(420,0,.08);}};
+function say(t,force){if((!S.setup.speak&&!force)||!('speechSynthesis' in window))return;try{speechSynthesis.cancel();var u=new SpeechSynthesisUtterance(t);u.rate=.85;u.pitch=1.1;u.lang='en-IN';speechSynthesis.speak(u);}catch(e){}}
+function party(big){if(!window.confetti)return;try{if(big){var end=Date.now()+1800;(function f(){window.confetti({particleCount:6,angle:60,spread:70,origin:{x:0,y:.7}});window.confetti({particleCount:6,angle:120,spread:70,origin:{x:1,y:.7}});if(Date.now()<end)requestAnimationFrame(f);})();window.confetti({particleCount:160,spread:100,origin:{y:.5}});}else window.confetti({particleCount:50,spread:60,origin:{y:.6}});}catch(e){}}
+let toastT=0;
+function toast(m){var t=$('#toast');t.textContent=m;t.style.display='block';clearTimeout(toastT);toastT=setTimeout(function(){t.style.display='none';},2800);}
+function openModal(html,cls){closeModal();var o=el('<div class="ov"><div class="sheet '+(cls||'')+'">'+html+'</div></div>');$('#modal').appendChild(o);return o;}
+function closeModal(){$('#modal').innerHTML='';}
+document.addEventListener('click',function(e){var b=e.target.closest&&e.target.closest('[data-say]');if(b){ac();say(b.getAttribute('data-say'),true);}});
+document.addEventListener('gesturestart',function(e){e.preventDefault();});
+
+/* ---------- navigation ---------- */
+let cur='splash',CL=[];
+function runCleanups(){CL.forEach(function(f){try{f();}catch(e){}});CL=[];}
+const TABS=[['home','🏠','Home'],['ws','📝','Worksheet'],['scan','📷','Scan'],['lab','🧪','Geek Lab'],['parent','🔒','Parent']];
+function buildTabs(){
+  var t=$('#tabs');t.innerHTML=TABS.map(function(x){return '<button type="button" class="tab" data-t="'+x[0]+'"><i>'+x[1]+'</i>'+x[2]+'</button>';}).join('');
+  [].forEach.call(t.children,function(b){b.addEventListener('click',function(){ac();SFX.pop();var k=b.getAttribute('data-t');if(k==='ws')startWorksheet();else if(k==='parent')pinGate();else go(k);});});
+}
+function go(n){
+  runCleanups();if(n!=='scan')stopCam();
+  cur=n;
+  [].forEach.call(document.querySelectorAll('.screen'),function(s){s.classList.toggle('active',s.id==='s-'+n);});
+  $('#tabs').style.display=(n==='splash'||n==='work')?'none':'flex';
+  var map={home:'home',done:'ws',scan:'scan',lab:'lab',parent:'parent'};
+  [].forEach.call($('#tabs').children,function(b){b.classList.toggle('on',map[n]===b.getAttribute('data-t'));});
+  var sc=$('#s-'+n);if(sc)sc.scrollTop=0;
+  if(n==='home')renderHome();else if(n==='done')renderDone();else if(n==='scan')renderScan();else if(n==='lab')renderLab();else if(n==='parent')renderParent();
+}
+
+/* ---------- 5. QUESTION RENDERERS ---------- */
+const DOMS={english:{n:'English',e:'📚',c:'#ff5c8a'},math:{n:'Maths',e:'🔢',c:'#3d8bff'},cs:{n:'Computer',e:'💻',c:'#7c4dff'}};
+const PRAISE=['Awesome!','You rock!','Super smart!','Brilliant!','Wow, great job!','Fantastic!','Byte is proud of you!'];
+let SES=null,QS=null,UI=null;
+const KROWS=[['1','2','3','4','5','6','7','8','9','0','BACK'],['Q','W','E','R','T','Y','U','I','O','P'],['A','S','D','F','G','H','J','K','L','ENTER'],['SHIFT','Z','X','C','V','B','N','M'],['SPACE']];
+const KLAB={BACK:'⌫',ENTER:'↵ Enter',SHIFT:'⇧ Shift',SPACE:'space'};
+const FING={};[['1QAZ',0],['2WSX',1],['3EDC',2],['45RTFGVB',3],['67YUHJNM',4],['8IK',5],['9OL',6],['0P',7]].forEach(function(p){p[0].split('').forEach(function(c){FING[c]=p[1];});});
+FING.BACK=7;FING.ENTER=7;FING.SHIFT=0;FING.SPACE=8;
+function buildKB(onKey){
+  var wrap=el('<div class="kb"></div>'),keys={};
+  KROWS.forEach(function(row){
+    var rw=el('<div class="kr"></div>');
+    row.forEach(function(k){
+      var b=el('<button type="button" class="k f'+FING[k]+(k.length>1?' sp sp-'+k:'')+((k==='F'||k==='J')?' bump':'')+'">'+(KLAB[k]||k)+'</button>');
+      b.addEventListener('pointerdown',function(ev){ev.preventDefault();ac();onKey(k);});
+      keys[k]=b;rw.appendChild(b);
+    });
+    wrap.appendChild(rw);
+  });
+  return {el:wrap,keys:keys,
+    flash:function(k,c){var b=keys[k];if(!b)return;b.classList.remove('ok','no');void b.offsetWidth;b.classList.add(c);setTimeout(function(){b.classList.remove(c);},420);},
+    hint:function(k){this.unhint();if(keys[k])keys[k].classList.add('hint');},
+    unhint:function(){Object.keys(keys).forEach(function(x){keys[x].classList.remove('hint');});}};
+}
+function hwKey(e){if(e.metaKey||e.ctrlKey||e.altKey)return null;var k=e.key;if(k==='Enter')return 'ENTER';if(k==='Backspace')return 'BACK';if(k===' ')return 'SPACE';if(k==='Shift')return 'SHIFT';if(k&&k.length===1)return k.toUpperCase();return null;}
+function bindHW(fn){var h=function(e){var k=hwKey(e);if(k){e.preventDefault();fn(k);}};document.addEventListener('keydown',h);CL.push(function(){document.removeEventListener('keydown',h);});}
+
+function choiceUI(q,host,api){
+  var n=q.options.length,box=el('<div class="opts c'+(q.cols||(n<=3?n:2))+'"></div>');host.appendChild(box);
+  q.options.forEach(function(o){
+    var b=el('<button type="button" class="opt" data-v="'+esc(o.v)+'">'+o.html+'</button>');
+    b.addEventListener('click',function(){
+      if(QS.done||b.classList.contains('dim'))return;
+      if(o.v===q.answer){b.classList.add('ok');fillBlank(q,o.v);api.right();}else{b.classList.add('bad');b.classList.add('dim');api.wrong();}
+    });
+    box.appendChild(b);
+  });
+  function fillBlank(qq,v){if(qq.fill){var bl=document.querySelector('#s-work .blank');if(bl)bl.textContent=v;}}
+  return {hint:function(){var w=[].filter.call(box.children,function(b){return b.getAttribute('data-v')!==esc(q.answer)&&!b.classList.contains('dim');})[0];if(w)w.classList.add('dim');},
+    reveal:function(){[].forEach.call(box.children,function(b){if(b.getAttribute('data-v')===esc(q.answer))b.classList.add('ok');});fillBlank(q,q.answer);}};
+}
+function gridUI(q,host,api){
+  var g=el('<div class="gridq"></div>');host.appendChild(g);var cells=[];
+  for(var r=0;r<3;r++)for(var c=0;c<3;c++)(function(r,c){
+    var b=el('<button type="button" class="gcell">'+((r===q.from[0]&&c===q.from[1])?q.piece:'')+'</button>');
+    b.addEventListener('click',function(){
+      if(QS.done)return;
+      if(r===q.target[0]&&c===q.target[1]){b.classList.add('ok');b.textContent='⭐';api.right();}
+      else if(r===q.from[0]&&c===q.from[1]){b.classList.add('bad');api.wrong();}
+      else{b.classList.add('bad');setTimeout(function(){b.classList.remove('bad');},450);api.wrong();}
+    });
+    g.appendChild(b);cells.push(b);
+  })(r,c);
+  var ti=q.target[0]*3+q.target[1];
+  return {hint:function(){cells[ti].style.outline='5px solid var(--sun)';},reveal:function(){cells[ti].classList.add('ok');cells[ti].textContent='⭐';}};
+}
+function tapKeyUI(q,host,api){
+  var kb=buildKB(press);host.appendChild(kb.el);
+  function press(k){if(QS.done)return;SFX.key();if(k===q.target){kb.flash(k,'ok');api.right();}else{kb.flash(k,'no');api.wrong();}}
+  bindHW(press);
+  return {hint:function(){kb.hint(q.target);},reveal:function(){kb.hint(q.target);}};
+}
+function typeUI(q,host,api){
+  var T=q.target,pos=0,ghost=false;
+  host.appendChild(el('<div class="tcopy">'+T.split('').map(function(c){return '<span>'+c+'</span>';}).join('')+'</div>'));
+  var tb=el('<div class="tbox">'+T.split('').map(function(){return '<span class="tb"></span>';}).join('')+'</div>');host.appendChild(tb);
+  var boxes=tb.children,kb=buildKB(press);host.appendChild(kb.el);
+  function mark(){[].forEach.call(boxes,function(b,i){b.classList.toggle('cur',i===pos);});if(ghost&&pos<T.length)kb.hint(T.charAt(pos));else kb.unhint();}
+  function press(k){
+    if(QS.done||pos>=T.length)return;SFX.key();
+    if(k===T.charAt(pos)){boxes[pos].textContent=k;boxes[pos].classList.add('done');kb.flash(k,'ok');pos++;mark();if(pos>=T.length)api.right();}
+    else{kb.flash(k,'no');if(api.miss()>=2)ghost=true;mark();}
+  }
+  bindHW(press);mark();
+  return {hint:function(){ghost=true;mark();},reveal:function(){}};
+}
+function dragUI(q,host,api){
+  var multi=!!q.multi,placed={},chips={},sel=null,lastDrop=0;
+  var slots=el('<div class="slots '+(multi?'s2':'s1')+'"></div>'),tray=el('<div class="tray"></div>'),foot=el('<div class="dzfoot"><button type="button" class="btn ok" disabled>✔ Check</button></div>'),chk=foot.firstChild;
+  host.appendChild(slots);host.appendChild(tray);host.appendChild(foot);
+  var slotEl={};
+  q.targets.forEach(function(t){var s=el('<div class="slot" data-t="'+esc(t.id)+'"><div class="sl">'+t.html+'</div><div class="drop"></div></div>');slotEl[t.id]=s;slots.appendChild(s);
+    s.addEventListener('click',function(){if(Date.now()-lastDrop<350)return;if(sel&&!QS.done){place(sel,t.id);}});});
+  function dropOf(id){return slotEl[id].querySelector('.drop');}
+  function place(itemId,tid){
+    if(!multi){Object.keys(placed).forEach(function(k){if(placed[k]===tid&&k!==itemId&&!chips[k].classList.contains('lock')){placed[k]=null;tray.appendChild(chips[k]);}else if(placed[k]===tid&&k!==itemId)return;});}
+    placed[itemId]=tid;dropOf(tid).appendChild(chips[itemId]);setSel(null);SFX.pop();upd();
+  }
+  function back(itemId){placed[itemId]=null;tray.appendChild(chips[itemId]);setSel(null);upd();}
+  function setSel(id){sel=id;Object.keys(chips).forEach(function(k){chips[k].classList.toggle('sel',k===id);});}
+  function upd(){chk.disabled=!q.items.every(function(it){return placed[it.id];});}
+  function slotAt(x,y){var e=document.elementFromPoint(x,y);var s=e&&e.closest?e.closest('.slot'):null;return s;}
+  q.items.forEach(function(it){
+    var c=el('<div class="chip">'+it.html+'</div>');chips[it.id]=c;placed[it.id]=null;tray.appendChild(c);
+    c.addEventListener('pointerdown',function(e){
+      if(QS.done||c.classList.contains('lock'))return;e.preventDefault();ac();
+      var sx=e.clientX,sy=e.clientY,moved=false,fly=null,rect=c.getBoundingClientRect(),ox=sx-rect.left,oy=sy-rect.top,over=null;
+      try{c.setPointerCapture(e.pointerId);}catch(x){}
+      function mv(ev){
+        if(!moved&&Math.hypot(ev.clientX-sx,ev.clientY-sy)<8)return;
+        if(!moved){moved=true;fly=c.cloneNode(true);fly.classList.add('fly');document.body.appendChild(fly);c.classList.add('ghost');}
+        fly.style.left=(ev.clientX-ox)+'px';fly.style.top=(ev.clientY-oy)+'px';
+        var s=slotAt(ev.clientX,ev.clientY);if(over&&over!==s)over.classList.remove('over');if(s)s.classList.add('over');over=s;
+      }
+      function up(ev){
+        c.removeEventListener('pointermove',mv);c.removeEventListener('pointerup',up);c.removeEventListener('pointercancel',up);
+        c.classList.remove('ghost');if(over)over.classList.remove('over');
+        if(moved){fly.parentNode.removeChild(fly);var s=slotAt(ev.clientX,ev.clientY);lastDrop=Date.now();if(s)place(it.id,s.getAttribute('data-t'));}
+        else{if(placed[it.id])back(it.id);else setSel(sel===it.id?null:it.id);}
+      }
+      c.addEventListener('pointermove',mv);c.addEventListener('pointerup',up);c.addEventListener('pointercancel',up);
+    });
+  });
+  chk.addEventListener('click',function(){
+    if(QS.done)return;var allOk=true;
+    q.items.forEach(function(it){
+      var c=chips[it.id];if(c.classList.contains('lock'))return;
+      if(placed[it.id]===q.map[it.id]){c.classList.add('lock');}
+      else{allOk=false;c.classList.add('no');placed[it.id]=null;tray.appendChild(c);setTimeout(function(){c.classList.remove('no');},450);}
+    });
+    upd();if(allOk)api.right();else api.wrong();
+  });
+  return {hint:function(){var it=q.items.filter(function(i){return !chips[i.id].classList.contains('lock');})[0];if(it){chips[it.id].classList.add('sel');slotEl[q.map[it.id]].classList.add('over');setTimeout(function(){slotEl[q.map[it.id]].classList.remove('over');},1500);}},
+    reveal:function(){q.items.forEach(function(it){placed[it.id]=q.map[it.id];dropOf(q.map[it.id]).appendChild(chips[it.id]);chips[it.id].classList.add('lock');chips[it.id].classList.remove('sel');});chk.disabled=true;}};
+}
+const RENDER={choice:choiceUI,grid:gridUI,tapKey:tapKeyUI,typeText:typeUI,drag:dragUI};
+
+/* ---------- worksheet session ---------- */
+function openSession(ses){SES=ses;go('work');renderQ();}
+function dotsHtml(){return SES.qs.map(function(q,i){var r=SES.res[i];return '<span class="dot'+(r?(r.ok&&r.w===0?' ok':' no'):'')+(i===SES.i?' cur':'')+'"></span>';}).join('');}
+function renderQ(){
+  runCleanups();
+  var q=SES.qs[SES.i],D=DOMS[q.domain]||DOMS.cs,host=$('#s-work');
+  QS={wrongs:0,done:false};
+  host.innerHTML='<div class="wrap"><div class="wtop"><button class="icon" id="wExit" type="button">✕</button><div class="pillD" style="background:'+D.c+'">'+D.e+' '+D.n+' · '+q.topic+'</div><div class="dots" id="wDots">'+dotsHtml()+'</div><button class="icon" id="wSay" type="button">🔊</button></div>'+
+    '<div class="qcard"><div class="qprompt">'+q.prompt+'</div><div class="qvis">'+(q.visual||'')+'</div><div id="qui"></div><div class="fb" id="fb"></div></div>'+
+    '<div class="wfoot"><button class="btn ghost" id="wHint" type="button">💡 Hint</button><button class="btn big" id="wNext" type="button" disabled>'+(SES.i===SES.qs.length-1?'Finish 🎉':'Next ➜')+'</button></div></div>';
+  var api={
+    right:function(){finishQ(true);},
+    wrong:function(){QS.wrongs++;SFX.bad();if(QS.wrongs>=3){UI&&UI.reveal&&UI.reveal();finishQ(false);}else fb('bad','Not yet — try again! 💪'+(q.hint?'<br><small>💡 '+q.hint+'</small>':''));},
+    miss:function(){QS.wrongs++;SFX.bad();fb('bad','Oops! Follow the glowing key ✨');return QS.wrongs;}
+  };
+  UI=RENDER[q.kind](q,$('#qui'),api);
+  $('#wExit').addEventListener('click',function(){runCleanups();go(SES.kind==='ws'?'home':'lab');});
+  $('#wSay').addEventListener('click',function(){ac();say(q.say||q.prompt.replace(/<[^>]+>/g,''),true);});
+  $('#wHint').addEventListener('click',function(){SFX.pop();fb('info','💡 '+(q.hint||'Take your time!'));if(UI&&UI.hint)UI.hint();});
+  $('#wNext').addEventListener('click',function(){
+    SES.i++;if(SES.persist)SES.persist();
+    if(SES.i>=SES.qs.length){runCleanups();SES.onDone();}else renderQ();
+  });
+  setTimeout(function(){say(q.say||q.prompt.replace(/<[^>]+>/g,''));},350);
+}
+function fb(type,html){var f=$('#fb');if(!f)return;f.className='fb show '+type;f.innerHTML=html;}
+function finishQ(ok){
+  if(QS.done)return;QS.done=true;
+  var pts=ok?Math.max(10-QS.wrongs*3,3):0;
+  SES.res[SES.i]={w:QS.wrongs,ok:ok,p:pts};S.xp+=pts;
+  if(ok){SFX.ok();fb('ok','⭐ '+pick(PRAISE)+' +'+pts+' XP');party(false);}else fb('info','Good try! Now you know the answer 🌟');
+  if(SES.persist)SES.persist();else save();
+  $('#wDots').innerHTML=dotsHtml();$('#wNext').disabled=false;
+}
+
+/* ---------- 6. SCREENS ---------- */
+function renderSplash(){
+  $('#s-splash').innerHTML='<div class="splash"><div class="floaty f1">💻</div><div class="floaty f2">⌨️</div><div class="floaty f3">🖱️</div><div class="floaty f4">📶</div><div class="floaty f5">🖨️</div>'+
+    '<div class="byte">🤖</div><h1 class="title">IT Geek Academy</h1><p class="sub" style="font-size:24px">Hi <b>'+PROFILE.first+'</b>! I\'m Byte.<br>Let\'s become a computer champion today!</p><button class="btn big" id="goBtn" type="button">Let\'s Go! 🚀</button></div>';
+  $('#goBtn').addEventListener('click',begin);
+}
+function begin(){
+  ac();SFX.win();say('Hi '+PROFILE.first+'! Let us become a computer champion today!');
+  if(!S.setup.done)setupModal(true);else go('home');
+}
+function greet(){var h=new Date().getHours();return h<12?'Good morning':h<17?'Good afternoon':'Good evening';}
+function domStars(day){
+  var out={};['english','math','cs'].forEach(function(d,k){var first=0;for(var i=k*5;i<k*5+5;i++){var r=day.res[i];if(r&&r.ok&&r.w===0)first++;}out[d]=first>=4?3:first>=2?2:1;});return out;
+}
+function renderHome(){
+  var d=todayStr(),day=S.days[d],lv=lvInfo(),h='';
+  var prog=day?Math.min(day.i,day.qs.length):0,total=15;
+  h+='<div class="wrap"><div class="hero"><div class="byte">🤖</div><div class="bubble">'+greet()+', <b>'+PROFILE.first+'</b>!<br>'+(day&&day.done?'You did it today! 🎉':'Ready for today\'s worksheet?')+'</div></div>';
+  h+='<div class="stats"><div class="stat">⭐ XP<b>'+S.xp+'</b></div><div class="stat">🔥 Streak<b>'+S.streak+' day'+(S.streak===1?'':'s')+'</b></div><div class="stat">Level<b style="font-size:21px">'+lv.name+'</b><div class="bar"><i style="width:'+lv.pct+'%"></i></div></div></div>';
+  if(S.pending&&S.tokens[S.pending]){h+='<div class="card" style="background:#fff5d6"><b>🎁 Your reward is ready to finish!</b><div class="row"><button class="btn ok" id="hResume" type="button">▶ Continue video</button></div></div>';}
+  h+='<div class="card todayc"><h2>📝 Today\'s Worksheet</h2>';
+  if(day&&day.done){
+    var t=S.tokens[day.token],st=domStars(day);
+    h+='<p class="sub">All 15 questions done! '+(t&&t.st==='claimed'?'Reward watched ✅ New worksheet tomorrow.':'Your reward QR is waiting 🎁')+'</p><div class="doms">'+['english','math','cs'].map(function(k){return '<div class="dchip">'+DOMS[k].e+' '+DOMS[k].n+'<br>'+'⭐'.repeat(st[k])+'</div>';}).join('')+'</div><div class="row"><button class="btn" id="hGo" type="button" style="background:#fff;color:var(--cs)">'+(t&&t.st!=='claimed'?'🎁 See my reward':'🏆 See my stars')+'</button></div>';
+  }else{
+    h+='<p class="sub">15 fun questions: English 📚, Maths 🔢 and Computers 💻. Finish them to unlock a video reward!</p><div class="bar" style="background:rgba(255,255,255,.3)"><i style="width:'+Math.round(prog/total*100)+'%"></i></div><div class="row"><button class="btn big" id="hGo" type="button" style="background:#fff;color:var(--cs)">'+(prog?'Continue ('+prog+'/15) ➜':'Start! ➜')+'</button></div>';
+  }
+  h+='</div><div class="card"><h3>🏅 My badges</h3><div class="badges">'+BADGES.map(function(b){return '<span class="bdg'+(S.badges.indexOf(b[0])>=0?' on':'')+'" title="'+b[2]+'">'+b[1]+'</span>';}).join('')+'</div></div>';
+  h+='<div class="card" id="hLab" style="cursor:pointer"><h3>🧪 Geek Lab</h3><p class="sub" style="margin:0">Typing games, device sorting and how QR scanning really works →</p></div></div>';
+  $('#s-home').innerHTML=h;
+  var g=$('#hGo');if(g)g.addEventListener('click',function(){ac();startWorksheet();});
+  $('#hLab').addEventListener('click',function(){go('lab');});
+  var rs=$('#hResume');if(rs)rs.addEventListener('click',function(){playReward(S.tokens[S.pending]);});
+}
+function startWorksheet(){
+  ac();var d=todayStr(),day=S.days[d];
+  if(!day){day={qs:buildWorksheet(d,S.resets[d]||0),i:0,res:[],done:false,token:''};S.days[d]=day;prune();save();}
+  if(day.done){go('done');return;}
+  openSession({kind:'ws',qs:day.qs,i:Math.min(day.i,day.qs.length-1),res:day.res,persist:function(){day.i=this.i;save();},onDone:finishWorksheet});
+}
+function finishWorksheet(){
+  var d=todayStr(),day=S.days[d];day.done=true;day.i=day.qs.length;
+  var y=ymd(new Date(Date.now()-864e5));S.streak=(S.lastDone===y)?S.streak+1:(S.lastDone===d?S.streak:1);S.lastDone=d;
+  issueToken(d);
+  var add=function(k){if(S.badges.indexOf(k)<0)S.badges.push(k);};
+  add('first');if(S.streak>=3)add('streak3');if(S.streak>=7)add('streak7');
+  var firsts=day.res.filter(function(r){return r&&r.ok&&r.w===0;}).length,csFirst=day.res.slice(10,15).filter(function(r){return r&&r.ok&&r.w===0;}).length;
+  if(csFirst===5)add('typist');if(firsts===15)add('perfect');
+  save();qrUnlocked=false;SFX.win();go('done');party(true);say('Hooray! You finished the worksheet!');
+}
+/* ---- Done / reward screen ---- */
+let qrUnlocked=false;
+function renderDone(){
+  var d=todayStr(),day=S.days[d],host=$('#s-done');
+  if(!day||!day.done){go('home');return;}
+  var t=S.tokens[day.token],st=domStars(day),h='<div class="wrap"><div class="center"><div class="trophy">🏆</div><h1 style="font-size:42px">Amazing, '+PROFILE.first+'!</h1><p class="sub">You finished today\'s worksheet!</p></div><div class="starsRow">'+
+    ['english','math','cs'].map(function(k){return '<div class="sc" style="background:'+DOMS[k].c+'">'+DOMS[k].e+' '+DOMS[k].n+'<b>'+'⭐'.repeat(st[k])+'</b></div>';}).join('')+'</div>';
+  if(!t){h+='<div class="card note badn">No reward channels are switched on. Ask a grown-up to check the Parent tab.</div>';}
+  else if(t.st==='claimed'){h+='<div class="card center"><div style="font-size:70px">✅</div><h2>Reward already watched</h2><p class="sub">Come back tomorrow for a new worksheet and a new video!</p><div class="row" style="justify-content:center"><button class="btn" id="dLab" type="button">🧪 Visit the Geek Lab</button></div></div>';}
+  else{
+    var show=S.setup.qrMode==='always'||qrUnlocked;
+    h+='<div class="card qrCard"><h2>🎁 Your Reward QR</h2>';
+    if(show)h+='<div id="qrBox"></div><p class="sub">Scan it in the <b>Scan 📷</b> tab to unlock one video. It works only once!</p>';
+    else h+='<div class="lockq"><div class="big">🔒</div><p>Your reward QR is locked.<br><b>Ask Mom or Dad</b> to send it or unlock it!</p></div>';
+    h+='<div class="row" style="justify-content:center"><button class="btn ok" id="dMail" type="button">📧 Ask '+(S.setup.sendTo==='mom'?'Mom':S.setup.sendTo==='both'?'Mom & Dad':'Dad')+' by email</button>'+(show?'<button class="btn" id="dShare" type="button">📤 Share QR</button>':'<button class="btn ghost" id="dUnlock" type="button">🔓 Parent: show QR</button>')+'<button class="btn ghost" id="dScan" type="button">📷 Scan now</button><button class="btn ghost" id="dHow" type="button">🔍 How does it work?</button></div></div>';
+  }
+  h+='</div>';host.innerHTML=h;
+  if(t&&t.st!=='claimed'&&(S.setup.qrMode==='always'||qrUnlocked))makeQR($('#qrBox'),qrText(t),240);
+  var b=function(id,fn){var x=$(id);if(x)x.addEventListener('click',fn);};
+  b('#dMail',function(){sendMail(t);});b('#dShare',function(){shareQR(t);});b('#dScan',function(){go('scan');});b('#dLab',function(){go('lab');});b('#dHow',howScanModal);
+  b('#dUnlock',function(){pinPrompt(function(){qrUnlocked=true;renderDone();});});
+}
+/* ---- Geek Lab ---- */
+const FACTS=[['🧠','The CPU is the computer\'s brain','It thinks super fast! Billions of tiny steps every second.'],
+  ['⌨️','Input devices','Keyboard, mouse, microphone and camera send things INTO the computer.'],['🖥️','Output devices','Monitor, printer and speaker show or play things OUT to us.'],
+  ['📶','The Wi-Fi router','A router sends internet through the air to your tablet, phone and Smart TV.'],['👆','Home row fingers','Put your pointer fingers on F and J. Feel the little bumps? They help you find your place without looking!'],
+  ['🌈','Colour fingers','On our keyboard each finger has its own colour. Same colour = same finger!'],['📷','A camera is an input device','It looks at the world and sends pictures to the computer. That is how scanning works!'],
+  ['🔗','What is a link?','A link is an address that tells your device which page to open.']];
+let factI=0;
+function renderLab(){
+  var f=FACTS[factI];
+  $('#s-lab').innerHTML='<div class="wrap"><h1>🧪 Geek Lab</h1><div class="card fact" id="fact"><div class="e">'+f[0]+'</div><h2>'+f[1]+'</h2><p>'+f[2]+'</p><div class="row" style="justify-content:center"><button class="btn sm ghost" id="fPrev" type="button">◀</button><button class="btn sm ghost" data-say="'+esc(f[1]+'. '+f[2])+'" type="button">🔊 Read</button><button class="btn sm" id="fNext" type="button">Next fact ▶</button></div></div>'+
+    '<h3>🎮 Mini games (+XP)</h3><div class="games"><button class="game" style="background:linear-gradient(135deg,#7c4dff,#3d8bff)" data-g="typing" type="button"><i>⌨️</i>Typing Arcade</button><button class="game" style="background:linear-gradient(135deg,#ff8a5c,#ff5c8a)" data-g="io" type="button"><i>⬇️⬆️</i>Input / Output</button><button class="game" style="background:linear-gradient(135deg,#34c77b,#1fa3a3)" data-g="net" type="button"><i>📶</i>Wi-Fi or Not?</button><button class="game" style="background:linear-gradient(135deg,#ffb347,#ff7a5c)" data-g="hw" type="button"><i>🖥️</i>Computer Parts</button></div>'+
+    '<div class="card" style="margin-top:14px"><h3>🔍 How does scanning work?</h3><p class="sub" style="margin:0 0 8px">A QR code is a picture made of black and white squares.</p><button class="btn" id="lHow" type="button">Show me!</button></div></div>';
+  $('#fPrev').addEventListener('click',function(){factI=(factI+FACTS.length-1)%FACTS.length;renderLab();});
+  $('#fNext').addEventListener('click',function(){factI=(factI+1)%FACTS.length;renderLab();});
+  $('#lHow').addEventListener('click',howScanModal);
+  [].forEach.call(document.querySelectorAll('.game'),function(b){b.addEventListener('click',function(){ac();startMini(b.getAttribute('data-g'));});});
+}
+function startMini(type){
+  var qs=buildMini(type,Date.now());
+  openSession({kind:'mini',qs:qs,i:0,res:[],onDone:function(){
+    var ok=SES.res.filter(function(r){return r&&r.ok;}).length;SFX.win();party(true);save();
+    var o=openModal('<div class="big">🎉</div><h2 style="text-align:center">Great job!</h2><p style="text-align:center">You got <b>'+ok+' / '+SES.qs.length+'</b> and earned XP!</p><div class="row"><button class="btn ok" id="mAgain" type="button">Play again</button><button class="btn ghost" id="mBack" type="button">Back to Lab</button></div>');
+    $('#mAgain',o).addEventListener('click',function(){closeModal();startMini(type);});$('#mBack',o).addEventListener('click',function(){closeModal();go('lab');});
+  }});
+}
+function howScanModal(){
+  var st=[['📱','A QR code is shown on a screen'],['📷','The camera (an INPUT device) looks at it'],['⬛⬜','The computer sees black and white squares'],['🧠','The CPU turns squares into letters: a secret link!'],['🌐','The link opens a page or video!']];
+  var o=openModal('<h2 style="text-align:center">🔍 How scanning works</h2><div class="steps">'+st.map(function(s,i){return '<div class="stp" style="animation-delay:'+(i*.7)+'s"><i>'+s[0]+'</i>'+(i+1)+'. '+s[1]+'</div>';}).join('')+'</div><div class="row"><button class="btn ghost" data-say="A QR code is a picture made of black and white squares. The camera looks at it. The computer reads the squares and finds a link. Then it opens the page." type="button">🔊 Read to me</button><button class="btn" id="hwClose" type="button">Got it!</button></div>');
+  $('#hwClose',o).addEventListener('click',closeModal);
+}
+
+/* ---------- 7. QR + ONE-TIME TOKENS ---------- */
+function b64u(s){return btoa(s).replace(/\+/g,'-').replace(/\//g,'_').replace(/=+$/,'');}
+function unb64u(s){s=s.replace(/-/g,'+').replace(/_/g,'/');while(s.length%4)s+='=';return atob(s);}
+function issueToken(date){
+  var day=S.days[date];if(day.token&&S.tokens[day.token]&&S.tokens[day.token].st!=='void')return S.tokens[day.token];
+  var pool=CHANNELS.filter(function(c){return S.ch[c.key]&&S.ch[c.key].on&&S.ch[c.key].id;});
+  var cand=pool.filter(function(c){return c.key!==S.lastChannel;});if(!cand.length)cand=pool;if(!cand.length){day.token='';return null;}
+  var c=pick(cand),t={id:rid(10),date:date,ch:c.key,idx:Math.floor(Math.random()*20),st:'issued',at:Date.now()};
+  S.tokens[t.id]=t;day.token=t.id;S.lastChannel=c.key;
+  var ks=Object.keys(S.tokens);if(ks.length>40){ks.sort(function(a,b){return S.tokens[a].at-S.tokens[b].at;}).slice(0,ks.length-40).forEach(function(k){delete S.tokens[k];});}
+  save();return t;
+}
+function payloadOf(t){return 'RW1.'+b64u(JSON.stringify({t:t.id,d:t.date,c:t.ch,i:t.idx}));}
+function linkOf(t){var u=(S.setup.appUrl||'').split('#')[0];return u?u+'#reward='+payloadOf(t):'';}
+function qrText(t){return linkOf(t)||payloadOf(t);}
+function makeQR(box,text,size){
+  if(!box)return;box.innerHTML='';
+  if(window.QRCode){try{new QRCode(box,{text:text,width:size,height:size,colorDark:'#26214f',colorLight:'#ffffff',correctLevel:QRCode.CorrectLevel.M});return;}catch(e){}}
+  box.innerHTML='<div style="width:'+size+'px;font-size:14px;word-break:break-all">QR library not loaded (check Wi-Fi). Code:<br>'+esc(text)+'</div>';
+}
+function parseReward(txt){
+  txt=String(txt||'').trim();var m=txt.match(/reward=([A-Za-z0-9._\-]+)/);if(m)txt=m[1];
+  m=txt.match(/RW1\.([A-Za-z0-9_\-]+)/);if(!m)return null;
+  try{var j=JSON.parse(unb64u(m[1]));if(j&&j.t)return j;}catch(e){}return null;
+}
+function redeem(p){
+  var t=S.tokens[p.t];
+  if(!t||t.st==='void')return {r:'unknown'};
+  if(t.st==='claimed'){return S.pending===t.id?{r:'ok',t:t}:{r:'used',t:t};}
+  if(Date.now()-t.at>48*3600e3)return {r:'expired',t:t};
+  t.st='claimed';t.claimedAt=Date.now();S.pending=t.id;save();return {r:'ok',t:t};
+}
+function handlePayload(text){
+  var p=parseReward(text);if(!p){showResult({r:'bad'});return;}showResult(redeem(p));
+}
+function showResult(res){
+  var o,r=res.r;
+  if(r==='ok'){
+    var ch=CHANNELS.filter(function(c){return c.key===res.t.ch;})[0]||CHANNELS[0];SFX.win();party(true);
+    o=openModal('<div class="big">🎉</div><h2 style="text-align:center">Reward unlocked!</h2><p style="text-align:center">Today\'s treat: <b>'+ch.e+' '+ch.n+'</b></p><div class="row"><button class="btn big ok" id="rPlay" type="button">▶ Play my video!</button></div>');
+    $('#rPlay',o).addEventListener('click',function(){closeModal();playReward(res.t);});return;
+  }
+  var cfg={used:['🙈','Oops! This reward has already been claimed today. Solve today\'s worksheet to unlock a new video!'],
+    unknown:['🤔','Hmm, this reward code is not from this iPad. Solve today\'s worksheet to unlock your own video!'],
+    expired:['⌛','This reward is too old now. Solve today\'s worksheet to unlock a new video!'],
+    bad:['🤷','That QR is not a reward code. Look for the one from the worksheet!']}[r]||['🤷','Something went wrong.'];
+  SFX.bad();say(cfg[1]);
+  o=openModal('<div class="big">'+cfg[0]+'</div><p style="text-align:center;font-weight:600">'+cfg[1]+'</p><div class="row"><button class="btn" id="rWs" type="button">📝 Go to worksheet</button><button class="btn ghost" id="rX" type="button">OK</button></div>');
+  $('#rWs',o).addEventListener('click',function(){closeModal();startWorksheet();});$('#rX',o).addEventListener('click',closeModal);
+}
+function recips(){var s=S.setup;return s.sendTo==='both'?[s.dadEmail,s.momEmail]:s.sendTo==='mom'?[s.momEmail]:[s.dadEmail];}
+function sendMail(t){
+  if(!t)return;var link=linkOf(t),body='Hi!\n\n'+PROFILE.first+' finished today\'s worksheet and earned a video reward. 🎉\n\nHow to use it:\n'+(link?'1) Open this link on the iPad:\n'+link+'\n\nor\n':'')+'Show the QR in this email to the iPad\'s Scan tab, or paste this code in the Scan tab:\n\n'+payloadOf(t)+'\n\nThe reward works only once.\n\n- Byte the Robot 🤖';
+  window.location.href='mailto:'+recips().join(',')+'?subject='+encodeURIComponent('🎉 '+PROFILE.first+' finished today\'s worksheet - reward QR')+'&body='+encodeURIComponent(body);
+}
+function qrPNG(cb){
+  var src=$('#qrBox canvas');if(!src){cb(null);return;}
+  var c=document.createElement('canvas');c.width=420;c.height=520;var x=c.getContext('2d');x.fillStyle='#fff';x.fillRect(0,0,420,520);x.fillStyle='#26214f';x.font='bold 30px sans-serif';x.textAlign='center';x.fillText(PROFILE.first+'\'s Reward 🎁',210,50);x.drawImage(src,70,80,280,280);x.font='20px sans-serif';x.fillText('Scan in the IT Geek app',210,400);x.fillText(todayStr(),210,435);
+  if(c.toBlob)c.toBlob(cb,'image/png');else cb(null);
+}
+function shareQR(t){
+  qrPNG(function(blob){
+    var data={title:'Reward QR',text:PROFILE.first+' finished today\'s worksheet! Reward code: '+(linkOf(t)||payloadOf(t))};
+    try{
+      if(blob&&window.File){var f=new File([blob],'reward-qr.png',{type:'image/png'});if(navigator.canShare&&navigator.canShare({files:[f]})){data.files=[f];}}
+      if(navigator.share){navigator.share(data).catch(function(){});return;}
+    }catch(e){}
+    sendMail(t);
+  });
+}
+
+/* ---------- 8. IN-APP SCANNER ---------- */
+let cam={stream:null,raf:0,on:false,last:0,cv:null};
+function renderScan(){
+  $('#s-scan').innerHTML='<div class="wrap"><h1>📷 Scan a Reward</h1><p class="sub">Point the camera at your reward QR code.</p><div class="camwrap" id="camw"><video id="camV" muted playsinline webkit-playsinline></video><div class="frame"><i></i></div><div class="ph" id="camPh"><div style="font-size:64px">📷</div>Tap <b>Start camera</b></div></div>'+
+    '<div class="center" id="scanSt" style="min-height:34px;font-size:19px;margin:10px 0;font-weight:600"></div><div class="row" style="justify-content:center"><button class="btn ok" id="cStart" type="button">▶ Start camera</button><label class="btn ghost" style="position:relative">📸 Take a photo of QR<input id="cFile" type="file" accept="image/*" capture="environment" style="position:absolute;left:0;top:0;width:100%;height:100%;opacity:0"></label><button class="btn ghost" id="cType" type="button">⌨️ Type code</button></div>'+
+    '<div class="note" style="margin-top:16px">💡 Show the QR from Mom or Dad\'s phone, or from the email. Each reward works <b>once</b>.</div></div>';
+  $('#cStart').addEventListener('click',function(){ac();startCam();});
+  $('#cFile').addEventListener('change',function(e){scanPhoto(e.target.files&&e.target.files[0]);e.target.value='';});
+  $('#cType').addEventListener('click',function(){
+    var o=openModal('<h2>⌨️ Type or paste the code</h2><label class="field"><span>Reward code or link</span><input type="text" id="codeIn" autocapitalize="off" autocorrect="off" placeholder="RW1...."></label><div class="row"><button class="btn ok" id="codeGo" type="button">Check</button><button class="btn ghost" id="codeX" type="button">Cancel</button></div>');
+    $('#codeGo',o).addEventListener('click',function(){var v=$('#codeIn',o).value;closeModal();handlePayload(v);});$('#codeX',o).addEventListener('click',closeModal);
+  });
+}
+function scanMsg(m){var s=$('#scanSt');if(s)s.innerHTML=m;}
+function startCam(){
+  if(!(navigator.mediaDevices&&navigator.mediaDevices.getUserMedia)){scanMsg('📵 Live camera needs the app to be opened from a secure (https) address. Use <b>Take a photo of QR</b> instead!');return;}
+  if(!window.jsQR){scanMsg('⚠️ Scanner is still loading. Check Wi-Fi and try again.');return;}
+  scanMsg('Starting camera…');stopCam();
+  navigator.mediaDevices.getUserMedia({video:{facingMode:{ideal:'environment'}},audio:false}).then(function(stream){
+    cam.stream=stream;var v=$('#camV');if(!v){stopCam();return;}v.srcObject=stream;v.setAttribute('playsinline','');var p=v.play();if(p&&p.catch)p.catch(function(){});
+    $('#camw').classList.add('live');cam.on=true;scanMsg('🔎 Looking for a QR code…');tick();
+  }).catch(function(){scanMsg('🚫 Camera not allowed. Ask a grown-up to allow it in Safari settings, or use <b>Take a photo of QR</b>.');});
+}
+function tick(){
+  if(!cam.on)return;var v=$('#camV');
+  if(v&&v.readyState>=2&&v.videoWidth&&window.jsQR){
+    var now=performance.now();
+    if(now-cam.last>150){
+      cam.last=now;if(!cam.cv)cam.cv=document.createElement('canvas');
+      var w=Math.min(520,v.videoWidth),h=Math.round(w*v.videoHeight/v.videoWidth);cam.cv.width=w;cam.cv.height=h;
+      var cx=cam.cv.getContext('2d');cx.drawImage(v,0,0,w,h);
+      var id=cx.getImageData(0,0,w,h),code=jsQR(id.data,w,h,{inversionAttempts:'dontInvert'});
+      if(code&&code.data){stopCam();SFX.ok();onScan(code.data);return;}
+    }
+  }
+  cam.raf=requestAnimationFrame(tick);
+}
+function stopCam(){
+  cam.on=false;cancelAnimationFrame(cam.raf);
+  if(cam.stream){cam.stream.getTracks().forEach(function(t){t.stop();});cam.stream=null;}
+  var w=document.getElementById('camw');if(w)w.classList.remove('live');
+}
+function onScan(text){handlePayload(text);}
+function scanPhoto(file){
+  if(!file)return;if(!window.jsQR){scanMsg('⚠️ Scanner is still loading. Check Wi-Fi and try again.');return;}
+  scanMsg('Reading photo…');var fr=new FileReader();
+  fr.onload=function(){var im=new Image();im.onload=function(){
+    var s=Math.min(1,1100/Math.max(im.width,im.height)),c=document.createElement('canvas');c.width=Math.round(im.width*s);c.height=Math.round(im.height*s);
+    var x=c.getContext('2d');x.drawImage(im,0,0,c.width,c.height);var d=x.getImageData(0,0,c.width,c.height),code=jsQR(d.data,c.width,c.height,{inversionAttempts:'attemptBoth'});
+    if(code&&code.data){SFX.ok();onScan(code.data);}else scanMsg('🤔 I could not find a QR in that photo. Try again, closer and straight on.');
+  };im.onerror=function(){scanMsg('Could not open that photo.');};im.src=fr.result;};
+  fr.readAsDataURL(file);
+}
+
+/* ---------- 9. VIDEO PLAYER (in-app overlay, auto-close) ---------- */
+let VID=null,ytCbs=[];
+window.onYouTubeIframeAPIReady=function(){ytCbs.splice(0).forEach(function(f){f();});};
+function loadYT(cb){
+  if(window.YT&&window.YT.Player){cb();return;}ytCbs.push(cb);
+  if(!document.getElementById('yt-api')){var s=document.createElement('script');s.id='yt-api';s.src='https://www.youtube.com/iframe_api';document.head.appendChild(s);}
+}
+function vmsg(h){var m=$('#vMsg');m.style.display=h?'flex':'none';m.innerHTML=h||'';}
+function playReward(t){
+  if(!t)return;ac();
+  var ch=CHANNELS.filter(function(c){return c.key===t.ch;})[0]||CHANNELS[0],cid=(S.ch[ch.key]&&S.ch[ch.key].id)||ch.id,list='UU'+cid.slice(2);
+  stopCam();VID={t:t,tries:0,ready:false,player:null,end:Date.now()+Math.max(1,S.setup.maxMin||15)*60000,tick:0,dog:0};
+  $('#vid').classList.add('on');$('#vTitle').textContent=ch.e+' '+ch.n;vmsg('<div style="font-size:70px">⏳</div>Getting your video ready…');
+  $('#ytWrap').innerHTML='<div id="ytMount"></div>';
+  VID.tick=setInterval(function(){var left=Math.max(0,VID.end-Date.now()),m=Math.floor(left/60000),s=Math.floor(left%60000/1000);$('#vTime').textContent='⏱ '+m+':'+(s<10?'0':'')+s;if(left<=0)endVideo('time');},1000);
+  VID.dog=setTimeout(function(){if(VID&&!VID.ready)failVideo('YouTube did not load. Check the Wi-Fi.');},15000);
+  loadYT(function(){
+    if(!VID)return;var pv={listType:'playlist',list:list,index:t.idx||0,autoplay:1,playsinline:1,rel:0,modestbranding:1,iv_load_policy:3};
+    if(location.protocol.indexOf('http')===0)pv.origin=location.origin;
+    try{VID.player=new YT.Player('ytMount',{width:'100%',height:'100%',playerVars:pv,events:{
+      onReady:function(e){try{e.target.playVideo();}catch(x){}},
+      onStateChange:function(e){if(!VID)return;if(e.data===1){VID.ready=true;vmsg('');}else if(e.data===0){endVideo('done');}},
+      onError:function(){if(!VID)return;if(VID.tries<4){VID.tries++;try{VID.player.nextVideo();}catch(x){failVideo('This video cannot play here.');}}else failVideo('These videos cannot play here.');}
+    }});}catch(e){failVideo('The video player could not start.');}
+  });
+}
+function failVideo(msg){
+  if(!VID)return;var t=VID.t;
+  if(!VID.ready&&!t.preview){
+    var pool=CHANNELS.filter(function(c){return S.ch[c.key].on&&S.ch[c.key].id&&c.key!==t.ch;});
+    t.st='issued';if(pool.length)t.ch=pick(pool).key;S.pending='';save();
+  }
+  teardownVideo();
+  var o=openModal('<div class="big">😕</div><p style="text-align:center">'+esc(msg)+'<br>'+(t.preview?'':'Your reward is safe. Scan it again in a moment!')+'</p><div class="row"><button class="btn" id="vfOk" type="button">OK</button></div>');
+  $('#vfOk',o).addEventListener('click',function(){closeModal();go(t.preview?'parent':'home');});
+}
+function teardownVideo(){
+  if(!VID)return;clearInterval(VID.tick);clearTimeout(VID.dog);
+  try{if(VID.player&&VID.player.destroy)VID.player.destroy();}catch(e){}
+  $('#ytWrap').innerHTML='<div id="ytMount"></div>';$('#vid').classList.remove('on');VID=null;
+}
+function endVideo(why){
+  if(!VID)return;var t=VID.t;teardownVideo();
+  if(!t.preview){S.pending='';save();}
+  if(why==='done'||why==='time'){SFX.win();toast('🎉 Video finished! Back to learning, champion!');say('Great watching! Back to learning!');}
+  go(t.preview?'parent':'home');
+}
+$('#vClose').addEventListener('click',function(){
+  if(!VID)return;
+  if(VID.t.preview||confirm('Close the video? This reward will be used up.'))endVideo('closed');
+});
+
+/* ---------- 10. PARENT PANEL ---------- */
+function pinGate(){if(!S.setup.done){setupModal(true);return;}pinPrompt(function(){go('parent');});}
+function pinPrompt(ok){
+  var wait=S.pinLock-Date.now();
+  if(wait>0){toast('Too many tries. Wait '+Math.ceil(wait/1000)+'s');return;}
+  var o=openModal('<h2>🔒 Parent PIN</h2><label class="field"><span>Enter your 4-digit PIN</span><input id="pinIn" type="password" inputmode="numeric" pattern="[0-9]*" maxlength="4" autocomplete="off"></label><div class="note badn" id="pinErr" style="display:none">Wrong PIN</div><div class="row"><button class="btn ok" id="pinGo" type="button">Unlock</button><button class="btn ghost" id="pinX" type="button">Cancel</button></div>');
+  var inp=$('#pinIn',o);setTimeout(function(){inp.focus();},200);
+  function chk(){if(inp.value===S.setup.pin){S.pinFail=0;save();closeModal();ok();}else{S.pinFail++;if(S.pinFail>=5){S.pinFail=0;S.pinLock=Date.now()+30000;}save();$('#pinErr',o).style.display='block';inp.value='';}}
+  $('#pinGo',o).addEventListener('click',chk);inp.addEventListener('keydown',function(e){if(e.key==='Enter')chk();});$('#pinX',o).addEventListener('click',closeModal);
+}
+function setupModal(first){
+  var s=S.setup,def=(location.protocol.indexOf('http')===0)?location.href.split('#')[0].split('?')[0]:'';
+  var o=openModal('<h2>👨‍👩‍👦 Parent setup</h2>'+(first?'<p>A grown-up should do this once. It takes a minute!</p>':'')+
+    '<label class="field"><span>Dad\'s email</span><input type="email" id="suDad" value="'+esc(s.dadEmail)+'"></label>'+
+    '<label class="field"><span>Mom\'s email</span><input type="email" id="suMom" value="'+esc(s.momEmail)+'"></label>'+
+    '<label class="field"><span>Send reward emails to</span><select id="suTo"><option value="dad">Dad</option><option value="mom">Mom</option><option value="both">Both</option></select></label>'+
+    '<label class="field"><span>Parent PIN (4 digits)</span><input type="password" inputmode="numeric" pattern="[0-9]*" maxlength="4" id="suPin" placeholder="'+(s.pin?'leave empty to keep':'e.g. 4321')+'"></label>'+
+    '<label class="field"><span>Confirm PIN</span><input type="password" inputmode="numeric" pattern="[0-9]*" maxlength="4" id="suPin2"></label>'+
+    '<label class="field"><span>Web address of this app (so QR links open it)</span><input type="url" id="suUrl" placeholder="https://yourname.github.io/it-geek/" value="'+esc(s.appUrl||def)+'"></label>'+
+    '<label class="field"><span>Reward QR on the iPad</span><select id="suQr"><option value="pin">Hidden until a parent enters the PIN (recommended)</option><option value="always">Show right away</option></select></label>'+
+    '<label class="field"><span>Max video minutes</span><input type="number" id="suMin" min="3" max="60" value="'+(s.maxMin||15)+'"></label>'+
+    '<div class="note badn" id="suErr" style="display:none"></div><div class="row"><button class="btn ok" id="suSave" type="button">Save ✔</button>'+(first?'':'<button class="btn ghost" id="suX" type="button">Cancel</button>')+'</div>');
+  $('#suTo',o).value=s.sendTo;$('#suQr',o).value=s.qrMode;
+  if(!first)$('#suX',o).addEventListener('click',closeModal);
+  $('#suSave',o).addEventListener('click',function(){
+    var d=$('#suDad',o).value.trim(),m=$('#suMom',o).value.trim(),p=$('#suPin',o).value,p2=$('#suPin2',o).value,err=$('#suErr',o),re=/^[^@\s]+@[^@\s]+\.[^@\s]+$/;
+    function bad(t){err.textContent=t;err.style.display='block';}
+    if(!re.test(d)||!re.test(m))return bad('Please enter valid email addresses.');
+    if(p||!s.pin){if(!/^\d{4}$/.test(p))return bad('PIN must be exactly 4 digits.');if(p!==p2)return bad('The two PINs do not match.');s.pin=p;}
+    s.dadEmail=d;s.momEmail=m;s.sendTo=$('#suTo',o).value;s.qrMode=$('#suQr',o).value;s.appUrl=$('#suUrl',o).value.trim();s.maxMin=Math.max(3,Math.min(60,parseInt($('#suMin',o).value,10)||15));
+    s.done=true;save();closeModal();toast('Saved ✔');if(first)go('home');else renderParent();
+  });
+}
+function renderParent(){
+  var d=todayStr(),day=S.days[d],t=day&&S.tokens[day.token],h='<div class="wrap"><h1>🔒 Parent panel</h1>';
+  var secure=window.isSecureContext,camOk=!!(navigator.mediaDevices&&navigator.mediaDevices.getUserMedia),isFile=location.protocol==='file:';
+  h+='<div class="card"><h3>Today ('+d+')</h3><p>Worksheet: <b>'+(day?(day.done?'finished ✅':'in progress ('+Math.min(day.i,15)+'/15)'):'not started')+'</b><br>Reward: <b>'+(t?({issued:'issued, not claimed yet 🎁',claimed:'claimed ✅',void:'cancelled'}[t.st]||t.st):'none yet')+'</b></p><div class="row">'+
+    (t&&t.st==='issued'?'<button class="btn ok sm" id="pQr" type="button">🎁 Show reward QR</button><button class="btn sm" id="pMail" type="button">📧 Email it</button>':'')+
+    '<button class="btn warn sm" id="pReset" type="button">↺ Reset today (new questions + new reward)</button><button class="btn ghost sm" id="pTest" type="button">▶ Test video player</button></div></div>';
+  h+='<div class="card"><h3>Contacts &amp; security</h3><p>Dad: <b>'+esc(S.setup.dadEmail)+'</b><br>Mom: <b>'+esc(S.setup.momEmail)+'</b><br>Send to: <b>'+S.setup.sendTo+'</b> · QR on iPad: <b>'+(S.setup.qrMode==='pin'?'PIN-locked':'visible')+'</b> · Max video: <b>'+S.setup.maxMin+' min</b><br>App address: <b>'+esc(S.setup.appUrl||'(not set)')+'</b></p><div class="row"><button class="btn sm" id="pEdit" type="button">✏️ Edit setup / change PIN</button><button class="btn ghost sm" id="pSnd" type="button">'+(S.setup.sound?'🔊 Sound on':'🔇 Sound off')+'</button><button class="btn ghost sm" id="pSpk" type="button">'+(S.setup.speak?'🗣️ Read-aloud on':'🤐 Read-aloud off')+'</button></div></div>';
+  h+='<div class="card"><h3>Approved video channels</h3>'+CHANNELS.map(function(c){return '<div class="chrow"><input type="checkbox" data-c="'+c.key+'" '+(S.ch[c.key].on?'checked':'')+'><b>'+c.e+' '+c.n+'</b><input type="text" data-i="'+c.key+'" value="'+esc(S.ch[c.key].id)+'" aria-label="channel id"></div>';}).join('')+'<small>Videos come from each channel\'s uploads playlist, picked at random. Channel IDs start with UC.</small></div>';
+  h+='<div class="card"><h3>This device</h3><div class="note '+(isFile?'badn':'good')+'">'+(isFile?'⚠️ Opened as a local file: the live camera and the YouTube player are blocked by iOS for file:// pages. Host this file on any free HTTPS site (GitHub Pages, Netlify Drop…) and enter its address in setup. Photo-scan and typed codes still work.':'✅ Opened from '+esc(location.origin||location.protocol)+(secure?' (secure)':' (not secure: camera needs https)'))+'</div><p style="margin:6px 0">Camera API: <b>'+(camOk?'available':'not available')+'</b> · QR library: <b>'+(window.QRCode?'loaded':'not loaded')+'</b> · Scanner library: <b>'+(window.jsQR?'loaded':'not loaded')+'</b></p></div>';
+  h+='<div class="card"><h3>Progress</h3>'+(Object.keys(S.days).sort().reverse().slice(0,7).map(function(k){var x=S.days[k];return '<div class="chrow"><b style="width:120px">'+k+'</b><span>'+(x.done?'✅ done':'⏳ '+Math.min(x.i,15)+'/15')+'</span></div>';}).join('')||'<p>No worksheets yet.</p>')+'<div class="row"><button class="btn warn sm" id="pWipe" type="button">Erase all app data</button></div></div></div>';
+  $('#s-parent').innerHTML=h;
+  var b=function(id,fn){var x=$(id);if(x)x.addEventListener('click',fn);};
+  b('#pQr',function(){qrUnlocked=true;go('done');});b('#pMail',function(){sendMail(t);});
+  b('#pReset',function(){if(!confirm('Reset today? The current reward (if unclaimed) will be cancelled.'))return;if(t&&t.st==='issued')t.st='void';S.resets[d]=(S.resets[d]||0)+1;delete S.days[d];save();renderParent();toast('Reset ✔');});
+  b('#pTest',function(){var c=CHANNELS.filter(function(x){return S.ch[x.key].on&&S.ch[x.key].id;})[0];if(!c){toast('Turn on a channel first');return;}playReward({id:'preview',ch:c.key,idx:0,preview:true});});
+  b('#pEdit',function(){setupModal(false);});
+  b('#pSnd',function(){S.setup.sound=!S.setup.sound;save();renderParent();});b('#pSpk',function(){S.setup.speak=!S.setup.speak;save();renderParent();});
+  b('#pWipe',function(){if(confirm('Erase everything, including XP, streak and PIN?')){try{localStorage.removeItem(KEY);}catch(e){}location.reload();}});
+  [].forEach.call(document.querySelectorAll('#s-parent [data-c]'),function(i){i.addEventListener('change',function(){S.ch[i.getAttribute('data-c')].on=i.checked;save();});});
+  [].forEach.call(document.querySelectorAll('#s-parent [data-i]'),function(i){i.addEventListener('change',function(){var v=i.value.trim();if(/^UC[\w-]{22}$/.test(v)){S.ch[i.getAttribute('data-i')].id=v;save();toast('Channel saved ✔');}else toast('That does not look like a channel ID');});});
+}
+
+/* ---------- 11. BOOT ---------- */
+function handleHash(){
+  var h=location.hash||'';
+  if(h.indexOf('reward=')<0)return;
+  var raw=h;try{history.replaceState(null,'',location.href.split('#')[0]);}catch(e){}
+  if(!S.setup.done){return;}
+  go('home');setTimeout(function(){handlePayload(raw);},300);
+}
+function init(){
+  buildTabs();renderSplash();go('splash');
+  window.addEventListener('hashchange',handleHash);
+  if(S.setup.done&&!S.setup.appUrl&&location.protocol.indexOf('http')===0){S.setup.appUrl=location.href.split('#')[0].split('?')[0];save();}
+  if((location.hash||'').indexOf('reward=')>=0&&S.setup.done)handleHash();
+  document.addEventListener('visibilitychange',function(){if(document.hidden)stopCam();});
+}
+if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',init);else init();
+</script>
+</body>
+</html>
