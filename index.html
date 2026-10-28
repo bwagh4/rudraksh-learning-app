@@ -208,9 +208,14 @@ small{color:var(--soft)}
 #vid.on{display:flex}
 .vbar{display:flex;align-items:center;padding:calc(env(safe-area-inset-top) + 8px) 16px 8px;color:#fff;font-size:20px;font-weight:600}
 .vbar #vTitle{flex:1}.vbar #vTime{margin-right:14px;background:rgba(255,255,255,.15);padding:6px 14px;border-radius:99px;font-size:17px}
-.vbox{flex:1;position:relative;display:flex}
-#ytWrap{flex:1}#ytWrap iframe{width:100%;height:100%;border:0}
-#vMsg{position:absolute;left:0;top:0;right:0;bottom:0;display:flex;align-items:center;justify-content:center;flex-direction:column;color:#fff;font-size:26px;text-align:center;padding:30px;background:#0c0a22}
+.vbox{flex:1;position:relative;min-height:0}
+#ytWrap{position:absolute;left:0;top:0;right:0;bottom:0;background:#000}#ytWrap iframe,#ytWrap #ytMount{position:absolute;left:0;top:0;width:100%;height:100%;border:0}
+/* shields keep the child inside the app: they cover the YouTube title/share links (top) and logo link (bottom-right) */
+.vshield{position:absolute;z-index:2;background:transparent}.vs-top{left:0;right:0;top:0;height:76px}.vs-br{right:0;bottom:0;width:150px;height:58px}
+/* message is a banner only: it must never hide YouTube's own play button (iOS needs a real tap on it) */
+#vMsg{position:absolute;z-index:3;left:14px;right:14px;top:10px;display:none;align-items:center;justify-content:center;color:#fff;font-size:24px;font-weight:600;text-align:center;padding:12px 18px;border-radius:20px;background:rgba(124,77,255,.92);pointer-events:none}
+#vStat{display:none;color:#cfcdf5;font-size:14px;padding:0 16px 6px;word-break:break-word}
+#vFoot{display:none;padding:10px 16px calc(env(safe-area-inset-bottom) + 12px);text-align:center}
 #toast{position:fixed;left:50%;bottom:110px;transform:translateX(-50%);z-index:300;background:#26214f;color:#fff;padding:14px 26px;border-radius:99px;font-size:20px;font-weight:600;display:none;max-width:90%;text-align:center}
 </style>
 </head>
@@ -230,7 +235,9 @@ small{color:var(--soft)}
 <div id="modal"></div>
 <div id="vid">
   <div class="vbar"><div id="vTitle"></div><div id="vTime"></div><button class="icon" id="vClose" type="button">&#10005;</button></div>
-  <div class="vbox"><div id="ytWrap"><div id="ytMount"></div></div><div id="vMsg"></div></div>
+  <div id="vStat"></div>
+  <div class="vbox"><div id="ytWrap"><div id="ytMount"></div></div><div class="vshield vs-top"></div><div class="vshield vs-br"></div><div id="vMsg"></div></div>
+  <div id="vFoot"><button class="btn ok" id="vDone" type="button">I finished watching ✅</button></div>
 </div>
 <div id="toast"></div>
 
@@ -238,8 +245,12 @@ small{color:var(--soft)}
 'use strict';
 /* =====================================================================
    RUDRAKSH'S IT GEEK ACADEMY  -  single-file app (vanilla JS, iOS 12+ Safari)
+   Sections:  1 CONFIG   2 QUESTION ENGINE   3 STATE   4 UI helpers
+              5 Question renderers   6 Screens   7 QR + tokens   8 Scanner
+              9 Video player   10 Parent panel   11 Boot
    ===================================================================== */
 
+/* ---------- 1. CONFIG (edit freely) ---------- */
 const PROFILE={
   first:'Rudraksh', last:'Wagh',
   typeItems:[
@@ -253,24 +264,15 @@ const PROFILE={
     {label:'your area',text:'RAHATANI',e:'🏙️'}
   ]
 };
-
+/* Uploads playlist of a channel = "UU" + channelId without its leading "UC". */
 const CHANNELS=[
-  {key:'hsp',n:'Homeschool Pop',e:'🏠',id:'UCfPyVJEBD7Di1YYjTdS2v8g',v:['dFzAU3E5NX8','75727h89j6k','X8kXq542v6g']},
-  {key:'ngk',n:'Nat Geo Kids',e:'🌍',id:'UCXVCgDuD_QCkI7gTKU7-tpg',v:['99v8n1s2a3d','zX8kXq542v6','bN7mK9l0p1o']},
-  {key:'lbr',n:'LearnBright',e:'💡',id:'UCKCsVSA5THlkHbnkZTPm6-g',v:['5g6h7j8k9l0','1a2s3d4f5g6','7h8j9k0l1z2']},
-  {key:'fsc',n:'Free School',e:'🎨',id:'UCebMFnw6WxozGmqGekJHOJg',v:['3d4f5g6h7j8','9l0p1o2i3u4','5y6t7r8e9w0']},
-  {key:'kac',n:'Kids Academy',e:'🎓',id:'UCqb89GqploCXgz4lsdR-_ww',v:['2w3e4r5t6y7','8u9i0o1p2a3','4s5d6f7g8h9']}
+  {key:'hsp',n:'Homeschool Pop',e:'🏠',id:'UCfPyVJEBD7Di1YYjTdS2v8g'},
+  {key:'ngk',n:'Nat Geo Kids',e:'🌍',id:'UCXVCgDuD_QCkI7gTKU7-tpg'},
+  {key:'lbr',n:'LearnBright',e:'💡',id:'UCKCsVSA5THlkHbnkZTPm6-g'},
+  {key:'fsc',n:'Free School',e:'🎨',id:'UCebMFnw6WxozGmqGekJHOJg'},
+  {key:'kac',n:'Kids Academy',e:'🎓',id:'UCqb89GqploCXgz4lsdR-_ww'}
 ];
-
-/* Curated fallback playlist IDs for reliable iPad rendering across all 5 channels */
-const VID_POOL={
-  hsp: ['dQw4w9WgXcQ','ScMzIvxBSi4','b8IUxZkAuII','C0DPdy98e4c','3JZ_D3ELwOQ'],
-  ngk: ['J---aiyznGQ','9bZkp7q19f0','3JZ_D3ELwOQ','ScMzIvxBSi4','b8IUxZkAuII'],
-  lbr: ['b8IUxZkAuII','dQw4w9WgXcQ','ScMzIvxBSi4','C0DPdy98e4c','J---aiyznGQ'],
-  fsc: ['ScMzIvxBSi4','b8IUxZkAuII','dQw4w9WgXcQ','9bZkp7q19f0','3JZ_D3ELwOQ'],
-  kac: ['C0DPdy98e4c','J---aiyznGQ','ScMzIvxBSi4','b8IUxZkAuII','dQw4w9WgXcQ']
-};
-
+/* Short practice passages (original text). Swap in the school-book text here if you like. */
 const READING={
   poem:{title:'Oliver Twist (practice rhyme)',lines:['Oliver loves to clap, clap, clap,','Oliver loves to tap, tap, tap.','Oliver jumps up high, high, high,','Oliver waves to the sky!'],
     qs:[{q:'What does Oliver wave to?',a:'The sky',o:['The sky','The sea','The tree']},
@@ -286,6 +288,8 @@ const READING={
         {q:'How did he feel at the end?',a:'Happy',o:['Happy','Sad','Sleepy']}]}
 };
 
+/* ---------- 2. QUESTION ENGINE (pure, seeded, testable) ---------- */
+// <GEN>
 function hashStr(s){var h=2166136261;for(var i=0;i<s.length;i++){h^=s.charCodeAt(i);h=Math.imul(h,16777619);}return h>>>0;}
 function makeRng(seed){
   var a=seed>>>0;
@@ -317,14 +321,19 @@ function pickOpts(r,correct,pool,n,fn){
   return r.shuffle([correct].concat(ds)).map(function(x){return fn?mkOpt(x,fn(x)):mkOpt(x);});
 }
 function blankHtml(t){return t.replace('___','<span class="blank">&nbsp;</span>');}
+function emHtml(e,t){return '<span class="em">'+e+'</span>'+(t?'<span class="nm">'+t+'</span>':'');}
 function rowOf(ch){if('QWERTYUIOP'.indexOf(ch)>=0)return 'top letter row';if('ASDFGHJKL'.indexOf(ch)>=0)return 'middle letter row (home row)';if('ZXCVBNM'.indexOf(ch)>=0)return 'bottom letter row';return 'number row at the very top';}
-
-function T(topic,target,prompt,say,visual,hint,extra){var q={topic:topic,kind:'typeText',target:target,prompt:prompt,say:say,visual:visual||'',hint:hint,mode:'recall'};if(extra){for(var k in extra)q[k]=extra[k];}return q;}
+/* question builders: T = type it on the keyboard, D = drag and drop */
+/* typing modes: copy = the word is shown, child copies it; guide = word hidden but the next key glows (learn the spelling);
+   recall = word hidden, child must know the answer (glow only after 2 wrong keys or the Hint button) */
+const TYPE_MODE={'Typing: my world':'copy','Typing: alphabet':'copy','Typing: numbers 1-20':'copy','Spelling':'guide','Computer parts':'guide','Network: connected devices':'guide','Digraphs: oo, ee, ay':'guide','Writing numbers':'guide'};
+function T(topic,target,prompt,say,visual,hint,extra){var q={topic:topic,kind:'typeText',target:target,prompt:prompt,say:say,visual:visual||'',hint:hint,mode:TYPE_MODE[topic]||'recall'};if(extra){for(var k in extra)q[k]=extra[k];}return q;}
 function D(topic,multi,prompt,say,items,targets,map,hint){return {topic:topic,kind:'drag',multi:multi,prompt:prompt,say:say,visual:'',items:items,targets:targets,map:map,hint:hint};}
 function numIcon(e){return '<span class="ci">'+e+'</span>';}
 
-const VERB_P=[['I ___ Rudraksh.','am','👦'],['I ___ happy today.','am','😊'],['Mom ___ cooking food.','is','👩‍🍳'],['Granny ___ reading a book.','is','👵'],['Dad ___ at work.','is','👨‍💼'],['Om ___ my cousin brother.','is','🧒'],['Mom and Dad ___ at home.','are','🏠'],['You ___ my friend.','are','🤝'],['We ___ in school.','are','🏫']];
-const PRON_P=[['Mom and Dad are home. ___ are home.','They','👩👨'],['Granny and I read. ___ read.','We','👵👦'],['Om and I play. ___ play.','We','🧒👦'],['___ am Rudraksh.','I','👦'],['Roshni and Bhushan are happy. ___ are happy.','They','😊'],['Om and Rudraksh run. ___ run fast.','They','🏃']];
+/* ---- English ---- */
+const VERB_P=[['I ___ Rudraksh.','am','👦'],['I ___ happy today.','am','😊'],['I ___ a good boy.','am','🌟'],['Mom ___ cooking food.','is','👩‍🍳'],['Granny ___ reading a book.','is','👵'],['Dad ___ at work.','is','👨‍💼'],['Om ___ my cousin brother.','is','🧒'],['The sun ___ hot.','is','☀️'],['Mom and Dad ___ at home.','are','🏠'],['You ___ my friend.','are','🤝'],['The birds ___ singing.','are','🐦'],['We ___ in school.','are','🏫']];
+const PRON_P=[['Mom and Dad are home. ___ are home.','They','👩👨'],['Granny and I read. ___ read.','We','👵👦'],['Om and I play. ___ play.','We','🧒👦'],['___ am Rudraksh.','I','👦'],['Roshni and Bhushan are happy. ___ are happy.','They','😊'],['Om and Rudraksh run. ___ run fast.','They','🏃'],['Dad and I ride a bike. ___ ride a bike.','We','🚲'],['___ am in Senior KG.','I','🎒']];
 function sentSlot(e,t){return '<span style="font-size:44px">'+e+'</span> <span style="font-size:26px;font-weight:600">'+t.replace('___','▢')+'</span>';}
 function dragWords(r,topic,P,words,prompt,say,hint){
   var by={};P.forEach(function(p){(by[p[1]]=by[p[1]]||[]).push(p);});
@@ -333,115 +342,214 @@ function dragWords(r,topic,P,words,prompt,say,hint){
   return D(topic,false,prompt,say,r.shuffle(ch).map(function(p){return {id:p[1],html:p[1]};}),r.shuffle(ch).map(function(p){return {id:'s_'+p[1],html:sentSlot(p[2],p[0])};}),map,hint);
 }
 function qVerb(r){
-  if(r.chance(.6)){var p=r.pick(VERB_P);return T('Verbs: is, am, are',p[1].toUpperCase(),'Type the missing word: <b>is</b>, <b>am</b> or <b>are</b>',p[0].replace('___','blank')+' Type the missing word.','<div class="bigemoji">'+p[2]+'</div><div class="sent">'+blankHtml(p[0])+'</div>','Use "am" with I. Use "is" for one. Use "are" for many.',{fill:1,show:p[1]});}
-  return dragWords(r,'Verbs: is, am, are',VERB_P,['am','is','are'],'Drag <b>is</b>, <b>am</b> and <b>are</b> to the right sentence','Drag each word to the sentence where it fits.','"am" goes with I. "is" is for one. "are" is for many.');
+  if(r.chance(.6)){
+    var p=r.pick(VERB_P);
+    return T('Verbs: is, am, are',p[1].toUpperCase(),'Type the missing word: <b>is</b>, <b>am</b> or <b>are</b>',p[0].replace('___','blank')+' Type the missing word: is, am or are.',
+      '<div class="bigemoji">'+p[2]+'</div><div class="sent">'+blankHtml(p[0])+'</div>','Use "am" with I. Use "is" for one person or thing. Use "are" for many, or with you.',{fill:1,show:p[1]});
+  }
+  return dragWords(r,'Verbs: is, am, are',VERB_P,['am','is','are'],'Drag <b>is</b>, <b>am</b> and <b>are</b> to the right sentence','Drag each word to the sentence where it fits.','"am" goes with I. "is" is for one. "are" is for many or you.');
 }
 function qPronoun(r){
-  if(r.chance(.6)){var p=r.pick(PRON_P);return T('Pronouns: they, we, I',p[1].toUpperCase(),'Type the missing word: <b>They</b>, <b>We</b> or <b>I</b>',p[0].replace('___','blank')+' Type the missing word.','<div class="bigemoji">'+p[2]+'</div><div class="sent">'+blankHtml(p[0])+'</div>','"We" means me and others. "They" means other people. "I" means me.',{fill:1,show:p[1]});}
-  return dragWords(r,'Pronouns: they, we, I',PRON_P,['They','We','I'],'Drag <b>They</b>, <b>We</b> and <b>I</b> to the right sentence','Drag each word to the sentence where it fits.','"We" means me and others. "They" means other people.');
+  if(r.chance(.6)){
+    var p=r.pick(PRON_P);
+    return T('Pronouns: they, we, I',p[1].toUpperCase(),'Type the missing word: <b>They</b>, <b>We</b> or <b>I</b>',p[0].replace('___','blank')+' Type the missing word: they, we or I.',
+      '<div class="bigemoji">'+p[2]+'</div><div class="sent">'+blankHtml(p[0])+'</div>','"We" means me and others. "They" means other people. "I" means just me.',{fill:1,show:p[1]});
+  }
+  return dragWords(r,'Pronouns: they, we, I',PRON_P,['They','We','I'],'Drag <b>They</b>, <b>We</b> and <b>I</b> to the right sentence','Drag each word to the sentence where it fits.','"We" means me and others. "They" means other people. "I" means just me.');
 }
-const DG={oo:[['moon','🌙'],['book','📖'],['spoon','🥄'],['zoo','🦁']],ee:[['tree','🌳'],['bee','🐝'],['sheep','🐑'],['jeep','🚙']],ay:[['day','☀️'],['hay','🌾'],['tray','🍽️'],['clay','🏺']]};
+const DG={oo:[['moon','🌙'],['book','📖'],['spoon','🥄'],['zoo','🦁'],['foot','🦶'],['broom','🧹'],['boot','🥾']],ee:[['tree','🌳'],['bee','🐝'],['sheep','🐑'],['jeep','🚙'],['feet','👣'],['seed','🌱'],['cheese','🧀']],ay:[['day','☀️'],['hay','🌾'],['tray','🍽️'],['clay','🏺'],['jay','🐦'],['spray','🧴']]};
 function qDigraph(r){
   var ks=['oo','ee','ay'];
-  if(r.chance(.5)){var d=r.pick(ks),w=r.pick(DG[d]);return T('Digraphs: oo, ee, ay',w[0].toUpperCase(),'Type the word. Listen for <b>'+d+'</b>!','Type the word '+w[0]+'.','<div class="bigemoji">'+w[1]+'</div>','Say it slowly: "'+w[0]+'".');}
+  if(r.chance(.5)){
+    var d=r.pick(ks),w=r.pick(DG[d]);
+    return T('Digraphs: oo, ee, ay',w[0].toUpperCase(),'Type the word. Listen for <b>'+d+'</b>!','Type the word '+w[0]+'. Listen for '+d+'.','<div class="bigemoji">'+w[1]+'</div>','Say it slowly: "'+w[0]+'". It has the letters '+d+' in it.');
+  }
   var ws=ks.map(function(k){return {k:k,w:r.pick(DG[k])};}),map={};
   ws.forEach(function(x){map[x.k]='w_'+x.k;});
-  return D('Digraphs: oo, ee, ay',false,'Drag <b>oo</b>, <b>ee</b> and <b>ay</b> to the word that needs them','Drag the missing letters to each word.',r.shuffle(ws).map(function(x){return {id:x.k,html:x.k};}),r.shuffle(ws).map(function(x){var g=x.w[0].replace(x.k,'|').split('|');return {id:'w_'+x.k,html:'<span style="font-size:52px">'+x.w[1]+'</span> <span style="font-size:32px;letter-spacing:3px">'+g[0]+'▢'+g[1]+'</span>'};}),map,'Say each word slowly.');
+  return D('Digraphs: oo, ee, ay',false,'Drag <b>oo</b>, <b>ee</b> and <b>ay</b> to the word that needs them','Drag the missing letters to each word.',
+    r.shuffle(ws).map(function(x){return {id:x.k,html:x.k};}),
+    r.shuffle(ws).map(function(x){var g=x.w[0].replace(x.k,'|').split('|');return {id:'w_'+x.k,html:'<span style="font-size:52px">'+x.w[1]+'</span> <span style="font-size:32px;letter-spacing:3px">'+g[0]+'▢'+g[1]+'</span>'};}),map,'Say each word slowly and listen to the middle sound.');
 }
 function qReading(r){
   var key=r.chance(.5)?'poem':'story',P=READING[key],q=r.pick(P.qs),all=P.lines.join(' ');
   var vis='<div class="passage"><h4>📖 '+P.title+'</h4>'+P.lines.join('<br>')+'<br><button type="button" class="sayb" data-say="'+all.replace(/"/g,'&quot;')+'">🔊 Read to me</button></div>';
-  var topic='Reading: '+(key==='poem'?'Poem':'Story'),hint='Read the '+(key==='poem'?'poem':'story')+' again.';
-  if(q.t)return T(topic,q.t,q.q+' <small>(type the answer)</small>',q.q.replace(/<[^>]+>/g,''),vis,hint);
+  var topic='Reading: '+(key==='poem'?'Poem':'Story'),hint='Read the '+(key==='poem'?'poem':'story')+' again. The answer is in there!';
+  if(q.t)return T(topic,q.t,q.q+' <small>(type the answer)</small>',q.q.replace(/<[^>]+>/g,'')+' Type the answer.',vis,hint);
   return {topic:topic,kind:'choice',prompt:q.q,say:q.q.replace(/<[^>]+>/g,''),visual:vis,options:r.shuffle(q.o).map(function(x){return mkOpt(x);}),answer:q.a,hint:hint};
 }
 const PREP=[['in','🧺','basket','sc-in'],['on','📦','box','sc-on'],['under','🪑','chair','sc-under'],['behind','🌳','tree','sc-behind'],['next to','🏠','house','sc-nextto']];
-const THINGS=[['🐱','cat'],['⚽','ball'],['🐶','dog']];
+const THINGS=[['🐱','cat'],['⚽','ball'],['🐶','dog'],['🐰','rabbit'],['🧸','teddy']];
 function sceneHtml(p,t,mini){return '<div class="scene '+p[3]+(mini?' mini':'')+'"><span class="L">'+p[1]+'</span><span class="S">'+t[0]+'</span></div>';}
 function qPrep(r){
-  if(r.chance(.5)){var p=r.pick(PREP),t=r.pick(THINGS),sent='The '+t[1]+' is ___ the '+p[2]+'.';return T('Prepositions',p[0].toUpperCase(),'Where is the <b>'+t[1]+'</b>? Type the word!','Where is the '+t[1]+'?',sceneHtml(p,t)+'<div class="sent">'+blankHtml(sent)+'</div>','Look at where the animal is.',{fill:1,show:p[0]});}
-  var ps=r.shuffle(PREP).slice(0,3),map={};ps.forEach(function(x){map[x[0]]='p_'+x[0];});
-  return D('Prepositions',false,'Drag the word that tells <b>where</b> it is','Drag each word to the picture.',r.shuffle(ps).map(function(x){return {id:x[0],html:x[0]};}),ps.map(function(x){var t=r.pick(THINGS);return {id:'p_'+x[0],html:sceneHtml(x,t,true)+'<small>The '+t[1]+' is ▢ the '+x[2]+'</small>'};}),map,'Look at where the animal is.');
+  if(r.chance(.5)){
+    var p=r.pick(PREP),t=r.pick(THINGS),sent='The '+t[1]+' is ___ the '+p[2]+'.';
+    return T('Prepositions',p[0].toUpperCase(),'Where is the <b>'+t[1]+'</b>? Type the word!','Where is the '+t[1]+'? Type the missing word.',sceneHtml(p,t)+'<div class="sent">'+blankHtml(sent)+'</div>','Look at where the '+t[1]+' is compared to the '+p[2]+'.',{fill:1,show:p[0]});
+  }
+  var ps=r.shuffle(PREP).slice(0,3).map(function(p){return {p:p,t:r.pick(THINGS)};}),map={};
+  ps.forEach(function(x){map[x.p[0]]='p_'+x.p[0];});
+  return D('Prepositions',false,'Drag the word that tells <b>where</b> it is','Drag each word to the picture where it fits.',
+    r.shuffle(ps).map(function(x){return {id:x.p[0],html:x.p[0]};}),
+    ps.map(function(x){return {id:'p_'+x.p[0],html:sceneHtml(x.p,x.t,true)+'<small>The '+x.t[1]+' is ▢ the '+x.p[2]+'</small>'};}),map,'Look at where the animal is compared to the other thing.');
 }
-const SPELL=[['cat','🐱'],['dog','🐶'],['sun','☀️'],['bus','🚌'],['hat','🎩'],['pig','🐷'],['cup','☕'],['bed','🛏️']];
-function qSpellWord(r){var w=r.pick(SPELL);return T('Spelling',w[0].toUpperCase(),'Type the word for this picture','Type the word for this picture.','<div class="bigemoji">'+w[1]+'</div>','Say it slowly: '+w[0].split('').join(' - ')+'.');}
+const SPELL=[['cat','🐱'],['dog','🐶'],['sun','☀️'],['bus','🚌'],['hat','🎩'],['pig','🐷'],['cup','☕'],['bed','🛏️'],['egg','🥚'],['fish','🐟'],['ball','⚽'],['frog','🐸'],['book','📖'],['tree','🌳'],['moon','🌙'],['bee','🐝']];
+function qSpellWord(r){
+  var w=r.pick(SPELL);
+  return T('Spelling',w[0].toUpperCase(),'Type the word for this picture','Type the word for this picture.','<div class="bigemoji">'+w[1]+'</div>','Say it slowly and listen to each sound: '+w[0].split('').join(' - ')+'.');
+}
 
+/* ---- Maths ---- */
 const EM=['🍎','⭐','🐞','🎈','🍪','🚗','🌼','🐟'];
-function groups(e,n,outFrom){var h='<div class="emojirow">',i;for(i=0;i<n;i++){if(i%5===0)h+=(i?'</span>':'')+'<span class="g">';h+=(outFrom!==undefined&&i>=outFrom)?'<span class="out">'+e+'</span>':e;}return h+'</span></div>';}
-function numOpts(r,ans,lo,hi,n){var c=[];[-3,-2,-1,1,2,3].forEach(function(d){var v=ans+d;if(v>=lo&&v<=hi)c.push(v);});return pickOpts(r,ans,c,n||4,function(x){return '<span class="numcard">'+x+'</span>';});}
+function groups(e,n,outFrom){
+  var h='<div class="emojirow">',i;
+  for(i=0;i<n;i++){
+    if(i%5===0)h+=(i?'</span>':'')+'<span class="g">';
+    h+=(outFrom!==undefined&&i>=outFrom)?'<span class="out">'+e+'</span>':e;
+  }
+  return h+'</span></div>';
+}
+function numOpts(r,ans,lo,hi,n){
+  var c=[];[-3,-2,-1,1,2,3].forEach(function(d){var v=ans+d;if(v>=lo&&v<=hi)c.push(v);});
+  return pickOpts(r,ans,c,n||4,function(x){return '<span class="numcard">'+x+'</span>';});
+}
 function qNumbers(r){
   var v=r.int(0,9),e;
-  if(v<3){var n=r.int(3,20);e=r.pick(EM);return T('Numbers to 20: counting',String(n),'Count them, then <b>type</b> the number','Count them, then type the number.',groups(e,n),'Touch each one and count: 1, 2, 3...');}
-  if(v<5){var s=r.int(1,16),hide=r.int(0,4),seq=[],i;for(i=0;i<5;i++)seq.push(s+i);return T('Numbers to 20: missing number',String(seq[hide]),'Type the <b>missing</b> number','Type the missing number.','<div class="seq">'+seq.map(function(x,j){return '<div class="sb'+(j===hide?' q':'')+'">'+(j===hide?'?':x)+'</div>';}).join('')+'</div>','Count in order.');}
-  if(v<8){var ns=r.shuffle([1,2,3,4,5,6,7,8,9,10,11,12]).slice(0,3),sorted=ns.slice().sort(function(a,b){return a-b;}),map={};sorted.forEach(function(x,j){map['n'+x]='s'+j;});return D('Numbers to 20: order',false,'Drag the numbers from <b>smallest</b> to <b>biggest</b>','Drag the numbers in order.',ns.map(function(x){return {id:'n'+x,html:String(x)};}),[{id:'s0',html:'1st<small>smallest</small>'},{id:'s1',html:'2nd<small>middle</small>'},{id:'s2',html:'3rd<small>biggest</small>'}],map,'The number you say first is the smallest.');}
+  if(v<3){
+    var n=r.int(3,20);e=r.pick(EM);
+    return T('Numbers to 20: counting',String(n),'Count them, then <b>type</b> the number','Count them, then type the number.',groups(e,n),'Touch each one and count: 1, 2, 3 ... Groups of 5 help!');
+  }
+  if(v<5){
+    var s=r.int(1,16),hide=r.int(0,4),seq=[],i;
+    for(i=0;i<5;i++)seq.push(s+i);
+    return T('Numbers to 20: missing number',String(seq[hide]),'Type the <b>missing</b> number','Type the missing number.',
+      '<div class="seq">'+seq.map(function(x,j){return '<div class="sb'+(j===hide?' q':'')+'">'+(j===hide?'?':x)+'</div>';}).join('')+'</div>','Count in order. What comes between its neighbours?');
+  }
+  if(v<8){
+    var ns=r.shuffle([1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20]).slice(0,3),sorted=ns.slice().sort(function(a,b){return a-b;}),map={};
+    sorted.forEach(function(x,j){map['n'+x]='s'+j;});
+    return D('Numbers to 20: order',false,'Drag the numbers from <b>smallest</b> to <b>biggest</b>','Drag the numbers in order, from smallest to biggest.',
+      ns.map(function(x){return {id:'n'+x,html:String(x)};}),[{id:'s0',html:'1st<small>smallest</small>'},{id:'s1',html:'2nd<small>middle</small>'},{id:'s2',html:'3rd<small>biggest</small>'}],map,'The number you say first when counting is the smallest.');
+  }
   var m=r.int(2,19),after=r.chance(.5),ans=after?m+1:m-1;
-  return T('Numbers to 20: before & after',String(ans),'Type the number that comes <b>'+(after?'AFTER':'BEFORE')+'</b> '+m,'Type the number that comes '+(after?'after':'before')+' '+m+'.','<div class="eq">'+(after?m+' ➡️ ?':'? ⬅️ '+m)+'</div>','Count by one.');
+  return T('Numbers to 20: before & after',String(ans),'Type the number that comes <b>'+(after?'AFTER':'BEFORE')+'</b> '+m,'Type the number that comes '+(after?'after':'before')+' '+m+'.','<div class="eq">'+(after?m+' ➡️ ?':'? ⬅️ '+m)+'</div>','Count '+(after?'forward':'backward')+' by one.');
 }
 const ANIMALS=['🐶','🐱','🐰','🦊','🐼','🐸','🐵','🦁'];
 const ORD=[['1st','first'],['2nd','second'],['3rd','third'],['4th','fourth'],['5th','last']];
 function qPosition(r){
-  if(r.chance(.5)){var line=r.shuffle(ANIMALS).slice(0,5),idx=[0,1,2,3,4],map={};idx.forEach(function(i){map['a'+i]='o'+i;});var d=D('Positions',false,'Drag each animal to its <b>place</b>','Drag each animal to its place.',r.shuffle(idx).map(function(i){return {id:'a'+i,html:numIcon(line[i])};}),idx.map(function(i){return {id:'o'+i,html:ORD[i][0]+'<small>'+ORD[i][1]+'</small>'};}),map,'Start counting from the START flag.');d.visual='<div class="lineup"><small>START</small> ➡️ '+line.join(' ')+' 🏁</div>';return d;}
-  var piece=r.pick(['🐢','🐞','🚗']),dirs=[['LEFT ⬅️',0,-1],['RIGHT ➡️',0,1],['UP ⬆️',-1,0],['DOWN ⬇️',1,0]],pr,pc,dd,tr,tc;
+  if(r.chance(.5)){
+    var line=r.shuffle(ANIMALS).slice(0,5),idx=r.shuffle([0,1,2,3,4]).slice(0,3).sort(),map={};
+    idx.forEach(function(i){map['a'+i]='o'+i;});
+    var d=D('Positions',false,'Drag each animal to its <b>place</b> in the line','Drag each animal to its place in the line.',
+      r.shuffle(idx).map(function(i){return {id:'a'+i,html:numIcon(line[i])};}),idx.map(function(i){return {id:'o'+i,html:ORD[i][0]+'<small>'+ORD[i][1]+'</small>'};}),map,'Start counting from the START flag: 1st, 2nd, 3rd...');
+    d.visual='<div class="lineup"><small>START</small> ➡️ '+line.join(' ')+' 🏁</div>';return d;
+  }
+  var piece=r.pick(['🐢','🐞','🚗','🐥','🚀']),dirs=[['LEFT ⬅️',0,-1],['RIGHT ➡️',0,1],['UP ⬆️',-1,0],['DOWN ⬇️',1,0]],pr,pc,dd,tr,tc;
   do{pr=r.int(0,2);pc=r.int(0,2);dd=r.pick(dirs);tr=pr+dd[1];tc=pc+dd[2];}while(tr<0||tr>2||tc<0||tc>2);
-  return {topic:'Directions',kind:'grid',prompt:'Tap the box that is <b>'+dd[0]+'</b> of the '+piece,say:'Tap the box that is '+dd[0].split(' ')[0].toLowerCase()+' of the '+piece,visual:'',piece:piece,from:[pr,pc],target:[tr,tc],hint:'Left and right, up and down.'};
+  return {topic:'Directions',kind:'grid',prompt:'Tap the box that is <b>'+dd[0]+'</b> of the '+piece,say:'Tap the box that is '+dd[0].split(' ')[0].toLowerCase()+' of the '+piece,visual:'',piece:piece,from:[pr,pc],target:[tr,tc],
+    hint:'Left is your left hand. Right is your right hand. Up is the sky. Down is the floor.'};
 }
-const SYM=['🔴','🔵','🟡','🟢','⭐','❤️'];
+const SYM=['🔴','🔵','🟡','🟢','⭐','❤️','🔶','🟣'];
 function qPattern(r){
-  if(r.chance(.35)){var u='AB',syms=r.shuffle(SYM),map={A:syms[0],B:syms[1]},L=5,seq=[],i;for(i=0;i<L;i++)seq.push(map[u.charAt(i%u.length)]);var ans=seq[L-1];return {topic:'Patterns',kind:'choice',cols:2,prompt:'What comes <b>next</b> in the pattern?',say:'What comes next in the pattern?',visual:'<div class="seq">'+seq.slice(0,L-1).map(function(x){return '<div class="sb">'+x+'</div>';}).join('')+'<div class="sb q">?</div></div>',options:r.shuffle([syms[0],syms[1],syms[2]]).map(function(x){return mkOpt(x,'<span class="em">'+x+'</span>');}),answer:ans,hint:'Say the pattern out loud.'};}
-  var step=r.int(1,2),st=r.int(1,10),s2=[st,st+step,st+2*step],a4=st+3*step;
+  if(r.chance(.35)){
+    var units=['AB','AAB','ABB','ABC'],u=r.pick(units),syms=r.shuffle(SYM),map={A:syms[0],B:syms[1],C:syms[2]},L=u.length*2+1,seq=[],i;
+    for(i=0;i<L;i++)seq.push(map[u.charAt(i%u.length)]);
+    var ans=seq[L-1],used=u.split('').filter(function(c,j,a){return a.indexOf(c)===j;}).map(function(c){return map[c];});
+    return {topic:'Patterns',kind:'choice',cols:used.length+1>3?2:3,prompt:'What comes <b>next</b> in the pattern?',say:'What comes next in the pattern?',
+      visual:'<div class="seq">'+seq.slice(0,L-1).map(function(x){return '<div class="sb">'+x+'</div>';}).join('')+'<div class="sb q">?</div></div>',
+      options:r.shuffle(used.concat([syms[3]])).map(function(x){return mkOpt(x,'<span class="em">'+x+'</span>');}),answer:ans,hint:'Say the pattern out loud. It repeats again and again.'};
+  }
+  var step=r.pick([1,2,2,5]),maxStart=20-3*step,st=r.int(1,Math.max(1,maxStart)),s2=[st,st+step,st+2*step],a4=st+3*step;
   return T('Patterns: number pattern',String(a4),'Type the number that comes <b>next</b>','Type the number that comes next.',
-    '<div class="seq">'+s2.map(function(x){return '<div class="sb">'+x+'</div>';}).join('')+'<div class="sb q">?</div></div>','See how much the numbers go up.');
+    '<div class="seq">'+s2.map(function(x){return '<div class="sb">'+x+'</div>';}).join('')+'<div class="sb q">?</div></div>','See how much the numbers go up each time. Add that again!');
 }
 function qSpelling(r){
   var n=r.int(1,20),v=r.int(0,9);
-  if(v<4)return T('Writing numbers',NUMW[n].toUpperCase(),'Write the number word for <b>'+n+'</b>','Type the number word for '+n+'.','<div class="eq">'+n+'</div>','Sound it out.');
-  if(v<7){var ns=r.shuffle([1,2,3,4,5,6,7,8,9,10]).slice(0,3),mp={};ns.forEach(function(x){mp['w'+x]='n'+x;});return D('Number spelling',false,'Drag each <b>word</b> to its <b>number</b>','Drag each word to its number.',ns.map(function(x){return {id:'w'+x,html:NUMW[x]};}),ns.map(function(x){return {id:'n'+x,html:String(x)};}),mp,'Sound out the word.');}
-  return T('Number spelling',String(n),'Type the <b>number</b> for this word','Type the number for the word '+NUMW[n]+'.','<div class="eq" style="letter-spacing:4px">'+NUMW[n]+'</div>','Count up to find the number.');
+  if(v<4)return T('Writing numbers',NUMW[n].toUpperCase(),'Write the number word for <b>'+n+'</b>','Type the number word for '+n+'.','<div class="eq">'+n+'</div>','Sound it out: '+NUMW[n].split('').join(' - ')+'. Follow the glowing keys!');
+  if(v<7){
+    var ns=r.shuffle([1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20]).slice(0,3),mp={};
+    ns.forEach(function(x){mp['w'+x]='n'+x;});
+    return D('Number spelling',false,'Drag each <b>word</b> to its <b>number</b>','Drag each word to its number.',ns.map(function(x){return {id:'w'+x,html:NUMW[x]};}),ns.map(function(x){return {id:'n'+x,html:String(x)};}),mp,'Sound out the word and think of the number.');
+  }
+  if(v<9)return T('Number spelling',String(n),'Type the <b>number</b> for this word','Type the number for the word '+NUMW[n]+'.','<div class="eq" style="letter-spacing:4px">'+NUMW[n]+'</div>','Count up to find the number that sounds like the word.');
+  return {topic:'Number spelling',kind:'choice',cols:3,prompt:'Which is the spelling of <b>'+n+'</b>?',say:'Which is the spelling of '+n+'?',visual:'<div class="eq">'+n+'</div>',
+    options:pickOpts(r,NUMW[n],NUMW.slice(1),3,function(x){return '<b>'+x+'</b>';}),answer:NUMW[n],hint:'Sound it out: '+NUMW[n].split('').join(' - ')};
 }
 function qAddSub(r){
   var e=r.pick(EM),add=r.chance(.55),a,b,ans,q;
-  if(add){a=r.int(1,5);b=r.int(1,5);ans=a+b;q={topic:'Addition',prompt:'Type <b>'+a+' + '+b+'</b>',say:'What is '+a+' plus '+b+'?',visual:groups(e,a)+'<div class="eq">➕</div>'+groups(e,b)+'<div class="eq">'+a+' + '+b+' = ?</div>',hint:'Count all of them together.'};}
-  else{a=r.int(3,10);b=r.int(1,a-1);ans=a-b;q={topic:'Subtraction',prompt:'Type <b>'+a+' − '+b+'</b>',say:'What is '+a+' minus '+b+'?',visual:groups(e,a,a-b)+'<div class="eq">'+a+' − '+b+' = ?</div>',hint:'Count the ones left.'};}
+  if(add){
+    if(r.chance(.6)){a=r.int(1,6);b=r.int(1,Math.min(6,10-a));}else{a=r.int(5,12);b=r.int(1,20-a);}
+    ans=a+b;
+    q={topic:'Addition',prompt:'Type <b>'+a+' + '+b+'</b>',say:'What is '+a+' plus '+b+'? Type the answer.',visual:groups(e,a)+'<div class="eq">➕</div>'+groups(e,b)+'<div class="eq">'+a+' + '+b+' = ?</div>',hint:'Count all of them together: start at '+a+' and count on '+b+' more.'};
+  }else{
+    if(r.chance(.6)){a=r.int(3,10);b=r.int(1,a-1);}else{a=r.int(8,20);b=r.int(1,Math.min(9,a-1));}
+    ans=a-b;
+    q={topic:'Subtraction',prompt:'Type <b>'+a+' − '+b+'</b>',say:'What is '+a+' minus '+b+'? Type the answer.',visual:groups(e,a,a-b)+'<div class="eq">'+a+' − '+b+' = ?</div>',hint:'The faded ones go away. Count the ones left.'};
+  }
   if(r.chance(.8))return T(q.topic,String(ans),q.prompt,q.say,q.visual,q.hint);
   q.kind='choice';q.cols=2;q.prompt=q.prompt.replace('Type ','What is ')+'?';q.options=numOpts(r,ans,0,20);q.answer=String(ans);return q;
 }
 function qMatchCounts(r){
-  var ns=r.shuffle([1,2,3,4,5,6]).slice(0,3),map={};ns.forEach(function(x){map['c'+x]='g'+x;});
-  return D('Counting & matching',false,'Drag each <b>number</b> to the group','Count each group.',ns.map(function(x){return {id:'c'+x,html:String(x)};}),ns.map(function(x){return {id:'g'+x,html:groups(r.pick(EM),x)};}),map,'Count each group carefully.');
+  var ns=r.shuffle([1,2,3,4,5,6,7,8,9,10,11,12]).slice(0,3),map={};
+  ns.forEach(function(x){map['c'+x]='g'+x;});
+  return D('Counting & matching',false,'Drag each <b>number</b> to the group with that many','Count each group and drag the matching number.',
+    r.shuffle(ns).map(function(x){return {id:'c'+x,html:String(x)};}),ns.map(function(x){return {id:'g'+x,html:groups(r.pick(EM),x)};}),map,'Count each group carefully. Groups of 5 help!');
 }
 
+/* ---- Computer Science ---- */
 function qKey(r){
-  var v=r.int(0,5),L='ABCDEFGHIJKLMNOPQRSTUVWXYZ'.split(''),t;
-  if(v<2){t=r.pick(L);return {topic:'Keyboard: letters',kind:'tapKey',target:t,prompt:'Find the letter <b>'+t+'</b> on the keyboard',say:'Find the letter '+t+'.',visual:'<div class="bigemoji" style="font-weight:700;color:var(--cs)">'+t+'</div>',hint:'Look at the keyboard.'};}
-  if(v<3){t=String(r.int(0,9));return {topic:'Keyboard: numbers',kind:'tapKey',target:t,prompt:'Find the number <b>'+t+'</b> on the keyboard',say:'Find number '+t+'.',visual:'<div class="bigemoji" style="font-weight:700;color:var(--cs)">'+t+'</div>',hint:'Numbers are on top.'};}
-  var n=r.int(1,10);return T('Typing: numbers 1-20',String(n),'Type the number <b>'+n+'</b>','Type number '+n,'','Look for the glowing key.');
+  var v=r.int(0,9),L='ABCDEFGHIJKLMNOPQRSTUVWXYZ'.split(''),t;
+  if(v<2){t=r.pick(L);return {topic:'Keyboard: letters',kind:'tapKey',target:t,prompt:'Find the letter <b>'+t+'</b> on the keyboard',say:'Find the letter '+t+' on the keyboard.',visual:'<div class="bigemoji" style="font-weight:700;color:var(--cs)">'+t+'</div>',hint:'It is on the '+rowOf(t)+'.'};}
+  if(v<3){t=String(r.int(0,9));return {topic:'Keyboard: numbers',kind:'tapKey',target:t,prompt:'Find the number <b>'+t+'</b> on the keyboard',say:'Find the number '+t+' on the keyboard.',visual:'<div class="bigemoji" style="font-weight:700;color:var(--cs)">'+t+'</div>',hint:'Numbers are on the very top row.'};}
+  if(v<4){
+    var S=[['SPACE','the <b>SPACE BAR</b>','It makes a space between words.'],['ENTER','the <b>ENTER</b> key','It starts a new line.'],['BACK','the <b>BACKSPACE</b> key ⌫','It erases the last letter.'],['SHIFT','the <b>SHIFT</b> key ⇧','It helps make BIG letters.']],s=r.pick(S);
+    return {topic:'Keyboard: special keys',kind:'tapKey',target:s[0],prompt:'Find '+s[1],say:'Find '+s[1].replace(/<[^>]+>/g,'')+'. '+s[2],visual:'<div class="sent">'+s[2]+'</div>',hint:s[2]};
+  }
+  if(v<7){var n=r.int(1,20),m=r.int(1,20);if(r.chance(.5))return T('Typing: numbers 1-20',n+' '+m,'Type these two numbers: <b>'+n+'</b> and <b>'+m+'</b>','Type these two numbers: '+n+' and '+m,'','Look for the glowing keys on the number row. Use the space bar between them.');return T('Typing: numbers 1-20',String(n),'Type the number <b>'+n+'</b>','Type the number '+n,'','Look for the glowing keys on the number row.');}
+  var seqs=['ABC','DEF','GHI','JKL','MNO','PQR','STU','VWX','XYZ','ABCDE','FGHIJ','KLMNO','PQRST','UVWXY'],q=r.pick(seqs);
+  return T('Typing: alphabet',q,'Type these letters: <b>'+q.split('').join(' ')+'</b>','Type these letters: '+q.split('').join(', '),'','Find each letter on the keyboard.');
 }
-function qTyping(r){var it=r.pick(PROFILE.typeItems);return T('Typing: my world',it.text,'Type <b>'+it.label+'</b>','Type '+it.label,'<div class="bigemoji">'+it.e+'</div>','Follow the glowing keys.');}
+function qTyping(r){
+  var it=r.pick(PROFILE.typeItems);
+  return T('Typing: my world',it.text,'Type <b>'+it.label+'</b>','Type '+it.label,'<div class="bigemoji">'+it.e+'</div>','Follow the glowing keys. You can do it!');
+}
 function qHardware(r,variant){
-  var keys=['monitor','keyboard','mouse','cpu','printer','speaker'],v=variant||r.pick(['match','typename']);
-  if(v==='typename'){var k=r.pick(keys),d=DEV[k];return T('Computer parts',d.n.toUpperCase(),'Type the name of this computer part','Type the name of this computer part.','<div class="bigemoji">'+d.i+'</div>','Starts with '+d.n.charAt(0)+'.');}
-  var pk=r.shuffle(keys).slice(0,3),mp={};pk.forEach(function(x){mp['d_'+x]='p_'+x;});
-  return D('Match the parts',false,'Drag each <b>name</b> to its <b>picture</b>','Drag each name to its picture.',pk.map(function(x){return {id:'d_'+x,html:DEV[x].n};}),pk.map(function(x){return {id:'p_'+x,html:DEV[x].i};}),mp,'Read the name.');
+  var keys=['monitor','keyboard','mouse','cpu','printer','speaker','headphones','mic','camera','laptop'],v=variant||r.pick(['match','typename','match','typename']);
+  if(v==='typename'){
+    var k=r.pick(keys),d=DEV[k];
+    return T('Computer parts',d.n.toUpperCase(),'Type the name of this computer part','Type the name of this computer part.','<div class="bigemoji">'+d.i+'</div>','It starts with the letter '+d.n.charAt(0)+'.');
+  }
+  var pk=r.shuffle(keys).slice(0,4),mp={};
+  pk.forEach(function(x){mp['d_'+x]='p_'+x;});
+  return D('Match the parts',false,'Drag each <b>name</b> to its <b>picture</b>','Drag each name to its picture.',pk.map(function(x){return {id:'d_'+x,html:DEV[x].n};}),pk.map(function(x){return {id:'p_'+x,html:DEV[x].i};}),mp,'Look at the picture and read the name.');
 }
 function qTypeDevice(r){
-  var F=[['keyboard','We use it to <b>type</b>.'],['mouse','It moves the <b>pointer</b>.'],['monitor','It shows pictures and words.'],['printer','It <b>prints</b> on paper.']],f=r.pick(F);
-  return T('What does it do?',DEV[f[0]].n.toUpperCase(),'Which device is it? <br><span style="font-size:24px">'+f[1]+'</span><br><small>Type its name!</small>','Which device is it? '+f[1].replace(/<[^>]+>/g,''),'<div class="bigemoji">❓</div>','Starts with '+DEV[f[0]].n.charAt(0)+'.');
+  var F=[['keyboard','We use it to <b>type</b> letters and numbers.'],['mouse','It moves the <b>pointer</b> (arrow) on the screen.'],['monitor','It is the <b>screen</b> that shows pictures and words.'],['printer','It <b>prints</b> on paper.'],['cpu','It is the <b>brain</b> of the computer.'],['speaker','It plays <b>sound</b> so we can hear.'],['mic','It <b>listens</b> to our voice.'],['camera','It takes <b>photos</b> and <b>scans QR codes</b>.'],['headphones','We wear them on our ears to <b>listen</b> privately.']],f=r.pick(F);
+  return T('What does it do?',DEV[f[0]].n.toUpperCase(),'Which device is it? <br><span style="font-size:24px">'+f[1]+'</span><br><small>Type its name!</small>','Which device is it? '+f[1].replace(/<[^>]+>/g,'')+' Type its name.',
+    '<div class="bigemoji">❓</div>','Think about what each part does. It starts with the letter '+DEV[f[0]].n.charAt(0)+'.');
 }
 function qNetwork(r,variant){
-  var ys=Object.keys(NET_Y),ns=Object.keys(NET_N),v=variant||r.pick(['sort','type']);
-  if(v==='type'){var yk=r.pick(ys);return T('Network: connected devices',NET_Y[yk].n.toUpperCase(),'This device connects to <b>Wi-Fi</b>. Type its name!','This device connects to Wi-Fi.', '<div class="bigemoji">'+NET_Y[yk].i+'</div>','Starts with '+NET_Y[yk].n.charAt(0)+'.');}
-  var items=[],mp={};
-  [r.pick(ys),r.pick(ys)].forEach(function(x){items.push({id:'y_'+x,html:numIcon(NET_Y[x].i)+NET_Y[x].n});mp['y_'+x]='y';});
-  [r.pick(ns),r.pick(ns)].forEach(function(x){items.push({id:'n_'+x,html:numIcon(NET_N[x].i)+NET_N[x].n});mp['n_'+x]='n';});
-  return D('Network: connected devices',true,'Which things can connect to <b>Wi-Fi</b>?','Sort them.',r.shuffle(items),[{id:'y',html:'📶<small>Wi-Fi</small>'},{id:'n',html:'🚫<small>No Wi-Fi</small>'}],mp,'Connected devices go online.');
+  var ys=Object.keys(NET_Y),ns=Object.keys(NET_N),v=variant||r.pick(['sort','sort','type']);
+  if(v==='type'){
+    var yk=r.pick(ys);
+    return T('Network: connected devices',NET_Y[yk].n.toUpperCase(),'This device connects to <b>Wi-Fi</b>. Type its name!','This device connects to Wi-Fi. Type its name.','<div class="bigemoji">'+NET_Y[yk].i+'</div>','It starts with the letter '+NET_Y[yk].n.charAt(0)+'.');
+  }
+  var ny=r.int(2,4),a=r.shuffle(ys).slice(0,ny),b=r.shuffle(ns).slice(0,6-ny),items=[],mp={};
+  a.forEach(function(x){items.push({id:'y_'+x,html:numIcon(NET_Y[x].i)+NET_Y[x].n});mp['y_'+x]='y';});
+  b.forEach(function(x){items.push({id:'n_'+x,html:numIcon(NET_N[x].i)+NET_N[x].n});mp['n_'+x]='n';});
+  return D('Network: connected devices',true,'Which things can connect to <b>Wi-Fi</b>? Sort them!','Which things can connect to Wi-Fi? Drag them to the right box.',
+    r.shuffle(items),[{id:'y',html:'📶<small>Connects to Wi-Fi</small>'},{id:'n',html:'🚫<small>No Wi-Fi</small>'}],mp,'Devices with a screen or chip that can go online connect to Wi-Fi.');
 }
 function qIO(r,variant){
-  var v=variant||r.pick(['sort','type']),ins=['keyboard','mouse','mic'],outs=['monitor','printer','speaker'];
-  if(v==='type'){var k=r.pick(ins.concat(outs)),d=DEV[k];return T('Input & Output',d.io==='in'?'INPUT':'OUTPUT','Is the <b>'+d.n+'</b> INPUT or OUTPUT?','Is it input or output?', '<div class="bigemoji">'+d.i+'</div>','Input = we give to computer. Output = computer shows us.');}
-  var items=[],mp={};
-  [r.pick(ins)].forEach(function(x){items.push({id:'i_'+x,html:numIcon(DEV[x].i)+DEV[x].n});mp['i_'+x]='in';});
-  [r.pick(outs)].forEach(function(x){items.push({id:'o_'+x,html:numIcon(DEV[x].i)+DEV[x].n});mp['o_'+x]='out';});
-  return D('Input & Output',true,'Sort: <b>INPUT</b> or <b>OUTPUT</b>?','Sort devices.',r.shuffle(items),[{id:'in',html:'⬇️ INPUT'},{id:'out',html:'⬆️ OUTPUT'}],mp,'Input goes in, output comes out.');
+  var v=variant||r.pick(['sort','sort','type']),ins=[],outs=[];
+  Object.keys(DEV).forEach(function(k){if(DEV[k].io==='in')ins.push(k);else if(DEV[k].io==='out')outs.push(k);});
+  if(v==='type'){
+    var k=r.pick(ins.concat(outs)),d=DEV[k];
+    return T('Input & Output',d.io==='in'?'INPUT':'OUTPUT','Is the <b>'+d.n+'</b> INPUT or OUTPUT? <small>Type the word!</small>','Is the '+d.n+' an input or an output device? Type the word.','<div class="bigemoji">'+d.i+'</div>','Input = we send TO the computer. Output = the computer shows or plays TO us.');
+  }
+  var a=r.shuffle(ins).slice(0,3),b=r.shuffle(outs).slice(0,3),items=[],mp={};
+  a.forEach(function(x){items.push({id:'i_'+x,html:numIcon(DEV[x].i)+DEV[x].n});mp['i_'+x]='in';});
+  b.forEach(function(x){items.push({id:'o_'+x,html:numIcon(DEV[x].i)+DEV[x].n});mp['o_'+x]='out';});
+  return D('Input & Output',true,'Sort the devices: <b>INPUT</b> or <b>OUTPUT</b>?','Sort the devices. Input devices send things into the computer. Output devices show or play things to us.',
+    r.shuffle(items),[{id:'in',html:'⬇️ INPUT<small>we give to the computer</small>'},{id:'out',html:'⬆️ OUTPUT<small>computer shows or plays to us</small>'}],mp,'Keyboard, mouse, mic and camera send things IN. Screen, printer and speaker send things OUT.');
 }
 
 function buildWorksheet(date,n){
@@ -455,14 +563,16 @@ function buildWorksheet(date,n){
 }
 function buildMini(type,seed){
   var r=makeRng(hashStr('mini|'+type+'|'+seed)),qs=[],i;
-  if(type==='typing'){for(i=0;i<3;i++)qs.push(qKey(r));for(i=0;i<3;i++)qs.push(qTyping(r));}
+  if(type==='typing'){for(i=0;i<3;i++)qs.push(qKey(r));for(i=0;i<3;i++)qs.push(qTyping(r));qs.push(qKey(r));}
   else if(type==='io'){['sort','type','sort','type'].forEach(function(v){qs.push(qIO(r,v));});}
   else if(type==='net'){['sort','type','sort','type'].forEach(function(v){qs.push(qNetwork(r,v));});}
   else{['match','typename','match','typename'].forEach(function(v){qs.push(qHardware(r,v));});}
   qs.forEach(function(q,j){q.domain='cs';q.id='m'+j;});
   return qs;
 }
+// </GEN>
 
+/* ---------- 3. STATE (localStorage) ---------- */
 const KEY='rudra_it_geek_v1';
 const DEF={setup:{done:false,momEmail:'phandroshni@gmail.com',dadEmail:'bwagh4@gmail.com',sendTo:'dad',pin:'',appUrl:'',qrMode:'pin',maxMin:15,sound:true,speak:true},
   xp:0,streak:0,lastDone:'',days:{},resets:{},tokens:{},pending:'',lastChannel:'',ch:{},badges:[],pinFail:0,pinLock:0};
@@ -472,6 +582,7 @@ function loadState(){
   var s=JSON.parse(JSON.stringify(DEF));
   if(j){Object.keys(j).forEach(function(k){if(k==='setup'){Object.keys(j.setup||{}).forEach(function(q){s.setup[q]=j.setup[q];});}else s[k]=j[k];});}
   var ch2={};CHANNELS.forEach(function(c){ch2[c.key]={on:!(s.ch[c.key]&&s.ch[c.key].on===false)};});s.ch=ch2;
+  /* migration: rewards/channels saved by older versions (e.g. a removed channel) are re-pointed to a random approved channel */
   var okKeys=CHANNELS.map(function(c){return c.key;}),on=okKeys.filter(function(k){return s.ch[k].on;});if(!on.length)on=okKeys;
   Object.keys(s.tokens||{}).forEach(function(k){var t=s.tokens[k];if(t&&okKeys.indexOf(t.ch)<0)t.ch=on[Math.floor(Math.random()*on.length)];});
   if(okKeys.indexOf(s.lastChannel)<0)s.lastChannel='';
@@ -486,6 +597,7 @@ const LV=[['Bit 🔹',0],['Byte 🔸',60],['Keyboard Ninja ⌨️',150],['Mouse 
 function lvInfo(){var i=0;while(i<LV.length-1&&S.xp>=LV[i+1][1])i++;var nx=LV[i+1];return {i:i,name:LV[i][0],next:nx?nx[1]:null,pct:nx?Math.round((S.xp-LV[i][1])/(nx[1]-LV[i][1])*100):100};}
 const BADGES=[['first','🥇','First worksheet'],['streak3','🔥','3-day streak'],['streak7','🚀','7-day streak'],['typist','⌨️','Typing star'],['perfect','🏆','Perfect day']];
 
+/* ---------- 4. UI helpers: DOM, sound, speech ---------- */
 const $=function(s,root){return (root||document).querySelector(s);};
 function el(h){var d=document.createElement('div');d.innerHTML=h.trim();return d.firstChild;}
 function esc(s){return String(s).replace(/&/g,'&amp;').replace(/"/g,'&quot;').replace(/</g,'&lt;').replace(/>/g,'&gt;');}
@@ -503,6 +615,7 @@ function closeModal(){$('#modal').innerHTML='';}
 document.addEventListener('click',function(e){var b=e.target.closest&&e.target.closest('[data-say]');if(b){ac();say(b.getAttribute('data-say'),true);}});
 document.addEventListener('gesturestart',function(e){e.preventDefault();});
 
+/* ---------- navigation ---------- */
 let cur='splash',CL=[];
 function runCleanups(){CL.forEach(function(f){try{f();}catch(e){}});CL=[];}
 const TABS=[['home','🏠','Home'],['ws','📝','Worksheet'],['scan','📷','Scan'],['lab','🧪','Geek Lab'],['parent','🔒','Parent']];
@@ -521,6 +634,7 @@ function go(n){
   if(n==='home')renderHome();else if(n==='done')renderDone();else if(n==='scan')renderScan();else if(n==='lab')renderLab();else if(n==='parent')renderParent();
 }
 
+/* ---------- 5. QUESTION RENDERERS ---------- */
 const DOMS={english:{n:'English',e:'📚',c:'#ff5c8a'},math:{n:'Maths',e:'🔢',c:'#3d8bff'},cs:{n:'Computer',e:'💻',c:'#7c4dff'}};
 const PRAISE=['Awesome!','You rock!','Super smart!','Brilliant!','Wow, great job!','Fantastic!','Byte is proud of you!'];
 let SES=null,QS=null,UI=null;
@@ -584,14 +698,15 @@ function tapKeyUI(q,host,api){
   return {hint:function(){kb.hint(q.target);},reveal:function(){kb.hint(q.target);}};
 }
 function typeUI(q,host,api){
-  var T=q.target,pos=0,mode='recall',ghost=true;
+  var T=q.target,pos=0,mode=q.mode||'recall',ghost=(mode==='guide');
+  if(mode==='copy')host.appendChild(el('<div class="tcopy">'+T.split('').map(function(c){return '<span>'+(c===' '?'&nbsp;&nbsp;':c)+'</span>';}).join('')+'</div>'));
   var tb=el('<div class="tbox'+(T.length>8?' long':'')+'">'+T.split('').map(function(c){return '<span class="tb'+(c===' '?' sp':'')+'"></span>';}).join('')+'</div>');host.appendChild(tb);
   var boxes=tb.children,kb=buildKB(press);host.appendChild(kb.el);
   function mark(){[].forEach.call(boxes,function(b,i){b.classList.toggle('cur',i===pos);});if(ghost&&pos<T.length)kb.hint(chKey(T.charAt(pos)));else kb.unhint();}
   function press(k){
     if(QS.done||pos>=T.length)return;SFX.key();
     if(k===chKey(T.charAt(pos))){boxes[pos].textContent=k==='SPACE'?'␣':k;boxes[pos].classList.add('done');kb.flash(k,'ok');pos++;mark();if(pos>=T.length){if(q.fill){var bl=document.querySelector('#s-work .blank');if(bl)bl.textContent=(q.show||T).toLowerCase();}api.right();}}
-    else{kb.flash(k,'no');api.miss('Oops! Follow the glowing key ✨');mark();}
+    else{kb.flash(k,'no');if(api.miss(ghost?'':'Not that key. Think again, or tap 💡 Hint for help!')>=2)ghost=true;mark();}
   }
   bindHW(press);mark();
   return {hint:function(){ghost=true;mark();},reveal:function(){[].forEach.call(boxes,function(b,i){b.textContent=T.charAt(i)===' '?'␣':T.charAt(i);b.classList.add('done');});pos=T.length;kb.unhint();}};
@@ -647,6 +762,7 @@ function dragUI(q,host,api){
 }
 const RENDER={choice:choiceUI,grid:gridUI,tapKey:tapKeyUI,typeText:typeUI,drag:dragUI};
 
+/* ---------- worksheet session ---------- */
 function openSession(ses){SES=ses;go('work');renderQ();}
 function dotsHtml(){return SES.qs.map(function(q,i){var r=SES.res[i];return '<span class="dot'+(r?(r.ok&&r.w===0?' ok':' no'):'')+(i===SES.i?' cur':'')+'"></span>';}).join('');}
 function renderQ(){
@@ -681,6 +797,7 @@ function finishQ(ok){
   $('#wDots').innerHTML=dotsHtml();$('#wNext').disabled=false;
 }
 
+/* ---------- 6. SCREENS ---------- */
 function renderSplash(){
   $('#s-splash').innerHTML='<div class="splash"><div class="floaty f1">💻</div><div class="floaty f2">⌨️</div><div class="floaty f3">🖱️</div><div class="floaty f4">📶</div><div class="floaty f5">🖨️</div>'+
     '<div class="byte">🤖</div><h1 class="title">IT Geek Academy</h1><p class="sub" style="font-size:24px">Hi <b>'+PROFILE.first+'</b>! I\'m Byte.<br>Let\'s become a computer champion today!</p><button class="btn big" id="goBtn" type="button">Let\'s Go! 🚀</button></div>';
@@ -690,13 +807,14 @@ function begin(){
   ac();SFX.win();say('Hi '+PROFILE.first+'! Let us become a computer champion today!');
   if(!S.setup.done)setupModal(true);else go('home');
 }
+function greet(){var h=new Date().getHours();return h<12?'Good morning':h<17?'Good afternoon':'Good evening';}
 function domStars(day){
   var out={};['english','math','cs'].forEach(function(d,k){var first=0;for(var i=k*6;i<k*6+6;i++){var r=day.res[i];if(r&&r.ok&&r.w===0)first++;}out[d]=first>=5?3:first>=3?2:1;});return out;
 }
 function renderHome(){
   var d=todayStr(),day=S.days[d],lv=lvInfo(),h='';
   var total=day?day.qs.length:18,prog=day?Math.min(day.i,total):0;
-  h+='<div class="wrap"><div class="hero"><div class="byte">🤖</div><div class="bubble">Hi, <b>'+PROFILE.first+'</b>!<br>'+(day&&day.done?'You did it today! 🎉':'Ready for today\'s worksheet?')+'</div></div>';
+  h+='<div class="wrap"><div class="hero"><div class="byte">🤖</div><div class="bubble">'+greet()+', <b>'+PROFILE.first+'</b>!<br>'+(day&&day.done?'You did it today! 🎉':'Ready for today\'s worksheet?')+'</div></div>';
   h+='<div class="stats"><div class="stat">⭐ XP<b>'+S.xp+'</b></div><div class="stat">🔥 Streak<b>'+S.streak+' day'+(S.streak===1?'':'s')+'</b></div><div class="stat">Level<b style="font-size:21px">'+lv.name+'</b><div class="bar"><i style="width:'+lv.pct+'%"></i></div></div></div>';
   if(S.pending&&S.tokens[S.pending]){h+='<div class="card" style="background:#fff5d6"><b>🎁 Your reward is ready to finish!</b><div class="row"><button class="btn ok" id="hResume" type="button">▶ Continue video</button></div></div>';}
   h+='<div class="card todayc"><h2>📝 Today\'s Worksheet</h2>';
@@ -729,7 +847,7 @@ function finishWorksheet(){
   if(csFirst>=5)add('typist');if(firsts===day.qs.length)add('perfect');
   save();qrUnlocked=false;SFX.win();go('done');party(true);say('Hooray! You finished the worksheet!');
 }
-
+/* ---- Done / reward screen ---- */
 let qrUnlocked=false;
 function renderDone(){
   var d=todayStr(),day=S.days[d],host=$('#s-done');
@@ -751,7 +869,7 @@ function renderDone(){
   b('#dMail',function(){sendMail(t);});b('#dShare',function(){shareQR(t);});b('#dScan',function(){go('scan');});b('#dLab',function(){go('lab');});b('#dHow',howScanModal);
   b('#dUnlock',function(){pinPrompt(function(){qrUnlocked=true;renderDone();});});
 }
-
+/* ---- Geek Lab ---- */
 const FACTS=[['🧠','The CPU is the computer\'s brain','It thinks super fast! Billions of tiny steps every second.'],
   ['⌨️','Input devices','Keyboard, mouse, microphone and camera send things INTO the computer.'],['🖥️','Output devices','Monitor, printer and speaker show or play things OUT to us.'],
   ['📶','The Wi-Fi router','A router sends internet through the air to your tablet, phone and Smart TV.'],['👆','Home row fingers','Put your pointer fingers on F and J. Feel the little bumps? They help you find your place without looking!'],
@@ -782,13 +900,14 @@ function howScanModal(){
   $('#hwClose',o).addEventListener('click',closeModal);
 }
 
+/* ---------- 7. QR + ONE-TIME TOKENS ---------- */
 function b64u(s){return btoa(s).replace(/\+/g,'-').replace(/\//g,'_').replace(/=+$/,'');}
 function unb64u(s){s=s.replace(/-/g,'+').replace(/_/g,'/');while(s.length%4)s+='=';return atob(s);}
 function issueToken(date){
   var day=S.days[date];if(day.token&&S.tokens[day.token]&&S.tokens[day.token].st!=='void')return S.tokens[day.token];
   var pool=CHANNELS.filter(function(c){return S.ch[c.key]&&S.ch[c.key].on;});
   var cand=pool.filter(function(c){return c.key!==S.lastChannel;});if(!cand.length)cand=pool;if(!cand.length){day.token='';return null;}
-  var c=pick(cand),t={id:rid(10),date:date,ch:c.key,idx:Math.floor(Math.random()*VID_POOL[c.key].length),st:'issued',at:Date.now()};
+  var c=pick(cand),t={id:rid(10),date:date,ch:c.key,idx:Math.floor(Math.random()*20),st:'issued',at:Date.now()};
   S.tokens[t.id]=t;day.token=t.id;S.lastChannel=c.key;
   var ks=Object.keys(S.tokens);if(ks.length>40){ks.sort(function(a,b){return S.tokens[a].at-S.tokens[b].at;}).slice(0,ks.length-40).forEach(function(k){delete S.tokens[k];});}
   save();return t;
@@ -852,6 +971,7 @@ function shareQR(t){
   });
 }
 
+/* ---------- 8. IN-APP SCANNER ---------- */
 let cam={stream:null,raf:0,on:false,last:0,cv:null};
 function renderScan(){
   $('#s-scan').innerHTML='<div class="wrap"><h1>📷 Scan a Reward</h1><p class="sub">Point the camera at your reward QR code.</p><div class="camwrap" id="camw"><video id="camV" muted playsinline webkit-playsinline></video><div class="frame"><i></i></div><div class="ph" id="camPh"><div style="font-size:64px">📷</div>Tap <b>Start camera</b></div></div>'+
@@ -905,32 +1025,46 @@ function scanPhoto(file){
   fr.readAsDataURL(file);
 }
 
-let VID=null;
-function playReward(t){
-  if(!t)return;ac();
-  var ch=CHANNELS.filter(function(c){return c.key===t.ch;})[0]||CHANNELS[0];
-  var pool=VID_POOL[ch.key]||['dQw4w9WgXcQ','ScMzIvxBSi4','b8IUxZkAuII'];
-  var vidId=pool[(t.idx||0)%pool.length];
-  
-  VID={t:t,end:Date.now()+Math.max(1,S.setup.maxMin||15)*60000,tick:0};
-  $('#vid').classList.add('on');
-  $('#vTitle').textContent=ch.e+' '+ch.n;
-  vmsg('');
-  
-  var embedUrl='https://www.youtube.com/embed/'+vidId+'?autoplay=1&playsinline=1&modestbranding=1&rel=0';
-  $('#ytWrap').innerHTML='<iframe src="'+embedUrl+'" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>';
-  
-  VID.tick=setInterval(function(){
-    var left=Math.max(0,VID.end-Date.now()),m=Math.floor(left/60000),s=Math.floor(left%60000/1000);
-    $('#vTime').textContent='⏱ '+m+':'+(s<10?'0':'')+s;
-    if(left<=0)endVideo('time');
-  },1000);
+/* ---------- 9. VIDEO PLAYER (in-app overlay, auto-close) ---------- */
+let VID=null,ytCbs=[];
+window.onYouTubeIframeAPIReady=function(){ytCbs.splice(0).forEach(function(f){f();});};
+function loadYT(cb){
+  if(window.YT&&window.YT.Player){cb();return;}ytCbs.push(cb);
+  if(!document.getElementById('yt-api')){var s=document.createElement('script');s.id='yt-api';s.src='https://www.youtube.com/iframe_api';document.head.appendChild(s);}
 }
 function vmsg(h){var m=$('#vMsg');m.style.display=h?'flex':'none';m.innerHTML=h||'';}
-function teardownVideo(){
-  if(!VID)return;clearInterval(VID.tick);
+function playReward(t){
+  if(!t)return;ac();
+  var ch=CHANNELS.filter(function(c){return c.key===t.ch;})[0]||CHANNELS[0],cid=ch.id,list='UU'+cid.slice(2);
+  stopCam();VID={t:t,tries:0,ready:false,player:null,end:Date.now()+Math.max(1,S.setup.maxMin||15)*60000,tick:0,dog:0};
+  $('#vid').classList.add('on');$('#vTitle').textContent=ch.e+' '+ch.n;vmsg('<div style="font-size:70px">⏳</div>Getting your video ready…');
   $('#ytWrap').innerHTML='<div id="ytMount"></div>';
-  $('#vid').classList.remove('on');VID=null;
+  VID.tick=setInterval(function(){var left=Math.max(0,VID.end-Date.now()),m=Math.floor(left/60000),s=Math.floor(left%60000/1000);$('#vTime').textContent='⏱ '+m+':'+(s<10?'0':'')+s;if(left<=0)endVideo('time');},1000);
+  VID.dog=setTimeout(function(){if(VID&&!VID.ready)failVideo('YouTube did not load. Check the Wi-Fi.');},15000);
+  loadYT(function(){
+    if(!VID)return;var pv={listType:'playlist',list:list,index:t.idx||0,autoplay:1,playsinline:1,rel:0,modestbranding:1,iv_load_policy:3};
+    if(location.protocol.indexOf('http')===0)pv.origin=location.origin;
+    try{VID.player=new YT.Player('ytMount',{width:'100%',height:'100%',playerVars:pv,events:{
+      onReady:function(e){try{e.target.playVideo();}catch(x){}},
+      onStateChange:function(e){if(!VID)return;if(e.data===1){VID.ready=true;vmsg('');}else if(e.data===0){endVideo('done');}},
+      onError:function(){if(!VID)return;if(VID.tries<4){VID.tries++;try{VID.player.nextVideo();}catch(x){failVideo('This video cannot play here.');}}else failVideo('These videos cannot play here.');}
+    }});}catch(e){failVideo('The video player could not start.');}
+  });
+}
+function failVideo(msg){
+  if(!VID)return;var t=VID.t;
+  if(!VID.ready&&!t.preview){
+    var pool=CHANNELS.filter(function(c){return S.ch[c.key].on&&c.key!==t.ch;});
+    t.st='issued';if(pool.length)t.ch=pick(pool).key;S.pending='';save();
+  }
+  teardownVideo();
+  var o=openModal('<div class="big">😕</div><p style="text-align:center">'+esc(msg)+'<br>'+(t.preview?'':'Your reward is safe. Scan it again in a moment!')+'</p><div class="row"><button class="btn" id="vfOk" type="button">OK</button></div>');
+  $('#vfOk',o).addEventListener('click',function(){closeModal();go(t.preview?'parent':'home');});
+}
+function teardownVideo(){
+  if(!VID)return;clearInterval(VID.tick);clearTimeout(VID.dog);
+  try{if(VID.player&&VID.player.destroy)VID.player.destroy();}catch(e){}
+  $('#ytWrap').innerHTML='<div id="ytMount"></div>';$('#vid').classList.remove('on');VID=null;
 }
 function endVideo(why){
   if(!VID)return;var t=VID.t;teardownVideo();
@@ -943,6 +1077,7 @@ $('#vClose').addEventListener('click',function(){
   if(VID.t.preview||confirm('Close the video? This reward will be used up.'))endVideo('closed');
 });
 
+/* ---------- 10. PARENT PANEL ---------- */
 function pinGate(){if(!S.setup.done){setupModal(true);return;}pinPrompt(function(){go('parent');});}
 function pinPrompt(ok){
   var wait=S.pinLock-Date.now();
@@ -982,8 +1117,8 @@ function renderParent(){
     (t&&t.st==='issued'?'<button class="btn ok sm" id="pQr" type="button">🎁 Show reward QR</button><button class="btn sm" id="pMail" type="button">📧 Email it</button>':'')+
     '<button class="btn warn sm" id="pReset" type="button">↺ Reset today (new questions + new reward)</button><button class="btn ghost sm" id="pTest" type="button">▶ Test video player</button></div></div>';
   h+='<div class="card"><h3>Contacts &amp; security</h3><p>Dad: <b>'+esc(S.setup.dadEmail)+'</b><br>Mom: <b>'+esc(S.setup.momEmail)+'</b><br>Send to: <b>'+S.setup.sendTo+'</b> · QR on iPad: <b>'+(S.setup.qrMode==='pin'?'PIN-locked':'visible')+'</b> · Max video: <b>'+S.setup.maxMin+' min</b><br>App address: <b>'+esc(S.setup.appUrl||'(not set)')+'</b></p><div class="row"><button class="btn sm" id="pEdit" type="button">✏️ Edit setup / change PIN</button><button class="btn ghost sm" id="pSnd" type="button">'+(S.setup.sound?'🔊 Sound on':'🔇 Sound off')+'</button><button class="btn ghost sm" id="pSpk" type="button">'+(S.setup.speak?'🗣️ Read-aloud on':'🤐 Read-aloud off')+'</button></div></div>';
-  h+='<div class="card"><h3>Approved video channels (automatic)</h3>'+CHANNELS.map(function(c){return '<div class="chrow"><input type="checkbox" data-c="'+c.key+'" '+(S.ch[c.key].on?'checked':'')+'><b>'+c.e+' '+c.n+'</b></div>';}).join('')+'<small>No video links to enter: each reward picks a random video from one of the ticked channels automatically.</small></div>';
-  h+='<div class="card"><h3>This device</h3><div class="note '+(isFile?'badn':'good')+'">'+(isFile?'⚠️ Opened as a local file.':'✅ Opened from '+esc(location.origin||location.protocol))+'</div><p style="margin:6px 0">Camera API: <b>'+(camOk?'available':'not available')+'</b> · QR library: <b>'+(window.QRCode?'loaded':'not loaded')+'</b> · Scanner library: <b>'+(window.jsQR?'loaded':'not loaded')+'</b></p></div>';
+  h+='<div class="card"><h3>Approved video channels (automatic)</h3>'+CHANNELS.map(function(c){return '<div class="chrow"><input type="checkbox" data-c="'+c.key+'" '+(S.ch[c.key].on?'checked':'')+'><b>'+c.e+' '+c.n+'</b></div>';}).join('')+'<small>No video links to enter: each reward picks a random video from one of the ticked channels automatically (a different channel from yesterday).</small></div>';
+  h+='<div class="card"><h3>This device</h3><div class="note '+(isFile?'badn':'good')+'">'+(isFile?'⚠️ Opened as a local file: the live camera and the YouTube player are blocked by iOS for file:// pages. Host this file on any free HTTPS site (GitHub Pages, Netlify Drop…) and enter its address in setup. Photo-scan and typed codes still work.':'✅ Opened from '+esc(location.origin||location.protocol)+(secure?' (secure)':' (not secure: camera needs https)'))+'</div><p style="margin:6px 0">Camera API: <b>'+(camOk?'available':'not available')+'</b> · QR library: <b>'+(window.QRCode?'loaded':'not loaded')+'</b> · Scanner library: <b>'+(window.jsQR?'loaded':'not loaded')+'</b></p></div>';
   h+='<div class="card"><h3>Progress</h3>'+(Object.keys(S.days).sort().reverse().slice(0,7).map(function(k){var x=S.days[k];return '<div class="chrow"><b style="width:120px">'+k+'</b><span>'+(x.done?'✅ done':'⏳ '+Math.min(x.i,x.qs.length)+'/'+x.qs.length)+'</span></div>';}).join('')||'<p>No worksheets yet.</p>')+'<div class="row"><button class="btn warn sm" id="pWipe" type="button">Erase all app data</button></div></div></div>';
   $('#s-parent').innerHTML=h;
   var b=function(id,fn){var x=$(id);if(x)x.addEventListener('click',fn);};
@@ -996,6 +1131,7 @@ function renderParent(){
   [].forEach.call(document.querySelectorAll('#s-parent [data-c]'),function(i){i.addEventListener('change',function(){S.ch[i.getAttribute('data-c')].on=i.checked;save();});});
 }
 
+/* ---------- 11. BOOT ---------- */
 function handleHash(){
   var h=location.hash||'';
   if(h.indexOf('reward=')<0)return;
