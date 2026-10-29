@@ -1379,23 +1379,23 @@ let VID=null,ytCbs=[];
 window.onYouTubeIframeAPIReady=function(){ytCbs.splice(0).forEach(function(f){f();});};
 function loadYT(cb){
   if(window.YT&&window.YT.Player){cb();return;}ytCbs.push(cb);
-  if(!document.getElementById('yt-api')){var s=document.createElement('script');s.id='yt-api';s.src='https://www.youtube.com/iframe_api';document.head.appendChild(s);}
+  if(!document.getElementById('yt-api')){var s=document.createElement('script');s.id='yt-api';s.src='https://www.youtube.com/iframe_api';s.onerror=function(){if(s.parentNode)s.parentNode.removeChild(s);ytCbs=[];if(VID)failVideo('The YouTube script was blocked or could not be reached (stage: loading script). A content blocker, VPN, Private Relay or parental filter on this device may be blocking youtube.com.');};document.head.appendChild(s);}
 }
 function vmsg(h){var m=$('#vMsg');m.style.display=h?'flex':'none';m.innerHTML=h||'';}
 function playReward(t){
   if(!t)return;ac();
   var ch=CHANNELS.filter(function(c){return c.key===t.ch;})[0]||CHANNELS[0],cid=ch.id,list='UU'+cid.slice(2);
-  stopCam();VID={t:t,tries:0,ready:false,player:null,end:Date.now()+Math.max(1,S.setup.maxMin||15)*60000,tick:0,dog:0};
+  stopCam();VID={t:t,stage:'loading YouTube script',tries:0,ready:false,player:null,end:Date.now()+Math.max(1,S.setup.maxMin||15)*60000,tick:0,dog:0};
   $('#vid').classList.add('on');$('#vTitle').textContent=ch.e+' '+ch.n;vmsg('<div style="font-size:70px">⏳</div>Getting your video ready…');
   $('#ytWrap').innerHTML='<div id="ytMount"></div>';
   VID.tick=setInterval(function(){var left=Math.max(0,VID.end-Date.now()),m=Math.floor(left/60000),s=Math.floor(left%60000/1000);$('#vTime').textContent='⏱ '+m+':'+(s<10?'0':'')+s;if(left<=0)endVideo('time');},1000);
-  VID.dog=setTimeout(function(){if(VID&&!VID.ready)failVideo('YouTube did not load. Check the Wi-Fi.');},15000);
+  VID.dog=setTimeout(function wd(){if(!VID||VID.ready)return;if(VID.stage==='player ready'&&!VID.waited){VID.waited=1;vmsg('👆 Tap the ▶ play button to start!');VID.dog=setTimeout(wd,60000);return;}failVideo('YouTube did not start (stage: '+VID.stage+'). '+(VID.stage==='player ready'?'The play button was not tapped.':'Check that youtube.com is not blocked on this device (content blocker, VPN, Private Relay).'));},15000);
   loadYT(function(){
-    if(!VID)return;var pv={listType:'playlist',list:list,index:t.idx||0,autoplay:1,playsinline:1,rel:0,modestbranding:1,iv_load_policy:3};
+    if(!VID)return;VID.stage='creating player';var pv={listType:'playlist',list:list,index:t.idx||0,autoplay:1,playsinline:1,rel:0,modestbranding:1,iv_load_policy:3};
     if(location.protocol.indexOf('http')===0)pv.origin=location.origin;
     try{VID.player=new YT.Player('ytMount',{width:'100%',height:'100%',playerVars:pv,events:{
-      onReady:function(e){try{e.target.playVideo();}catch(x){}},
-      onStateChange:function(e){if(!VID)return;if(e.data===1){VID.ready=true;vmsg('');}else if(e.data===0){endVideo('done');}},
+      onReady:function(e){if(VID)VID.stage='player ready';try{e.target.playVideo();}catch(x){}},
+      onStateChange:function(e){if(!VID)return;if(e.data!==1&&e.data!==0&&VID.stage!=='playing')VID.stage='player ready';if(e.data===1){VID.ready=true;VID.stage='playing';vmsg('');}else if(e.data===0){endVideo('done');}},
       onError:function(){if(!VID)return;if(VID.tries<4){VID.tries++;try{VID.player.nextVideo();}catch(x){failVideo('This video cannot play here.');}}else failVideo('These videos cannot play here.');}
     }});}catch(e){failVideo('The video player could not start.');}
   });
