@@ -1259,6 +1259,20 @@ function renderQ(){
     SES.i++;if(SES.persist)SES.persist();
     if(SES.i>=SES.qs.length){runCleanups();SES.onDone();}else renderQ();
   });
+
+  // External iPad keyboard: Enter advances only after the Next button is enabled.
+  var worksheetEnterHandler=function(e){
+    if((e.key==='Enter'||e.code==='NumpadEnter')&&!e.repeat&&!e.isComposing){
+      var nextBtn=$('#wNext');
+      if($('#s-work').classList.contains('active')&&nextBtn&&!nextBtn.disabled){
+        e.preventDefault();
+        nextBtn.click();
+      }
+    }
+  };
+  document.addEventListener('keydown',worksheetEnterHandler);
+  CL.push(function(){document.removeEventListener('keydown',worksheetEnterHandler);});
+
   setTimeout(function(){say(q.say||q.prompt.replace(/<[^>]+>/g,''));},350);
 }
 function fb(type,html){var f=$('#fb');if(!f)return;f.className='fb show '+type;f.innerHTML=html;}
