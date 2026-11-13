@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="referrer" content="strict-origin-when-cross-origin">
 <title>Rudraksh's IT Geek Academy</title>
-<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no,viewport-fit=cover">
+<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no,viewport-fit=cover">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-title" content="IT Geek">
@@ -356,6 +356,23 @@ button#vClose{color:#26214f}
 .stk.big{font-size:110px;line-height:1.1}.pop{animation:bounce .8s}
 .album{display:grid;grid-template-columns:repeat(10,1fr);grid-gap:6px;margin-top:8px}.al{display:block;text-align:center;font-size:30px;padding:4px 0;border-radius:12px;background:#ece9ff;opacity:.5}.al.on{opacity:1;background:#fff;box-shadow:0 2px 6px rgba(80,60,160,.2)}
 .tmr{background:linear-gradient(135deg,#e8e4ff,#dff3ff);text-align:center}.tl{text-align:left;max-width:460px;margin:6px auto 10px;font-size:20px;font-weight:600;line-height:1.7}
+/* ---- keyboard friendly + zoom lock ---- */
+html,body,.screen{touch-action:pan-x pan-y}
+:where(input,select,textarea){font-size:max(16px,1em)}
+button:focus-visible,[tabindex]:focus-visible,select:focus-visible,.opt:focus-visible,.tab:focus-visible{outline:5px solid #ffb300;outline-offset:3px}
+.opl input:focus-visible+.mk{outline:4px solid #ffb300;outline-offset:3px}.swt input:focus-visible+.trk{outline:4px solid #ffb300;outline-offset:3px}
+.rng:focus-visible{outline:4px solid #ffb300;outline-offset:6px;border-radius:12px}
+.chip:focus-visible,.slot:focus-visible{outline:5px solid #ffb300;outline-offset:3px}
+body.nokb .kb{display:none}
+.nkey{display:none;text-align:center;margin:12px 0 4px;font-size:26px;font-weight:700;min-height:92px}body.nokb .nkey{display:block}
+.kcap{display:inline-block;min-width:64px;padding:8px 18px;margin:0 8px;border-radius:16px;font-size:44px;line-height:1.2;box-shadow:0 5px 0 rgba(0,0,0,.18);animation:bounce .5s}
+.nkey small{display:block;font-size:17px;color:#6b6591;margin-top:6px;font-weight:600}
+kbd{display:none;margin-left:8px;padding:1px 8px;border-radius:8px;background:rgba(0,0,0,.14);font:inherit;font-size:.55em;font-weight:700;vertical-align:middle;letter-spacing:.02em}body.nokb kbd{display:inline-block}
+.tab kbd{display:none!important}body.nokb .tab kbd{display:block!important;margin:2px auto 0;font-size:11px;padding:0 6px}
+.opt{position:relative}.opt .nb{display:none;position:absolute;left:8px;top:8px;width:26px;height:26px;border-radius:8px;background:rgba(124,77,255,.16);color:#5a3cc8;font-size:15px;font-weight:700;line-height:26px;text-align:center}body.nokb .opt .nb{display:block}
+.wc.wcur{box-shadow:0 0 0 5px #7c4dff;z-index:1}
+.kbt{width:100%;border-collapse:collapse;font-size:18px}.kbt td{padding:6px 8px;border-bottom:1px solid #eee;vertical-align:middle}.kbt td:first-child{white-space:nowrap}
+.kbhint{text-align:center;font-size:15px;font-weight:600;color:#6b6591;margin:2px 0 6px;display:none}body.nokb .kbhint{display:block}
 </style>
 </head>
 <body>
@@ -1077,7 +1094,7 @@ function say(t,force){if((!S.setup.speak&&!force)||!('speechSynthesis' in window
 function party(big){if(!window.confetti)return;try{if(big){var end=Date.now()+1800;(function f(){window.confetti({particleCount:6,angle:60,spread:70,origin:{x:0,y:.7}});window.confetti({particleCount:6,angle:120,spread:70,origin:{x:1,y:.7}});if(Date.now()<end)requestAnimationFrame(f);})();window.confetti({particleCount:160,spread:100,origin:{y:.5}});}else window.confetti({particleCount:50,spread:60,origin:{y:.6}});}catch(e){}}
 let toastT=0;
 function toast(m){var t=$('#toast');t.textContent=m;t.style.display='block';clearTimeout(toastT);toastT=setTimeout(function(){t.style.display='none';},2800);}
-function openModal(html,cls){closeModal();var o=el('<div class="ov"><div class="sheet '+(cls||'')+'">'+html+'</div></div>');$('#modal').appendChild(o);return o;}
+function openModal(html,cls){closeModal();var o=el('<div class="ov"><div class="sheet '+(cls||'')+'">'+html+'</div></div>');$('#modal').appendChild(o);setTimeout(function(){var f=o.querySelector('input:not([type=hidden]),select,textarea')||o.querySelector('.btn:not(.ghost)')||o.querySelector('button');if(f&&document.body.contains(f))focusEl(f);},80);return o;}
 function closeModal(){$('#modal').innerHTML='';}
 document.addEventListener('click',function(e){var b=e.target.closest&&e.target.closest('[data-say]');if(b){ac();say(b.getAttribute('data-say'),true);}});
 document.addEventListener('gesturestart',function(e){e.preventDefault();});
@@ -1087,7 +1104,7 @@ let cur='splash',CL=[];
 function runCleanups(){CL.forEach(function(f){try{f();}catch(e){}});CL=[];}
 const TABS=[['home','🏠','Home'],['ws','📝','Worksheet'],['scan','📷','Scan'],['lab','🧪','Geek Lab'],['parent','🔒','Parent']];
 function buildTabs(){
-  var t=$('#tabs');t.innerHTML=TABS.map(function(x){return '<button type="button" class="tab" data-t="'+x[0]+'"><i>'+x[1]+'</i>'+x[2]+'</button>';}).join('');
+  var t=$('#tabs');t.innerHTML=TABS.map(function(x,ix){return '<button type="button" class="tab" data-t="'+x[0]+'"><i>'+x[1]+'</i>'+x[2]+'<kbd>'+(ix+1)+'</kbd></button>';}).join('');
   [].forEach.call(t.children,function(b){b.addEventListener('click',function(){ac();SFX.pop();var k=b.getAttribute('data-t');if(k==='ws')startWorksheet();else if(k==='parent')pinGate();else go(k);});});
 }
 function go(n){
@@ -1098,8 +1115,124 @@ function go(n){
   var map={home:'home',done:'ws',scan:'scan',lab:'lab',game:'lab',parent:'parent'};
   [].forEach.call($('#tabs').children,function(b){b.classList.toggle('on',map[n]===b.getAttribute('data-t'));});
   var sc=$('#s-'+n);if(sc)sc.scrollTop=0;
+  try{if(document.activeElement&&document.activeElement.blur)document.activeElement.blur();}catch(e){}
   if(n==='home')renderHome();else if(n==='done')renderDone();else if(n==='scan')renderScan();else if(n==='lab')renderLab();else if(n==='parent')renderParent();
 }
+
+/* ---------- KEYBOARD-FRIENDLY APP + ZOOM LOCK ---------- */
+let CURKEYS=null,HELPOPEN=false;
+function setKeys(fn){CURKEYS=fn;CL.push(function(){CURKEYS=null;});}   /* a screen/game can own keys while it is on screen */
+function applyKbMode(){
+  var m=S.setup.kbd||'auto',show=(m==='show')||(m==='auto'&&!S.setup.hwSeen);   /* auto: hide the on-screen keyboard once a real keyboard is used */
+  if(document.body)document.body.classList.toggle('nokb',!show);
+}
+const FOCUSABLE='button:not(:disabled),[tabindex="0"],input:not(:disabled):not([type=hidden]),select:not(:disabled),textarea:not(:disabled),a[href]';
+function rectOf(e){var r=e.getBoundingClientRect();if(!r.width&&e.closest){var l=e.closest('label');if(l)r=l.getBoundingClientRect();}return r;}
+function modalOpen(){return document.querySelector('#modal .sheet');}
+function focusables(){
+  var sc=modalOpen()||document.querySelector('.screen.active')||document.body,list=[].slice.call(sc.querySelectorAll(FOCUSABLE));
+  if(!modalOpen()){var tb=$('#tabs');if(tb&&tb.style.display!=='none')list=list.concat([].slice.call(tb.querySelectorAll('button')));}
+  return list.filter(function(e){var r=rectOf(e);return r.width>0&&r.height>0&&getComputedStyle(e).visibility!=='hidden';});
+}
+function focusEl(e){try{e.focus();}catch(x){}try{e.scrollIntoView({block:'nearest'});}catch(x){}}
+function spatial(dir){
+  var a=document.activeElement,list=focusables();if(!list.length)return false;
+  if(!a||a===document.body||list.indexOf(a)<0){focusEl(list[0]);return true;}
+  var ar=rectOf(a),ax=ar.left+ar.width/2,ay=ar.top+ar.height/2,best=null,bs=1e12;
+  list.forEach(function(e){
+    if(e===a)return;var r=rectOf(e),dx=r.left+r.width/2-ax,dy=r.top+r.height/2-ay,prim,cross;
+    if(dir==='ArrowRight'){prim=dx;cross=Math.abs(dy);}else if(dir==='ArrowLeft'){prim=-dx;cross=Math.abs(dy);}else if(dir==='ArrowDown'){prim=dy;cross=Math.abs(dx);}else{prim=-dy;cross=Math.abs(dx);}
+    if(prim<=2)return;var sc=prim+cross*2.5;if(sc<bs){bs=sc;best=e;}
+  });
+  if(best){focusEl(best);return true;}return false;
+}
+function kbHelp(){
+  var rows=[['Enter','Next question / press the main button'],['Tab / Shift+Tab','Move to the next / previous choice'],['← ↑ → ↓','Move between choices'],['1 2 3 4','Pick that answer'],['Space or Enter','Press the highlighted button'],['H','Hint (Alt+H while typing)'],['S','Read the question aloud (Alt+S while typing)'],['Esc','Close a pop-up / leave the question'],['1 – 5','Home · Worksheet · Scan · Geek Lab · Parent (on the main screens)'],['Ctrl+Enter','Submit a form while typing in a text area'],['?','Show this help']];
+  var o=openModal('<h2>⌨️ Keyboard help</h2><table class="kbt">'+rows.map(function(r){return '<tr><td><kbd style="display:inline-block">'+r[0]+'</kbd></td><td>'+r[1]+'</td></tr>';}).join('')+'</table><div class="row"><button class="btn" id="khOk" type="button">Got it</button></div>');
+  $('#khOk',o).addEventListener('click',closeModal);
+}
+document.addEventListener('keydown',function(e){
+  var t=e.target,tag=t&&t.tagName,k=e.key,ty=tag==='INPUT'?t.type:'';
+  var typing=(tag==='INPUT'&&/^(text|number|email|password|url|search|tel)$/.test(ty))||tag==='TEXTAREA',inSel=tag==='SELECT',isRange=ty==='range',isRadio=ty==='radio';
+  /* a real keyboard was used (outside text boxes, which iPad's own keyboard also fills) -> hide the on-screen keyboard */
+  if(e.isTrusted&&!typing&&!inSel&&k&&k!=='Unidentified'&&!S.setup.hwSeen){S.setup.hwSeen=true;save();applyKbMode();}
+  /* never let the page zoom from the keyboard */
+  if((e.ctrlKey||e.metaKey)&&(k==='+'||k==='-'||k==='='||k==='_'||k==='0')){e.preventDefault();return;}
+  var mod=e.ctrlKey||e.metaKey||e.altKey,modal=modalOpen(),q=(cur==='work'&&SES)?SES.qs[SES.i]:null,kind=q&&q.kind,letterKind=(kind==='typeText'||kind==='tapKey');
+  /* video player */
+  if(VID){
+    if(k==='Escape'){e.preventDefault();var vc=$('#vClose');if(vc)vc.click();return;}
+    if(k===' '||k==='k'||k==='K'){e.preventDefault();toggleVideo();return;}
+    if(k==='n'||k==='N'){var vn=$('#vNext');if(vn)vn.click();return;}
+    return;
+  }
+  /* keys owned by the current game */
+  if(CURKEYS&&!mod&&!typing&&!inSel&&!modal&&!e.defaultPrevented){if(CURKEYS(e)){e.preventDefault();e.stopImmediatePropagation();return;}}
+  if(e.defaultPrevented)return;
+  /* Tab stays inside an open pop-up */
+  if(k==='Tab'&&modal){
+    var fl=focusables();if(fl.length){var i=fl.indexOf(document.activeElement);
+      if(e.shiftKey&&(i<=0)){e.preventDefault();focusEl(fl[fl.length-1]);}else if(!e.shiftKey&&(i===fl.length-1)){e.preventDefault();focusEl(fl[0]);}else if(i<0){e.preventDefault();focusEl(fl[0]);}}
+    return;
+  }
+  if(k==='Escape'){
+    if(modal){e.preventDefault();closeModal();return;}
+    if(typing||inSel){t.blur();return;}
+    if(cur==='work'||cur==='game'){e.preventDefault();var x=$('#wExit')||$('#gExit');if(x)x.click();}
+    return;
+  }
+  /* Enter */
+  if(k==='Enter'){
+    if(e.repeat){e.preventDefault();return;}
+    if(tag==='TEXTAREA'){if(e.ctrlKey||e.metaKey){var f=t.closest('form');if(f){e.preventDefault();if(f.requestSubmit)f.requestSubmit();else f.dispatchEvent(new Event('submit',{cancelable:true}));return;}}else return;}
+    if(cur==='work'&&QS&&QS.done&&!modal){var nx=$('#wNext');if(nx&&!nx.disabled){e.preventDefault();nx.click();return;}}
+    if(typing||inSel||isRange||tag==='BUTTON'||tag==='A'||tag==='LABEL'||isRadio||ty==='checkbox')return;   /* the browser handles these */
+    if(t&&t.getAttribute&&t.getAttribute('role')==='button'){e.preventDefault();t.click();return;}
+    var btn=null;
+    if(modal)btn=modal.querySelector('.btn:not(.ghost):not(:disabled)')||modal.querySelector('button:not(:disabled)');
+    else if(cur==='splash')btn=$('#goBtn');
+    else if(cur==='home')btn=$('#hResume')||$('#hGo');
+    if(btn){e.preventDefault();btn.click();}
+    return;
+  }
+  if(typing||inSel||isRange)return;
+  if(k==='Enter'||mod&&!(e.altKey&&(e.code==='KeyH'||e.code==='KeyS')))return;
+  /* the "?" help key */
+  if(k==='?'){e.preventDefault();kbHelp();return;}
+  /* question screen shortcuts */
+  if(cur==='work'&&SES&&!modal){
+    if(e.altKey&&e.code==='KeyH'||(!letterKind&&(k==='h'||k==='H'))){e.preventDefault();var hb=$('#wHint');if(hb)hb.click();return;}
+    if(e.altKey&&e.code==='KeyS'||(!letterKind&&(k==='s'||k==='S'))){e.preventDefault();var sb=$('#wSay');if(sb)sb.click();return;}
+    if(kind==='choice'&&/^[1-9]$/.test(k)){var os=document.querySelectorAll('#qui .opt'),o=os[+k-1];if(o){e.preventDefault();o.click();}return;}
+    if(kind==='choice'&&/^[a-dA-D]$/.test(k)){var os2=document.querySelectorAll('#qui .opt'),o2=os2['abcd'.indexOf(k.toLowerCase())];if(o2){e.preventDefault();o2.click();}return;}
+  }
+  /* number keys switch the main screens */
+  if(/^[1-5]$/.test(k)&&!modal&&cur!=='work'&&cur!=='game'&&cur!=='splash'){var tb=$('#tabs').children[+k-1];if(tb){e.preventDefault();tb.click();return;}}
+  /* arrow keys move around like a game controller */
+  if(/^Arrow(Up|Down|Left|Right)$/.test(k)&&!isRadio){if(spatial(k))e.preventDefault();return;}
+  if(k===' '&&t&&t.getAttribute&&t.getAttribute('role')==='button'){e.preventDefault();t.click();}
+},false);
+document.addEventListener('keydown',function(e){   /* Space on role=button divs */
+  var t=e.target;if(e.defaultPrevented)return;if(e.key===' '&&t&&t.getAttribute&&t.getAttribute('role')==='button'&&t.tagName!=='BUTTON'){e.preventDefault();t.click();}
+});
+/* ---- keep the screen from zooming ---- */
+(function(){
+  var meta=document.querySelector('meta[name=viewport]'),base='width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no,viewport-fit=cover',busy=0;
+  if(meta)meta.setAttribute('content',base);
+  ['gesturestart','gesturechange','gestureend'].forEach(function(n){document.addEventListener(n,function(e){e.preventDefault();},{passive:false});});
+  document.addEventListener('touchmove',function(e){if(e.touches&&e.touches.length>1)e.preventDefault();},{passive:false});
+  document.addEventListener('dblclick',function(e){var tg=e.target&&e.target.tagName;if(tg!=='INPUT'&&tg!=='TEXTAREA')e.preventDefault();},{passive:false});
+  document.addEventListener('wheel',function(e){if(e.ctrlKey)e.preventDefault();},{passive:false});
+  function reset(){
+    if(!meta||busy)return;busy=1;meta.setAttribute('content',base+',shrink-to-fit=no');
+    setTimeout(function(){meta.setAttribute('content',base);busy=0;try{window.scrollTo(0,0);}catch(x){}},80);
+  }
+  function check(){var v=window.visualViewport;if(v&&v.scale&&Math.abs(v.scale-1)>0.02)reset();}
+  if(window.visualViewport){window.visualViewport.addEventListener('resize',check);window.visualViewport.addEventListener('scroll',check);}
+  window.addEventListener('orientationchange',function(){setTimeout(reset,300);});
+  window.addEventListener('pageshow',function(){setTimeout(check,100);});
+  document.addEventListener('focusout',function(){setTimeout(check,150);});   /* after leaving a text box */
+})();
 
 /* ---------- 5. QUESTION RENDERERS ---------- */
 const DOMS={english:{n:'English',e:'📚',c:'#ff5c8a'},math:{n:'Maths',e:'🔢',c:'#3d8bff'},cs:{n:'Computer',e:'💻',c:'#7c4dff'},forms:{n:'Forms',e:'📋',c:'#1fa3a3'}};
@@ -1134,8 +1267,8 @@ function bindHW(fn){var h=function(e){var k=hwKey(e);if(k){e.preventDefault();fn
 
 function choiceUI(q,host,api){
   var n=q.options.length,box=el('<div class="opts c'+(q.cols||(n<=3?n:2))+'"></div>');host.appendChild(box);
-  q.options.forEach(function(o){
-    var b=el('<button type="button" class="opt" data-v="'+esc(o.v)+'">'+o.html+'</button>');
+  q.options.forEach(function(o,oi){
+    var b=el('<button type="button" class="opt" data-v="'+esc(o.v)+'"><span class="nb">'+(oi+1)+'</span>'+o.html+'</button>');
     b.addEventListener('click',function(){
       if(QS.done||b.classList.contains('dim'))return;
       if(o.v===q.answer){b.classList.add('ok');fillBlank(q,o.v);api.right();}else{b.classList.add('bad');b.classList.add('dim');api.wrong();}
@@ -1162,11 +1295,13 @@ function gridUI(q,host,api){
   return {hint:function(){cells[ti].style.outline='5px solid var(--sun)';},reveal:function(){cells[ti].classList.add('ok');cells[ti].textContent='⭐';}};
 }
 function tapKeyUI(q,host,api){
-  var kb=buildKB(press),row=kbRow(q.target),miss=0;host.appendChild(kb.el);kb.hintRow(row);   /* the right ROW is lit from the start */
+  var kb=buildKB(press),row=kbRow(q.target),miss=0,nk=el('<div class="nkey"></div>');host.appendChild(nk);host.appendChild(kb.el);kb.hintRow(row);
+  var ROWN=['the number row (1 2 3 …)','the top letter row (Q W E R T Y …)','the home row (A S D F G …)','the bottom letter row (Z X C V B …)','the bottom of the keyboard'];
+  nk.innerHTML='<small>Press it on your keyboard! It is on <b>'+ROWN[row]+'</b></small>';   /* the right ROW is lit from the start */
   function press(k){
-    if(QS.done)return;SFX.key();
-    if(k===q.target){kb.flash(k,'ok');kb.unrow();kb.unhint();tone(660,0,.12,'triangle',.18);tone(990,.1,.18,'triangle',.18);api.right();}
-    else{kb.flash(k,'no');miss++;api.miss(miss<2?'Nice try! Look at the <b>glowing row</b> ✨':'Almost! The key is glowing now ✨');if(miss>=2)kb.hint(q.target);}
+    if(QS.done)return;if((k==='ENTER'||k==='BACK'||k==='SHIFT')&&k!==q.target)return;SFX.key();
+    if(k===q.target){nk.innerHTML='';kb.flash(k,'ok');kb.unrow();kb.unhint();tone(660,0,.12,'triangle',.18);tone(990,.1,.18,'triangle',.18);api.right();}
+    else{kb.flash(k,'no');miss++;api.miss(miss<2?'Nice try! Look on <b>'+ROWN[row]+'</b> ✨':'Almost! Press the <b>'+(KLAB[q.target]||q.target)+'</b> key ✨');if(miss>=2){kb.hint(q.target);nk.innerHTML='Press <span class="kcap" style="background:'+(FCOL[FING[q.target]]||'#eee')+'">'+(KLAB[q.target]||q.target)+'</span>';}}
   }
   bindHW(press);
   return {hint:function(){kb.hint(q.target);},reveal:function(){kb.hint(q.target);}};
@@ -1175,10 +1310,13 @@ function typeUI(q,host,api){
   var T=q.target,pos=0,mode=q.mode||'recall',ghost=(mode!=='recall');
   if(mode==='copy')host.appendChild(el('<div class="tcopy">'+T.split('').map(function(c){return '<span>'+(c===' '?'&nbsp;&nbsp;':c)+'</span>';}).join('')+'</div>'));
   var tb=el('<div class="tbox'+(T.length>8?' long':'')+'">'+T.split('').map(function(c){return '<span class="tb'+(c===' '?' sp':'')+'"></span>';}).join('')+'</div>');host.appendChild(tb);
+  var nk=el('<div class="nkey"></div>');host.appendChild(nk);
   var boxes=tb.children,kb=buildKB(press);host.appendChild(kb.el);
-  function mark(){[].forEach.call(boxes,function(b,i){b.classList.toggle('cur',i===pos);});if((ghost||pos===0)&&pos<T.length)kb.hint(chKey(T.charAt(pos)));else kb.unhint();}
+  function mark(){[].forEach.call(boxes,function(b,i){b.classList.toggle('cur',i===pos);});
+    if((ghost||pos===0)&&pos<T.length){var ck=chKey(T.charAt(pos)),fg=FING[ck];kb.hint(ck);nk.innerHTML='Press <span class="kcap" style="background:'+(FCOL[fg]||'#eee')+'">'+(ck==='SPACE'?'SPACE BAR':ck)+'</span><small>'+(FNAME[fg]||'')+'</small>';}
+    else{kb.unhint();nk.innerHTML=pos<T.length?'<small>Which key comes next? Think… ✨</small>':'';}}
   function press(k){
-    if(QS.done||pos>=T.length)return;SFX.key();
+    if(QS.done||pos>=T.length)return;if(k==='ENTER'||k==='BACK'||k==='SHIFT')return;SFX.key();
     if(k===chKey(T.charAt(pos))){boxes[pos].textContent=k==='SPACE'?'␣':k;boxes[pos].classList.add('done','pop');kb.flash(k,'ok');tone(500+pos*55,0,.14,'triangle',.16);if(q.ls&&k.length===1)say(k.toLowerCase());pos++;mark();if(pos>=T.length){[].forEach.call(boxes,function(b,i){setTimeout(function(){b.classList.add('jump');},i*80);});if(q.fill){var bl=document.querySelector('#s-work .blank');if(bl)bl.textContent=(q.show||T).toLowerCase();}api.right();}}
     else{kb.flash(k,'no');api.miss(ghost?'Oops! Press the glowing key ✨':'Almost! Here comes a clue ✨');ghost=true;mark();}
   }
@@ -1191,8 +1329,11 @@ function dragUI(q,host,api){
   host.appendChild(slots);host.appendChild(tray);host.appendChild(foot);
   var slotEl={};
   q.targets.forEach(function(t){var s=el('<div class="slot" data-t="'+esc(t.id)+'"><div class="sl">'+t.html+'</div><div class="drop"></div></div>');slotEl[t.id]=s;slots.appendChild(s);
-    s.addEventListener('click',function(){if(Date.now()-lastDrop<350)return;if(sel&&!QS.done){place(sel,t.id);}});});
+    s.addEventListener('click',function(){if(Date.now()-lastDrop<350)return;if(sel&&!QS.done){place(sel,t.id);}});
+    s.setAttribute('tabindex','0');s.setAttribute('role','button');
+    s.addEventListener('keydown',function(e){if(e.key!=='Enter'&&e.key!==' ')return;e.preventDefault();e.stopPropagation();if(sel&&!QS.done){place(sel,t.id);kfocus();}});});
   function dropOf(id){return slotEl[id].querySelector('.drop');}
+  function kfocus(){var un=q.items.filter(function(i){return !placed[i.id];})[0];if(un)chips[un.id].focus();else if(!chk.disabled)chk.focus();}
   function place(itemId,tid){
     if(!multi){Object.keys(placed).forEach(function(k){if(placed[k]===tid&&k!==itemId&&!chips[k].classList.contains('lock')){placed[k]=null;tray.appendChild(chips[k]);}else if(placed[k]===tid&&k!==itemId)return;});}
     placed[itemId]=tid;dropOf(tid).appendChild(chips[itemId]);setSel(null);SFX.pop();upd();
@@ -1202,7 +1343,13 @@ function dragUI(q,host,api){
   function upd(){chk.disabled=!q.items.every(function(it){return placed[it.id];});}
   function slotAt(x,y){var e=document.elementFromPoint(x,y);var s=e&&e.closest?e.closest('.slot'):null;return s;}
   q.items.forEach(function(it){
-    var c=el('<div class="chip">'+it.html+'</div>');chips[it.id]=c;placed[it.id]=null;tray.appendChild(c);
+    var c=el('<div class="chip" tabindex="0" role="button">'+it.html+'</div>');chips[it.id]=c;placed[it.id]=null;tray.appendChild(c);
+    c.addEventListener('keydown',function(e){
+      if(e.key!=='Enter'&&e.key!==' ')return;e.preventDefault();e.stopPropagation();
+      if(QS.done||c.classList.contains('lock'))return;
+      if(placed[it.id]){back(it.id);c.focus();}
+      else{setSel(sel===it.id?null:it.id);if(sel){var free=q.targets.filter(function(t){return !Object.keys(placed).some(function(k2){return placed[k2]===t.id;});})[0]||q.targets[0];slotEl[free.id].focus();}}
+    });
     c.addEventListener('pointerdown',function(e){
       if(QS.done||c.classList.contains('lock'))return;e.preventDefault();ac();
       var sx=e.clientX,sy=e.clientY,moved=false,fly=null,rect=c.getBoundingClientRect(),ox=sx-rect.left,oy=sy-rect.top,over=null;
@@ -1245,13 +1392,15 @@ function renderQ(){
   QS={wrongs:0,done:false};
   host.innerHTML='<div class="wrap"><div class="wtop"><button class="icon" id="wExit" type="button">✕</button><div class="pillD" style="background:'+D.c+'">'+D.e+' '+D.n+' · '+q.topic+'</div><div class="dots" id="wDots">'+dotsHtml()+'</div><button class="icon" id="wSay" type="button">🔊</button></div>'+
     '<div class="qcard"><div class="qprompt">'+q.prompt+'</div><div class="qvis">'+(q.visual||'')+'</div><div id="qui"></div><div class="fb" id="fb"></div></div>'+
-    '<div class="wfoot"><button class="btn ghost" id="wHint" type="button">💡 Hint</button><button class="btn big" id="wNext" type="button" disabled>'+(SES.i===SES.qs.length-1?'Finish 🎉':'Next ➜')+'</button></div></div>';
+    '<div class="wfoot"><button class="btn ghost" id="wHint" type="button">💡 Hint<kbd>'+((q.kind==='typeText'||q.kind==='tapKey')?'Alt+H':'H')+'</kbd></button><button class="btn big" id="wNext" type="button" disabled>'+(SES.i===SES.qs.length-1?'Finish 🎉':'Next ➜')+'<kbd>Enter ⏎</kbd></button></div></div>';
   var api={
     right:function(){finishQ(true);},
     wrong:function(){QS.wrongs++;SFX.bad();if(QS.wrongs>=3){UI&&UI.reveal&&UI.reveal();finishQ(false);}else fb('bad','Not yet — try again! 💪'+(q.hint?'<br><small>💡 '+q.hint+'</small>':''));},
     miss:function(msg){QS.wrongs++;SFX.bad();fb('bad',msg||'Oops! Follow the glowing key ✨');return QS.wrongs;}
   };
   UI=RENDER[q.kind](q,$('#qui'),api);
+  try{document.activeElement&&document.activeElement.blur&&document.activeElement.blur();}catch(e){}
+  setTimeout(function(){var f=null,qu=$('#qui');if(!qu||QS.done)return;if(q.kind==='choice')f=qu.querySelector('.opt');else if(q.kind==='grid')f=qu.querySelector('.gcell');else if(q.kind==='form')f=qu.querySelector('input:not([type=hidden]):not([type=radio]):not([type=checkbox]),select,textarea')||qu.querySelector('input');else if(q.kind==='drag')f=qu.querySelector('.chip');if(f)focusEl(f);},60);
   $('#wExit').addEventListener('click',function(){runCleanups();go(SES.kind==='ws'||SES.kind==='quiz'?'home':'lab');});
   $('#wSay').addEventListener('click',function(){ac();say(q.say||q.prompt.replace(/<[^>]+>/g,''),true);});
   $('#wHint').addEventListener('click',function(){SFX.pop();fb('info','💡 '+(q.hint||'Take your time!'));if(UI&&UI.hint)UI.hint();});
@@ -1259,20 +1408,6 @@ function renderQ(){
     SES.i++;if(SES.persist)SES.persist();
     if(SES.i>=SES.qs.length){runCleanups();SES.onDone();}else renderQ();
   });
-
-  // External iPad keyboard: Enter advances only after the Next button is enabled.
-  var worksheetEnterHandler=function(e){
-    if((e.key==='Enter'||e.code==='NumpadEnter')&&!e.repeat&&!e.isComposing){
-      var nextBtn=$('#wNext');
-      if($('#s-work').classList.contains('active')&&nextBtn&&!nextBtn.disabled){
-        e.preventDefault();
-        nextBtn.click();
-      }
-    }
-  };
-  document.addEventListener('keydown',worksheetEnterHandler);
-  CL.push(function(){document.removeEventListener('keydown',worksheetEnterHandler);});
-
   setTimeout(function(){say(q.say||q.prompt.replace(/<[^>]+>/g,''));},350);
 }
 function fb(type,html){var f=$('#fb');if(!f)return;f.className='fb show '+type;f.innerHTML=html;}
@@ -1282,7 +1417,7 @@ function finishQ(ok){
   SES.res[SES.i]={w:QS.wrongs,ok:ok,p:pts};S.xp+=pts;
   if(ok){SFX.ok();fb('ok','⭐ '+pick(PRAISE)+' +'+pts+' XP');party(false);}else fb('info','Good try! Now you know the answer 🌟');
   if(SES.persist)SES.persist();else save();
-  $('#wDots').innerHTML=dotsHtml();$('#wNext').disabled=false;
+  $('#wDots').innerHTML=dotsHtml();$('#wNext').disabled=false;try{$('#wNext').focus();}catch(e){}
 }
 
 /* ---------- 6. SCREENS ---------- */
@@ -1315,7 +1450,7 @@ function renderHome(){
     h+='<p class="sub">'+total+' hands-on questions: type, tick, choose, fill in forms, drag and tap! English 📚, Maths 🔢 and Computers 💻. Finish them to unlock a video reward!</p><div class="bar" style="background:rgba(255,255,255,.3)"><i style="width:'+Math.round(prog/total*100)+'%"></i></div><div class="row"><button class="btn big" id="hGo" type="button" style="background:#fff;color:var(--cs)">'+(prog?'Continue ('+prog+'/'+total+') ➜':'Start! ➜')+'</button></div>';
   }
   h+='</div>'+albumCard()+'<div class="card"><h3>🏅 My badges</h3><div class="badges">'+BADGES.map(function(b){return '<span class="bdg'+(S.badges.indexOf(b[0])>=0?' on':'')+'" title="'+b[2]+'">'+b[1]+'</span>';}).join('')+'</div></div>';
-  h+='<div class="card" id="hLab" style="cursor:pointer"><h3>🧪 Geek Lab</h3><p class="sub" style="margin:0">Typing games, device sorting and how QR scanning really works →</p></div></div>';
+  h+='<div class="card" id="hLab" style="cursor:pointer" tabindex="0" role="button"><h3>🧪 Geek Lab</h3><p class="sub" style="margin:0">Typing games, device sorting and how QR scanning really works →</p></div></div>';
   $('#s-home').innerHTML=h;
   var g=$('#hGo');if(g)g.addEventListener('click',function(){ac();startWorksheet();});
   $('#hLab').addEventListener('click',function(){go('lab');});
@@ -2090,7 +2225,7 @@ function renderParent(){
   h+='<div class="card"><h3>Today ('+d+')</h3><p>Worksheet: <b>'+(day?(day.done?'finished ✅':'in progress ('+Math.min(day.i,day.qs.length)+'/'+day.qs.length+')'):'not started')+'</b><br>Reward: <b>'+(t?({issued:'issued, not claimed yet 🎁',claimed:'claimed ✅',void:'cancelled'}[t.st]||t.st):'none yet')+'</b></p><div class="row">'+
     (t&&t.st==='issued'?'<button class="btn ok sm" id="pQr" type="button">🎁 Show reward QR</button><button class="btn sm" id="pMail" type="button">📧 Email it</button>':'')+
     '<button class="btn warn sm" id="pReset" type="button">↺ Reset today (new questions + new reward)</button><button class="btn ghost sm" id="pTest" type="button">▶ Test video player</button></div></div>';
-  h+='<div class="card"><h3>Contacts &amp; security</h3><p>Dad: <b>'+esc(S.setup.dadEmail)+'</b><br>Mom: <b>'+esc(S.setup.momEmail)+'</b><br>Send to: <b>'+S.setup.sendTo+'</b> · QR on iPad: <b>'+(S.setup.qrMode==='pin'?'PIN-locked':'visible')+'</b> · Max video: <b>'+S.setup.maxMin+' min</b><br>App address: <b>'+esc(S.setup.appUrl||'(not set)')+'</b></p><div class="row"><button class="btn sm" id="pEdit" type="button">✏️ Edit setup / change PIN</button><button class="btn ghost sm" id="pSnd" type="button">'+(S.setup.sound?'🔊 Sound on':'🔇 Sound off')+'</button><button class="btn ghost sm" id="pSpk" type="button">'+(S.setup.speak?'🗣️ Read-aloud on':'🤐 Read-aloud off')+'</button></div></div>';
+  h+='<div class="card"><h3>Contacts &amp; security</h3><p>Dad: <b>'+esc(S.setup.dadEmail)+'</b><br>Mom: <b>'+esc(S.setup.momEmail)+'</b><br>Send to: <b>'+S.setup.sendTo+'</b> · QR on iPad: <b>'+(S.setup.qrMode==='pin'?'PIN-locked':'visible')+'</b> · Max video: <b>'+S.setup.maxMin+' min</b><br>App address: <b>'+esc(S.setup.appUrl||'(not set)')+'</b></p><div class="row"><button class="btn sm" id="pEdit" type="button">✏️ Edit setup / change PIN</button><button class="btn ghost sm" id="pSnd" type="button">'+(S.setup.sound?'🔊 Sound on':'🔇 Sound off')+'</button><button class="btn ghost sm" id="pSpk" type="button">'+(S.setup.speak?'🗣️ Read-aloud on':'🤐 Read-aloud off')+'</button><button class="btn ghost sm" id="pKbd" type="button">'+({show:'⌨️ On-screen keyboard: shown',hide:'⌨️ On-screen keyboard: hidden',auto:'⌨️ On-screen keyboard: auto'}[S.setup.kbd||'auto'])+'</button><button class="btn ghost sm" id="pKh" type="button">❓ Keyboard help</button></div></div>';
   h+='<div class="card"><h3>Approved video channels (automatic)</h3>'+CHANNELS.map(function(c){return '<div class="chrow"><input type="checkbox" data-c="'+c.key+'" '+(S.ch[c.key].on?'checked':'')+'><b>'+c.e+' '+c.n+'</b></div>';}).join('')+'<small>No video links to enter: each reward picks a random video from one of the ticked channels automatically (a different channel from yesterday).</small></div>';
   h+='<div class="card"><h3>This device</h3><div class="note '+(isFile?'badn':'good')+'">'+(isFile?'⚠️ Opened as a local file: the live camera and the YouTube player are blocked by iOS for file:// pages. Host this file on any free HTTPS site (GitHub Pages, Netlify Drop…) and enter its address in setup. Photo-scan and typed codes still work.':'✅ Opened from '+esc(location.origin||location.protocol)+(secure?' (secure)':' (not secure: camera needs https)'))+'</div><p style="margin:6px 0">Camera API: <b>'+(camOk?'available':'not available')+'</b> · QR library: <b>'+(window.QRCode?'loaded':'not loaded')+'</b> · Scanner library: <b>'+(window.jsQR?'loaded':'not loaded')+'</b></p></div>';
   h+='<div class="card"><h3>Progress</h3>'+(Object.keys(S.days).sort().reverse().slice(0,7).map(function(k){var x=S.days[k];return '<div class="chrow"><b style="width:120px">'+k+'</b><span>'+(x.done?'✅ done':'⏳ '+Math.min(x.i,x.qs.length)+'/'+x.qs.length)+'</span></div>';}).join('')||'<p>No worksheets yet.</p>')+'<div class="row"><button class="btn warn sm" id="pWipe" type="button">Erase all app data</button></div></div></div>';
@@ -2100,12 +2235,15 @@ function renderParent(){
   b('#pReset',function(){if(!confirm('Reset today? The current reward (if unclaimed) will be cancelled.'))return;if(t&&t.st==='issued')t.st='void';S.resets[d]=(S.resets[d]||0)+1;delete S.days[d];save();renderParent();toast('Reset ✔');});
   b('#pTest',function(){var c=CHANNELS.filter(function(x){return S.ch[x.key].on;})[0];if(!c){toast('Turn on a channel first');return;}playReward({id:'preview',ch:c.key,idx:0,preview:true});});
   b('#pEdit',function(){setupModal(false);});
+  b('#pKbd',function(){var m=S.setup.kbd||'auto';S.setup.kbd=m==='auto'?'hide':m==='hide'?'show':'auto';save();applyKbMode();renderParent();toast(S.setup.kbd==='auto'?'Auto: hides when a real keyboard is used':S.setup.kbd==='hide'?'On-screen keyboard hidden':'On-screen keyboard shown');});
+  b('#pKh',kbHelp);
   b('#pSnd',function(){S.setup.sound=!S.setup.sound;save();renderParent();});b('#pSpk',function(){S.setup.speak=!S.setup.speak;save();renderParent();});
   b('#pWipe',function(){if(confirm('Erase everything, including XP, streak and PIN?')){try{localStorage.removeItem(KEY);}catch(e){}location.reload();}});
   [].forEach.call(document.querySelectorAll('#s-parent [data-c]'),function(i){i.addEventListener('change',function(){S.ch[i.getAttribute('data-c')].on=i.checked;save();});});
 }
 
 /* ---------- 11. BOOT ---------- */
+applyKbMode();
 function handleHash(){
   var h=location.hash||'';
   if(h.indexOf('reward=')<0)return;
