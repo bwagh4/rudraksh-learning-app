@@ -507,6 +507,7 @@ body.nokb .tab kbd{position:absolute;top:4px;right:calc(50% - 40px);margin:0;fon
 .tapnote{position:fixed;left:50%;bottom:110px;transform:translateX(-50%);z-index:9998;animation:bounce 1s infinite}
 .qqcard{background:linear-gradient(135deg,#e6f7ff,#efe6ff)}
 #fnRec.rec{background:#e63946;color:#fff;animation:micp 1s ease-in-out infinite}
+.verbadge{text-align:center;font-size:13px;font-weight:700;color:#6b6890;opacity:.8;margin:14px 0 6px;letter-spacing:.3px;user-select:none}
 </style>
 </head>
 <body>
@@ -1393,6 +1394,12 @@ document.addEventListener('keydown',function(e){
     if(e.repeat){e.preventDefault();return;}
     if(tag==='TEXTAREA'){if(e.ctrlKey||e.metaKey){var f=t.closest('form');if(f){e.preventDefault();if(f.requestSubmit)f.requestSubmit();else f.dispatchEvent(new Event('submit',{cancelable:true}));return;}}else return;}
     if(cur==='work'&&QS&&QS.done&&!modal){var nx=$('#wNext');if(nx&&!nx.disabled){e.preventDefault();nx.click();return;}}
+    if(cur==='work'&&QS&&!QS.done&&!modal){   /* Enter = Check, on every kind of question */
+      var onChip=t&&t.closest&&t.closest('.chip,.slot');
+      var dc=document.querySelector('#qui .dzfoot .btn:not(:disabled)');
+      if(dc&&!onChip){e.preventDefault();dc.click();return;}
+      if(!dc&&(isRadio||ty==='checkbox'||isRange||tag==='SELECT')){var fm=t.closest&&t.closest('form');if(fm){e.preventDefault();if(fm.requestSubmit)fm.requestSubmit();else fm.dispatchEvent(new Event('submit',{cancelable:true}));return;}}
+    }
     if(typing||inSel||isRange||tag==='BUTTON'||tag==='A'||tag==='LABEL'||isRadio||ty==='checkbox')return;   /* the browser handles these */
     if(t&&t.getAttribute&&t.getAttribute('role')==='button'){e.preventDefault();t.click();return;}
     var btn=null;
@@ -1662,7 +1669,8 @@ function renderHome(){
     h+='<p class="sub">'+total+' hands-on questions: type, tick, choose, fill in forms, drag and tap! English 📚, Maths 🔢 and Computers 💻. Finish them to unlock a video reward!</p><div class="bar" style="background:rgba(255,255,255,.3)"><i style="width:'+Math.round(prog/total*100)+'%"></i></div><div class="row"><button class="btn big" id="hGo" type="button" style="background:#fff;color:var(--cs)">'+(prog?'Continue ('+prog+'/'+total+') ➜':'Start! ➜')+'</button></div>';
   }
   h+='</div>'+albumCard()+'<div class="card"><h3>🏅 My badges</h3><div class="badges">'+BADGES.map(function(b){return '<span class="bdg'+(S.badges.indexOf(b[0])>=0?' on':'')+'" title="'+b[2]+'">'+b[1]+'</span>';}).join('')+'</div></div>';
-  h+='<div class="card" id="hLab" style="cursor:pointer" tabindex="0" role="button"><h3>🧪 Geek Lab</h3><p class="sub" style="margin:0">Typing games, device sorting and how QR scanning really works →</p></div></div>';
+  h+='<div class="card" id="hLab" style="cursor:pointer" tabindex="0" role="button"><h3>🧪 Geek Lab</h3><p class="sub" style="margin:0">Typing games, device sorting and how QR scanning really works →</p></div>';
+  h+='<div class="verbadge" title="App version">IT Geek Academy · v'+APP_VER+' · build '+APP_BUILD+'</div></div>';
   $('#s-home').innerHTML=h;
   var g=$('#hGo');if(g)g.addEventListener('click',function(){ac();startWorksheet();});
   $('#hLab').addEventListener('click',function(){go('lab');});
@@ -2450,7 +2458,7 @@ function renderParent(){
 }
 
 /* ---------- 12. v2 UPGRADE: syllabus, analytics, adaptive, backup, playground ---------- */
-const APP_VER='2.0';
+const APP_VER='4.1.0',APP_BUILD='2026-11-18';
 function shuf(a){a=a.slice();for(var i=a.length-1;i>0;i--){var j=Math.floor(Math.random()*(i+1)),t=a[i];a[i]=a[j];a[j]=t;}return a;}
 function lastNDays(n){var a=[],t=Date.now(),i;for(i=n-1;i>=0;i--)a.push(ymd(new Date(t-i*864e5)));return a;}
 function pctOf(f,n){return n?Math.round(f/n*100):0;}
@@ -3206,21 +3214,40 @@ function listenOnce(cb){
   return {stop:function(){try{rec.stop();}catch(e){}},abort:function(){fin=true;clearTimeout(timer);try{rec.onresult=rec.onerror=rec.onend=null;rec.abort();}catch(e){}}};
 }
 function optLabel(b){var c=b.cloneNode(true),nb=c.querySelector('.nb');if(nb)c.removeChild(nb);return (c.textContent||'').replace(/\s+/g,' ').trim();}
+function spokenNorm(x){
+  var t=normWords(x).join(' ').replace(/^(?:hmm |um |uh |okay |ok )+/,'').replace(/^(?:i think |i guess |maybe |it is |its |it s |that is |thats |the answer is |answer is |answer |my answer is |is it )+/,'').replace(/ please$/,'').trim();
+  return t;
+}
+function noArt(t){return t.replace(/^(?:the|a|an) /,'').trim();}
 function spokenToOption(alts,buttons){
-  var cands=[],labels=buttons.map(optLabel),clean=function(s){return String(s).toLowerCase().replace(/[^a-z0-9 ]/g,' ').replace(/\s+/g,' ').trim();};
-  buttons.forEach(function(b,i){
-    var lab=clean(labels[i]);if(!lab)return;var best=0,pass=false;
-    alts.forEach(function(a){
-      var ca=clean(a);
-      if(lab.length===1&&/[a-z]/.test(lab)){var sn=LETTER_SND[lab]||[lab];if(ca.split(' ').some(function(t){return sn.indexOf(t)>=0;})||sn.indexOf(ca)>=0){best=1;pass=true;}return;}
-      var r=matchSentence(lab,a);if(r.score>best)best=r.score;if(r.pass)pass=true;
-    });
-    if(pass)cands.push({i:i,s:best});
-  });
-  if(cands.length===1)return cands[0].i;
-  if(cands.length>1){cands.sort(function(a,b){return b.s-a.s;});if(cands[0].s>cands[1].s)return cands[0].i;return -2;}   /* ambiguous */
+  var labels=buttons.map(function(b){return spokenNorm(optLabel(b));}),L=labels.map(noArt),n=buttons.length,i,k;
+  var S=alts.map(spokenNorm).filter(Boolean),SA=S.map(noArt);
+  /* tier 1: exact match after normalising (case, punctuation, articles, spaces) */
+  for(k=0;k<S.length;k++){var ex=[];for(i=0;i<n;i++)if(L[i]&&(labels[i]===S[k]||L[i]===SA[k]))ex.push(i);if(ex.length===1)return ex[0];}
+  /* tier 2: the option appears inside what was said ("it is the pointer"), longest option wins */
+  var has=function(hay,nd){return nd&&(' '+hay+' ').indexOf(' '+nd+' ')>=0;};
+  var best=-1,bl=0,tie=false;
+  for(i=0;i<n;i++){if(!L[i]||L[i].length<2)continue;for(k=0;k<SA.length;k++)if(has(SA[k],L[i])){if(L[i].length>bl){best=i;bl=L[i].length;tie=false;}else if(L[i].length===bl&&i!==best)tie=true;break;}}
+  if(best>=0&&!tie)return best;
+  /* single-letter options: "bee" -> B */
+  var lets=[];for(i=0;i<n;i++)if(L[i].length===1&&/[a-z]/.test(L[i])){var sn=LETTER_SND[L[i]]||[L[i]];for(k=0;k<SA.length;k++)if(SA[k].split(' ').some(function(tk){return sn.indexOf(tk)>=0;})||sn.indexOf(SA[k])>=0){lets.push(i);break;}}
+  if(lets.length===1)return lets[0];
+  /* tier 3: fuzzy, exact words count more than near-misses (printer vs pointer) */
+  var sc=[];
+  for(i=0;i<n;i++){
+    var T=normWords(L[i]),top=0;if(!T.length||L[i].length<2){sc.push(0);continue;}
+    for(k=0;k<SA.length;k++){
+      var H=normWords(SA[k]),ex2=0,r=matchSentence(L[i],SA[k]);
+      T.forEach(function(w){if(H.indexOf(w)>=0)ex2++;});
+      var v=r.pass?(ex2+(r.got-ex2)*.5)/T.length+.01:0;if(v>top)top=v;
+    }
+    sc.push(top);
+  }
+  var order=sc.map(function(v,i){return i;}).sort(function(a,b){return sc[b]-sc[a];});
+  if(sc[order[0]]>0){if(n<2||sc[order[0]]-sc[order[1]]>=.2)return order[0];return -2;}
+  /* ordinals: "second", "number two" */
   var ord={one:0,'1':0,first:0,two:1,'2':1,second:1,three:2,'3':2,third:2,four:3,'4':3,fourth:3};
-  for(var k=0;k<alts.length;k++){var m=/^(?:option |number |answer |choice )?(one|two|three|four|1|2|3|4|first|second|third|fourth)$/.exec(clean(alts[k]));if(m&&ord[m[1]]!==undefined&&ord[m[1]]<buttons.length)return ord[m[1]];}
+  for(k=0;k<alts.length;k++){var m=/^(?:option |number |answer |choice )?(one|two|three|four|1|2|3|4|first|second|third|fourth)$/.exec(String(alts[k]).toLowerCase().replace(/[^a-z0-9 ]/g,'').trim());if(m&&ord[m[1]]!==undefined&&ord[m[1]]<n)return ord[m[1]];}
   return -1;
 }
 function vqSingleForm(q){return q.kind==='form'&&q.fields&&q.fields.length===1&&(q.fields[0].t==='text'||q.fields[0].t==='number')&&q.fields[0].answer!==undefined;}
