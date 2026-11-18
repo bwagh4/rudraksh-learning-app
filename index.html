@@ -489,6 +489,24 @@ body.nokb .tab kbd{position:absolute;top:4px;right:calc(50% - 40px);margin:0;fon
 .vtype{margin-top:12px}.vtype summary{cursor:pointer;font-weight:700;color:var(--soft);text-align:center;padding:8px}
 .vtype form{display:flex;gap:8px;margin-top:6px}.vtype .fi{flex:1}
 #vNext[hidden]{display:none}
+/* ---- v4: alarm, voice answers, family notes ---- */
+.alarm{position:fixed;inset:0;z-index:9999;display:flex;align-items:center;justify-content:center;padding:20px;background:radial-gradient(circle at 50% 30%,#ffe27a,#ff9ec4 55%,#7c4dff);animation:alin .35s ease}
+@keyframes alin{from{opacity:0}to{opacity:1}}
+.alcard{width:100%;max-width:640px;text-align:center;background:rgba(255,255,255,.92);border-radius:36px;padding:28px 22px;box-shadow:0 20px 60px rgba(60,20,120,.4)}
+.alcard h1{font-size:40px;margin:.1em 0;font-weight:800}.alsay{font-size:24px;font-weight:600;margin:.3em 0 .6em}
+.albyte{position:relative;display:inline-block;font-size:120px;line-height:1;animation:albounce 1s ease-in-out infinite}
+.alring{position:absolute;left:50%;top:50%;width:150px;height:150px;margin:-75px 0 0 -75px;border-radius:50%;border:6px solid rgba(255,92,138,.6);animation:alpulse 1.6s ease-out infinite;pointer-events:none}.alring.r2{animation-delay:.8s}
+@keyframes alpulse{from{transform:scale(.7);opacity:.9}to{transform:scale(1.9);opacity:0}}
+@keyframes albounce{0%,100%{transform:translateY(0) rotate(-4deg)}50%{transform:translateY(-14px) rotate(4deg)}}
+.albell{font-size:40px;animation:alring .6s ease-in-out infinite alternate;display:inline-block}@keyframes alring{from{transform:rotate(-18deg)}to{transform:rotate(18deg)}}
+.alprog{height:16px;background:#ece9ff;border-radius:10px;overflow:hidden;margin:6px auto;max-width:360px}.alprog div{height:100%;background:linear-gradient(90deg,#34c77b,#1fa3a3);border-radius:10px}
+.alhint{font-weight:700;color:#b5541c;font-size:20px}
+#alHear.pulse{animation:micp 1s ease-in-out infinite;background:#ffe27a}
+.micq.rec{animation:micp 1s ease-in-out infinite;background:#ffe0e6;color:#c0143c}
+.fnote{display:flex;align-items:center;gap:12px;background:linear-gradient(135deg,#fff3d6,#ffe1ee);border:2px solid #ffc833}.fnico{font-size:40px}
+.tapnote{position:fixed;left:50%;bottom:110px;transform:translateX(-50%);z-index:9998;animation:bounce 1s infinite}
+.qqcard{background:linear-gradient(135deg,#e6f7ff,#efe6ff)}
+#fnRec.rec{background:#e63946;color:#fff;animation:micp 1s ease-in-out infinite}
 </style>
 </head>
 <body>
@@ -1186,8 +1204,8 @@ function botSolve(L){
 
 /* ---------- 3. STATE (localStorage) ---------- */
 const KEY='rudra_it_geek_v1';
-const DEF={setup:{done:false,momEmail:'phandroshni@gmail.com',dadEmail:'bwagh4@gmail.com',sendTo:'dad',pin:'',appUrl:'',qrMode:'pin',maxMin:15,sound:true,speak:true,p1ws:4,p1qz:2,adapt:true,vol:.8,voice:''},
-  xp:0,streak:0,lastDone:'',days:{},resets:{},tokens:{},pending:'',lastChannel:'',ch:{},badges:[],stk:[],rec:[],qzq:null,pinFail:0,pinLock:0,qz:{},gw:{d:'',n:0,paid:0},gd:{d:'',done:{},memPaid:0},botSet:0,custom:[],log:[],stat:{},dom:{},hist:{},sess:[],scene:null,lastBackup:0,best:0,voice:{d:'',done:false,days:0,total:0}};
+const DEF={setup:{done:false,momEmail:'phandroshni@gmail.com',dadEmail:'bwagh4@gmail.com',sendTo:'dad',pin:'',appUrl:'',qrMode:'pin',maxMin:15,sound:true,speak:true,p1ws:4,p1qz:2,adapt:true,vol:.8,voice:'',alarm:true,alarmIdle:15,notes:true,vq:true},
+  xp:0,streak:0,lastDone:'',days:{},resets:{},tokens:{},pending:'',lastChannel:'',ch:{},badges:[],stk:[],rec:[],qzq:null,pinFail:0,pinLock:0,qz:{},gw:{d:'',n:0,paid:0},gd:{d:'',done:{},memPaid:0},botSet:0,custom:[],log:[],stat:{},dom:{},hist:{},sess:[],scene:null,lastBackup:0,best:0,voice:{d:'',done:false,days:0,total:0},vnotes:[],vnIdx:0,alarm:{d:'',last:0,n:0},vstat:{n:0}};
 let S=loadState();
 function loadState(){
   var j=null;try{j=JSON.parse(localStorage.getItem(KEY));}catch(e){}
@@ -1198,7 +1216,7 @@ function loadState(){
   var okKeys=CHANNELS.map(function(c){return c.key;}),on=okKeys.filter(function(k){return s.ch[k].on;});if(!on.length)on=okKeys;
   Object.keys(s.tokens||{}).forEach(function(k){var t=s.tokens[k];if(t&&okKeys.indexOf(t.ch)<0)t.ch=on[Math.floor(Math.random()*on.length)];});
   if(okKeys.indexOf(s.lastChannel)<0)s.lastChannel='';
-  ['custom','log','sess'].forEach(function(k){if(!Array.isArray(s[k]))s[k]=[];});['stat','dom','hist'].forEach(function(k){if(!s[k]||typeof s[k]!=='object'||Array.isArray(s[k]))s[k]={};});if(!s.voice||typeof s.voice!=='object')s.voice={d:'',done:false,days:0,total:0};
+  ['custom','log','sess','vnotes'].forEach(function(k){if(!Array.isArray(s[k]))s[k]=[];});['stat','dom','hist'].forEach(function(k){if(!s[k]||typeof s[k]!=='object'||Array.isArray(s[k]))s[k]={};});if(!s.voice||typeof s.voice!=='object')s.voice={d:'',done:false,days:0,total:0};
   return s;
 }
 function save(){try{localStorage.setItem(KEY,JSON.stringify(S));}catch(e){}}
@@ -1262,7 +1280,7 @@ const SFX={
 SFX.fanfare=SFX.win;
 (function(){
   var near='button,.opt,.tab,.icon,[role=button],.opl,.swt,a[href],select,.gcell,.slot',last=0;
-  ['pointerdown','touchend','keydown','mousedown'].forEach(function(n){document.addEventListener(n,function(){ac();},{capture:true,passive:true});});
+  ['pointerdown','touchend','keydown','mousedown'].forEach(function(n){document.addEventListener(n,function(){ac();unlockMedia();},{capture:true,passive:true});});
   document.addEventListener('pointerdown',function(e){
     try{
       document.body.classList.toggle('mouse',e.pointerType==='mouse');
@@ -1385,13 +1403,14 @@ document.addEventListener('keydown',function(e){
     return;
   }
   if(typing||inSel||isRange)return;
-  if(k==='Enter'||mod&&!(e.altKey&&(e.code==='KeyH'||e.code==='KeyS')))return;
+  if(k==='Enter'||mod&&!(e.altKey&&(e.code==='KeyH'||e.code==='KeyS'||e.code==='KeyV')))return;
   /* the "?" help key */
   if(k==='?'){e.preventDefault();kbHelp();return;}
   /* question screen shortcuts */
   if(cur==='work'&&SES&&!modal){
     if(e.altKey&&e.code==='KeyH'||(!letterKind&&(k==='h'||k==='H'))){e.preventDefault();var hb=$('#wHint');if(hb)hb.click();return;}
     if(e.altKey&&e.code==='KeyS'||(!letterKind&&(k==='s'||k==='S'))){e.preventDefault();var sb=$('#wSay');if(sb)sb.click();return;}
+    if(e.altKey&&e.code==='KeyV'||(!letterKind&&(k==='v'||k==='V'))){var vb=$('#wMic');if(vb){e.preventDefault();vb.click();return;}}
     if(kind==='choice'&&/^[1-9]$/.test(k)){var os=document.querySelectorAll('#qui .opt'),o=os[+k-1];if(o){e.preventDefault();o.click();}return;}
     if(kind==='choice'&&/^[a-dA-D]$/.test(k)){var os2=document.querySelectorAll('#qui .opt'),o2=os2['abcd'.indexOf(k.toLowerCase())];if(o2){e.preventDefault();o2.click();}return;}
   }
@@ -1598,14 +1617,16 @@ function renderQ(){
     SES.i++;if(SES.persist)SES.persist();
     if(SES.i>=SES.qs.length){runCleanups();SES.onDone();}else renderQ();
   });
-  if(!q.mute)setTimeout(function(){say(q.say||q.prompt.replace(/<[^>]+>/g,''));},350);
+  if(SES.voiceFirst&&vqAvailable(q)){setTimeout(function(){if(SES.qs[SES.i]!==q)return;say(q.say||q.prompt.replace(/<[^>]+>/g,''),true,{onend:function(){setTimeout(function(){if(SES&&SES.qs[SES.i]===q&&QS&&!QS.done&&cur==='work'&&!VQ.ctl)vqToggle();},250);}});},350);}
+  else if(!q.mute)setTimeout(function(){say(q.say||q.prompt.replace(/<[^>]+>/g,''));},350);
+  setupVoiceAnswer(q);
   var idleT=setTimeout(function(){if(QS&&!QS.done&&q.lvl<0&&UI&&UI.hint){try{UI.hint();fb('info','💡 '+(q.hint||'Take your time!'));}catch(e){}}},15000);CL.push(function(){clearTimeout(idleT);});
 }
 function fb(type,html){var f=$('#fb');if(!f)return;f.className='fb show '+type;f.innerHTML=html;}
 function finishQ(ok){
   if(QS.done)return;QS.done=true;
-  var q0=SES.qs[SES.i],pts=ok?Math.max(10-QS.wrongs*3,3):0;if(ok&&QS.wrongs===0&&q0&&q0.lvl>0)pts+=2;if(SES.noLog)pts=0;
-  SES.res[SES.i]={w:QS.wrongs,ok:ok,p:pts};S.xp+=pts;if(q0)logAns(q0,ok,QS.wrongs);
+  var q0=SES.qs[SES.i],pts=ok?Math.max(10-QS.wrongs*3,3):0;if(ok&&QS.wrongs===0&&q0&&q0.lvl>0)pts+=2;if(ok&&QS.wrongs===0&&QS.voice)pts+=2;if(SES.noLog)pts=0;
+  SES.res[SES.i]={w:QS.wrongs,ok:ok,p:pts,v:QS.voice?1:0};S.xp+=pts;if(q0)logAns(q0,ok,QS.wrongs);
   if(ok){SFX.ok();fb('ok','⭐ '+pick(PRAISE)+' +'+pts+' XP');party(false);}else fb('info','Good try! Now you know the answer 🌟');
   if(SES.persist)SES.persist();else save();
   $('#wDots').innerHTML=dotsHtml();$('#wNext').disabled=false;try{$('#wNext').focus();}catch(e){}
@@ -1664,7 +1685,7 @@ function finishWorksheet(){
   add('first');if(S.streak>=3)add('streak3');if(S.streak>=7)add('streak7');
   var firsts=day.res.filter(function(r){return r&&r.ok&&r.w===0;}).length,csFirst=day.res.filter(function(r,i){return day.qs[i]&&day.qs[i].domain==='cs'&&r&&r.ok&&r.w===0;}).length;
   if(csFirst>=5)add('typist');if(firsts===day.qs.length)add('perfect');
-  awardSticker(d);save();qrUnlocked=false;SFX.win();go('done');party(true);setTimeout(function(){say('Fantastic '+PROFILE.first+'! You finished today\'s worksheet. Come back tomorrow for a new sticker!');},700);
+  awardSticker(d);save();qrUnlocked=false;SFX.win();go('done');party(true);alarmClear();familyThenSay('Fantastic '+PROFILE.first+'! You finished today\'s worksheet. Come back tomorrow for a new sticker!');
 }
 /* ---------- APPRECIATION, STICKERS, "COME BACK TOMORROW" ---------- */
 const STICKERS=['🦄','🐉','🚀','🛸','🦖','🐙','🦁','🐬','🦋','🏆','🎸','🎨','🧩','🪁','🧸','🍕','🍦','🌈','⚡','🔮','🎯','🛡️','🦊','🐼','🤖','👾','🪐','🏅','🎮','🧠'];
@@ -1734,7 +1755,7 @@ let qrUnlocked=false;
 function renderDone(){
   var d=todayStr(),day=S.days[d],host=$('#s-done');
   if(!day||!day.done){go('home');return;}
-  var t=S.tokens[day.token],st=domStars(day),h='<div class="wrap">'+celebrateHtml(day)+'<div class="starsRow">'+
+  var t=S.tokens[day.token],st=domStars(day),h='<div class="wrap">'+celebrateHtml(day)+noteCardHtml(FN.cur)+'<div class="starsRow">'+
     domKeys(day).map(function(k){return '<div class="sc" style="background:'+DOMS[k].c+'">'+DOMS[k].e+' '+DOMS[k].n+'<b>'+'⭐'.repeat(st[k])+'</b></div>';}).join('')+'</div>';
   h+=stickerHtml(day);
   if(!t){h+='<div class="card note badn">No reward channels are switched on. Ask a grown-up to check the Parent tab.</div>';}
@@ -1763,7 +1784,7 @@ let factI=0;
 function renderLab(){
   var f=FACTS[factI];
   $('#s-lab').innerHTML='<div class="wrap"><h1>🧪 Geek Lab</h1><div class="card fact" id="fact"><div class="e">'+f[0]+'</div><h2>'+f[1]+'</h2><p>'+f[2]+'</p><div class="row" style="justify-content:center"><button class="btn sm ghost" id="fPrev" type="button">◀</button><button class="btn sm ghost" data-say="'+esc(f[1]+'. '+f[2])+'" type="button">🔊 Read</button><button class="btn sm" id="fNext" type="button">Next fact ▶</button></div></div>'+
-    voiceCard()+gamesBanner()+'<h3>🎮 Mini games (+XP)</h3><div class="games">'+newGameButtons()+'</div>'+
+    voiceCard()+quickQuizCard()+gamesBanner()+'<h3>🎮 Mini games (+XP)</h3><div class="games">'+newGameButtons()+'</div>'+
     '<div class="card" style="margin-top:14px"><h3>🔍 How does scanning work?</h3><p class="sub" style="margin:0 0 8px">A QR code is a picture made of black and white squares.</p><button class="btn" id="lHow" type="button">Show me!</button></div></div>';
   $('#fPrev').addEventListener('click',function(){factI=(factI+FACTS.length-1)%FACTS.length;renderLab();});
   $('#fNext').addEventListener('click',function(){factI=(factI+1)%FACTS.length;renderLab();});
@@ -1811,7 +1832,7 @@ function recordWin(){
     var t=issueBonus('game','3 mini-games');
     if(t){g.paid++;LASTB=t;msg+='<p style="text-align:center;font-weight:700;color:#127a47">🎁 3 wins! A bonus video reward is ready!</p><div class="row"><button class="btn ok" id="gRw" type="button">🎁 Show my reward QR</button></div>';}
   }
-  save();return msg;
+  msg+=noteWin();save();return msg;
 }
 function wireBonus(o){var b=$('#gRw',o);if(b&&LASTB){var t=LASTB;b.addEventListener('click',function(){bonusModal(t,'🎮 Game Champion!');});}}
 function bonusModal(t,title,unlocked,extra){
@@ -2147,8 +2168,8 @@ function finishQuiz(){
   if(S.qz[d]&&S.qz[d].done){go('home');return;}
   S.xp+=30;histDay(d).qz=1;if(S.badges.indexOf('quiz')<0)S.badges.push('quiz');
   var t=issueBonus('quiz','the Daily Tech Quiz');S.qz[d]={done:true,token:t?t.id:'',score:ok};save();
-  SFX.win();say('Daily Quiz Master! You earned thirty bonus XP!');go('home');party(true);
-  var extra='<p style="text-align:center;font-weight:700">Score: '+ok+' / 5<br>+30 Bonus XP ⚡<br>Badge: Daily Quiz Master 🏅</p>';
+  SFX.win();go('home');party(true);
+  var extra='<p style="text-align:center;font-weight:700">Score: '+ok+' / 5<br>+30 Bonus XP ⚡<br>Badge: Daily Quiz Master 🏅</p>'+noteWin('Daily Quiz Master! You earned thirty bonus XP!');
   if(t)bonusModal(t,'⚡ Daily Quiz Master!',false,extra);
   else{var o=openModal('<h2 style="text-align:center">⚡ Daily Quiz Master!</h2>'+extra+'<div class="row"><button class="btn" id="qOk" type="button">Yay!</button></div>');$('#qOk',o).addEventListener('click',closeModal);}
 }
@@ -2661,6 +2682,7 @@ function setHtml(){
   var h='<div class="card"><h3>📲 Install &amp; offline</h3><div class="note '+(PWA.s==='ready'||PWA.s==='update'?'good':'badn')+'">'+offTxt+'</div><p style="margin:6px 0">Home Screen app: <b>'+(standalone()?'installed ✅':'not yet')+'</b> · Protected storage: <b>'+(PWA.persist?'yes':'not guaranteed')+'</b> · Version <b>'+APP_VER+'</b></p>'+(standalone()?'':'<small>To install: open this page in <b>Safari</b>, tap <b>Share</b> (square with arrow), then <b>Add to Home Screen</b>.</small>')+'</div>';
   h+='<div class="card"><h3>💾 Backup &amp; restore</h3><div class="note '+(warn?'badn':'good')+'">'+(age===null?'⚠️ No backup yet. Save one so progress and custom questions are never lost.':age>=7?'⚠️ Last backup was '+age+' days ago.':'✅ Last backup: '+(age===0?'today':age+' day'+(age===1?'':'s')+' ago')+'.')+'</div><div class="row"><button class="btn sm" id="pBk" type="button">⬇️ Save backup file</button><label class="btn ghost sm" style="cursor:pointer">⬆️ Restore from file<input type="file" id="pRs" accept=".json,application/json" style="display:none"></label></div><small>The file holds XP, streaks, stickers, analytics and all custom questions. On iPad, choose <b>Save to Files</b> in the share sheet.</small></div>';
   h+='<div class="card"><h3>🔊 Sound &amp; learning</h3><div class="row"><label style="display:flex;align-items:center;gap:10px;font-weight:600">Volume <input type="range" id="pVol" min="0" max="100" value="'+Math.round((S.setup.vol==null?.8:S.setup.vol)*100)+'" style="width:180px"></label><button class="btn ghost sm" id="pTestSnd" type="button">▶ Test sounds</button><button class="btn ghost sm" id="pAdapt" type="button">'+(S.setup.adapt===false?'🎯 Adaptive difficulty: off':'🎯 Adaptive difficulty: on')+'</button></div><small>Adaptive: after about 6 answers in an area the app adds hints (accuracy under 50%) or removes helpers (88% or more).</small></div>';
+  h+=alarmHtml()+famHtml();
   h+='<div class="card"><h3>🗣️ Byte\'s voice</h3><div class="row"><select id="pVoice" class="fi" style="flex:1;min-width:220px"></select><button class="btn ghost sm" id="pVoiceTest" type="button">▶ Hear Byte</button></div><small id="pVoiceSt"></small><br><small>Byte picks the friendliest English voice on the iPad (Enhanced, Premium, Ava, Samantha…) and speaks a little slower and higher so it is easy to follow. For the best sound: Settings → Accessibility → Spoken Content → Voices → English → download an <b>Enhanced</b> voice.</small></div>';
   h+='<div class="card"><div class="row"><button class="btn warn sm" id="pWipe" type="button">Erase all app data</button></div></div>';
   return h;
@@ -2686,6 +2708,7 @@ function bindParentV2(){
   fillVoiceSel();var pv=$('#pVoice');if(pv)pv.addEventListener('change',function(){S.setup.voice=pv.value;save();say('Hi Rudraksh! I am Byte.',true);});
   q('#pVoiceTest',function(){ac();say('Hi Rudraksh! I am Byte. Let\'s learn something fun today!',true);});
   if(PT==='syl')bindSyl();
+  if(PT==='set')bindFamily();
 }
 
 /* ===== interactive sticker playground ===== */
@@ -2828,6 +2851,7 @@ function say(t,force,o){
           u.pitch=Math.max(.5,Math.min(1.8,(o.pitch||VOX.pitch)+(ex?.08:q?.12:0)));
           u.volume=1;
           if(v){u.voice=v;u.lang=v.lang;}else u.lang='en-IN';     /* fallback: the browser's own default voice */
+          if(!k&&o.onstart)u.onstart=function(){try{o.onstart();}catch(e){}};
           if(last){u.onend=done;u.onerror=done;}
           VOX.keep.push(u);k++;speechSynthesis.speak(u);         /* keep references: iOS drops finished-event of collected utterances */
         });
@@ -3058,8 +3082,8 @@ function vlFinish(){
   SFX.win();party(true);
   var stars=VL.stars>=3?'⭐⭐⭐':VL.stars===2?'⭐⭐':VL.stars===1?'⭐':'💛';
   $('#vCnt').textContent='Done!';
-  $('#vBody').innerHTML='<div class="center"><div class="big pop">🎤</div><h2 style="margin:.1em 0">Byte is so proud of you!</h2><div style="font-size:44px">'+stars+'</div><p class="sub" style="margin:6px 0">'+(first?'You earned <b>+'+xp+' XP</b> and the <b>Chatterbox</b> badge 🎤':'Nice practice! XP is given once per day.')+'</p><p class="sub">Come back tomorrow for 3 brand-new facts! 🌟</p><div class="row" style="justify-content:center"><button class="btn ok" id="vAgain" type="button">Practice again</button><button class="btn ghost" id="vHome" type="button">Back to Lab</button></div></div>';
-  sayQ([{t:'Wow, Rudraksh! You were a superstar today! Come back tomorrow for new facts.',pitch:1.2}]);
+  $('#vBody').innerHTML='<div class="center"><div class="big pop">🎤</div><h2 style="margin:.1em 0">Byte is so proud of you!</h2><div style="font-size:44px">'+stars+'</div><p class="sub" style="margin:6px 0">'+(first?'You earned <b>+'+xp+' XP</b> and the <b>Chatterbox</b> badge 🎤':'Nice practice! XP is given once per day.')+'</p><p class="sub">Come back tomorrow for 3 brand-new facts! 🌟</p>'+noteWin()+'<div class="row" style="justify-content:center"><button class="btn ok" id="vAgain" type="button">Practice again</button><button class="btn ghost" id="vHome" type="button">Back to Lab</button></div></div>';
+  if(!FN.cur)sayQ([{t:'Wow, Rudraksh! You were a superstar today! Come back tomorrow for new facts.',pitch:1.2}]);
   $('#vAgain').addEventListener('click',function(){renderVoice();});$('#vHome').addEventListener('click',function(){go('lab');});
   try{$('#vHome').focus();}catch(e){}
 }
@@ -3082,6 +3106,298 @@ document.addEventListener('click',function(e){
 function promptHtml(p){var m=/^([\s\S]*?)<br\s*\/?>([\s\S]*)$/.exec(String(p));if(!m||/<small/.test(p))return p;return '<span class="qh">'+m[1]+'</span><span class="sup">'+m[2]+'</span>';}
 document.addEventListener('touchstart',function(){},{passive:true});   /* lets :active press effects work in iOS Safari */
 
+/* ---------- 14. v4: evening alarm, voice answers, family voice notes ---------- */
+/* ===== audio unlock (Safari only plays sound after a tap) ===== */
+const SILENT_WAV='data:audio/wav;base64,UklGRiQAAABXQVZFZm10IBAAAAABAAEAQB8AAEAfAAABAAgAZGF0YQAAAAA=';
+const FN={audio:null,unlocked:false,cur:null,t:0};
+function mediaEl(){if(!FN.audio){try{FN.audio=new Audio();FN.audio.preload='auto';}catch(e){FN.audio=null;}}return FN.audio;}
+function unlockMedia(){
+  if(FN.unlocked)return;FN.unlocked=true;
+  try{var a=mediaEl();if(!a)return;a.src=SILENT_WAV;var p=a.play();if(p&&p.then)p.then(function(){try{a.pause();}catch(e){}}).catch(function(){FN.unlocked=false;});}catch(e){FN.unlocked=false;}
+}
+function saveOk(){try{localStorage.setItem(KEY,JSON.stringify(S));return true;}catch(e){return false;}}
+
+/* ===== 1. evening idle alarm (3:30 PM - 9:30 PM, repeats hourly) ===== */
+const ALM={act:Date.now(),open:false,keyH:null,timer:null};
+function alarmWindow(d){var m=d.getHours()*60+d.getMinutes();return m>=930&&m<=1290;}
+function wsDone(){var day=S.days[todayStr()];return !!(day&&day.done);}
+function alarmState(){var a=S.alarm;if(!a||typeof a!=='object')a=S.alarm={d:'',last:0,n:0};if(a.d!==todayStr()){a.d=todayStr();a.last=0;a.n=0;}return a;}
+function alarmIdleMs(){return Math.max(1,(S.setup.alarmIdle||15))*60000;}
+function alarmShouldFire(now){
+  var a=alarmState(),t=Date.now();
+  if(S.setup.alarm===false||!alarmWindow(now)||wsDone()||ALM.open)return false;
+  if(document.hidden||(typeof VID!=='undefined'&&VID))return false;
+  var idle=t-ALM.act;
+  if(!a.last)return idle>=alarmIdleMs();                 /* first reminder: after the idle threshold */
+  return t-a.last>=3600000&&idle>=120000;                /* then every hour while the worksheet is pending */
+}
+function alarmMessage(){return 'Hey '+PROFILE.first+'! It\'s time for your daily mission! Complete your worksheet right now to unlock your awesome reward video!';}
+function alarmSpeak(){
+  var started=false;
+  try{SFX.chime();}catch(e){}
+  say(alarmMessage(),true,{rate:.95,pitch:1.15,onstart:function(){started=true;}});
+  setTimeout(function(){if(!started&&ALM.open){var b=$('#alHear'),h=$('#alHint');if(b)b.classList.add('pulse');if(h)h.style.display='block';}},2200);   /* Safari blocked it: ask for one tap */
+}
+function alarmShow(test){
+  if(ALM.open)return;
+  var day=S.days[todayStr()],tot=(day&&day.qs)?day.qs.length:22,doneN=(day&&day.qs)?Math.min(day.i||0,tot):0;
+  var o=document.createElement('div');o.id='alarm';o.className='alarm';o.setAttribute('role','alertdialog');o.setAttribute('aria-modal','true');o.setAttribute('aria-label','Daily mission reminder');
+  o.innerHTML='<div class="alcard"><div class="albyte" id="alBot">🤖<span class="alring"></span><span class="alring r2"></span></div><div class="albell">⏰</div><h1>Mission time, '+esc(PROFILE.first)+'!</h1>'+
+    '<p class="alsay">Complete your worksheet now to unlock your awesome <b>reward video</b>! 🎬</p><div class="alprog"><div style="width:'+Math.round(doneN/tot*100)+'%"></div></div><small>'+doneN+' of '+tot+' questions done</small>'+
+    '<div class="row" style="justify-content:center;margin-top:14px"><button class="btn big ok" id="alGo" type="button">🚀 Start my mission<kbd>Enter ⏎</kbd></button></div>'+
+    '<div class="row" style="justify-content:center"><button class="btn ghost" id="alHear" type="button">🔊 Hear Byte</button><button class="btn ghost" id="alLater" type="button">⏰ Later<kbd>Esc</kbd></button></div><p class="alhint" id="alHint" style="display:none">👆 Tap <b>Hear Byte</b> to hear me!</p></div>';
+  document.body.appendChild(o);ALM.open=true;
+  if(!test){var a=alarmState();a.last=Date.now();a.n++;save();}
+  $('#alGo').addEventListener('click',function(){alarmHide();ac();if(cur!=='work')startWorksheet();});
+  $('#alLater').addEventListener('click',function(){ALM.act=Date.now();alarmHide();});
+  $('#alHear').addEventListener('click',function(){ac();unlockMedia();alarmSpeak();});
+  $('#alBot').addEventListener('click',function(){ac();alarmSpeak();});
+  ALM.keyH=function(e){if(e.key==='Enter'&&e.target.tagName!=='BUTTON'){e.preventDefault();e.stopImmediatePropagation();var g=$('#alGo');if(g)g.click();}else if(e.key==='Escape'){e.preventDefault();e.stopImmediatePropagation();var l=$('#alLater');if(l)l.click();}};
+  document.addEventListener('keydown',ALM.keyH,true);
+  try{$('#alGo').focus();}catch(e){}
+  alarmSpeak();
+}
+function alarmHide(){
+  var o=document.getElementById('alarm');if(o&&o.parentNode)o.parentNode.removeChild(o);
+  if(ALM.keyH){document.removeEventListener('keydown',ALM.keyH,true);ALM.keyH=null;}
+  if(ALM.open){ALM.open=false;stopSpeak();}
+}
+function alarmClear(){try{alarmHide();var a=alarmState();a.off=todayStr();save();}catch(e){}}
+function alarmTick(now){
+  now=now||new Date();
+  try{
+    if(ALM.open){
+      if(wsDone()||!alarmWindow(now)||S.setup.alarm===false){alarmHide();return;}
+      var a=alarmState();if(Date.now()-a.last>=3600000){a.last=Date.now();a.n++;save();alarmSpeak();}   /* unanswered alarm talks again after an hour */
+      return;
+    }
+    if(alarmShouldFire(now))alarmShow(false);
+  }catch(e){}
+}
+function startAlarm(){
+  var bump=function(){ALM.act=Date.now();};
+  ['pointerdown','pointermove','touchstart','keydown','wheel','scroll','click'].forEach(function(n){document.addEventListener(n,bump,{capture:true,passive:true});});
+  ALM.timer=setInterval(function(){alarmTick();},30000);
+  document.addEventListener('visibilitychange',function(){if(!document.hidden)setTimeout(function(){alarmTick();},20000);});   /* give a touch time to register first */
+  window.addEventListener('pageshow',function(){setTimeout(function(){alarmTick();},20000);});
+}
+function alarmInfo(){
+  var a=alarmState(),now=new Date();
+  if(S.setup.alarm===false)return 'Reminder is switched off.';
+  if(wsDone())return '✅ Today\'s worksheet is done, so there are no more reminders today.';
+  if(!alarmWindow(now))return 'Reminders only run between 3:30 PM and 9:30 PM.';
+  return 'Active now. '+(a.last?'Last reminder at '+new Date(a.last).toTimeString().slice(0,5)+' ('+a.n+' today); the next one is an hour later.':'The first reminder comes after '+(S.setup.alarmIdle||15)+' idle minutes.');
+}
+
+/* ===== 2. speak-your-answer (Quick Quiz + custom syllabus questions) ===== */
+for(var _n=11;_n<=20;_n++)VNUMW[String(_n)]=['eleven','twelve','thirteen','fourteen','fifteen','sixteen','seventeen','eighteen','nineteen','twenty'][_n-11];
+const LETTER_SND={a:['a','ay','eh','hey'],b:['b','be','bee'],c:['c','see','sea'],d:['d','dee'],e:['e','ee','he'],f:['f','eff','ef'],g:['g','gee','jee'],h:['h','aitch'],i:['i','eye','hi'],j:['j','jay'],k:['k','kay','okay'],l:['l','el','ell'],m:['m','em'],n:['n','en','and'],o:['o','oh','owe'],p:['p','pea','pee'],q:['q','queue','cue'],r:['r','are','our'],s:['s','ess','yes'],t:['t','tea','tee'],u:['u','you'],v:['v','vee'],w:['w','double u'],x:['x','ex'],y:['y','why'],z:['z','zed','zee']};
+function srClass(){return window.SpeechRecognition||window.webkitSpeechRecognition;}
+function listenOnce(cb){
+  var SR=srClass();if(!SR){cb([],'unsupported');return null;}
+  var rec,heard=[],last='',err=null,fin=false,timer=null;
+  try{rec=new SR();rec.lang='en-IN';rec.interimResults=true;rec.maxAlternatives=3;rec.continuous=false;}catch(e){cb([],'unsupported');return null;}
+  var end=function(){if(fin)return;fin=true;clearTimeout(timer);cb(heard.length?heard:(last?[last]:[]),err);};
+  rec.onresult=function(e){try{var res=e.results[e.results.length-1],alts=[],k;for(k=0;k<res.length;k++)alts.push(res[k].transcript);last=alts[0]||last;if(res.isFinal)heard=alts;if(cb.interim)cb.interim(last);}catch(x){}};
+  rec.onerror=function(e){err=(e&&e.error)||'error';};
+  rec.onend=end;
+  try{rec.start();}catch(e){cb([],'unsupported');return null;}
+  timer=setTimeout(function(){try{rec.stop();}catch(e){}},8000);
+  return {stop:function(){try{rec.stop();}catch(e){}},abort:function(){fin=true;clearTimeout(timer);try{rec.onresult=rec.onerror=rec.onend=null;rec.abort();}catch(e){}}};
+}
+function optLabel(b){var c=b.cloneNode(true),nb=c.querySelector('.nb');if(nb)c.removeChild(nb);return (c.textContent||'').replace(/\s+/g,' ').trim();}
+function spokenToOption(alts,buttons){
+  var cands=[],labels=buttons.map(optLabel),clean=function(s){return String(s).toLowerCase().replace(/[^a-z0-9 ]/g,' ').replace(/\s+/g,' ').trim();};
+  buttons.forEach(function(b,i){
+    var lab=clean(labels[i]);if(!lab)return;var best=0,pass=false;
+    alts.forEach(function(a){
+      var ca=clean(a);
+      if(lab.length===1&&/[a-z]/.test(lab)){var sn=LETTER_SND[lab]||[lab];if(ca.split(' ').some(function(t){return sn.indexOf(t)>=0;})||sn.indexOf(ca)>=0){best=1;pass=true;}return;}
+      var r=matchSentence(lab,a);if(r.score>best)best=r.score;if(r.pass)pass=true;
+    });
+    if(pass)cands.push({i:i,s:best});
+  });
+  if(cands.length===1)return cands[0].i;
+  if(cands.length>1){cands.sort(function(a,b){return b.s-a.s;});if(cands[0].s>cands[1].s)return cands[0].i;return -2;}   /* ambiguous */
+  var ord={one:0,'1':0,first:0,two:1,'2':1,second:1,three:2,'3':2,third:2,four:3,'4':3,fourth:3};
+  for(var k=0;k<alts.length;k++){var m=/^(?:option |number |answer |choice )?(one|two|three|four|1|2|3|4|first|second|third|fourth)$/.exec(clean(alts[k]));if(m&&ord[m[1]]!==undefined&&ord[m[1]]<buttons.length)return ord[m[1]];}
+  return -1;
+}
+function vqSingleForm(q){return q.kind==='form'&&q.fields&&q.fields.length===1&&(q.fields[0].t==='text'||q.fields[0].t==='number')&&q.fields[0].answer!==undefined;}
+function vqAvailable(q){return !!(srClass()&&S.setup.vq!==false&&q&&(q.kind==='choice'||vqSingleForm(q)));}
+var VQ={ctl:null,tries:0};
+function vqStop(){try{if(VQ.ctl)VQ.ctl.abort();}catch(e){}VQ.ctl=null;var b=$('#wMic');if(b){b.classList.remove('rec');b.innerHTML='🎤 Say it<kbd>V</kbd>';}}
+function vqToggle(){
+  var q=SES&&SES.qs[SES.i];if(!q||!QS||QS.done||!vqAvailable(q))return;
+  if(VQ.ctl){try{VQ.ctl.stop();}catch(e){}return;}
+  stopSpeak();var b=$('#wMic');if(b){b.classList.add('rec');b.innerHTML='🎙️ Listening…';}
+  fb('info','🎙️ Listening… say your answer!');
+  var cb=function(alts,err){
+    var ql=SES&&SES.qs[SES.i];VQ.ctl=null;vqStop();if(!ql||ql!==q||QS.done)return;
+    if(err==='not-allowed'||err==='service-not-allowed'){fb('info','🔒 The microphone is blocked. You can still tap or type your answer!');return;}
+    if(err==='unsupported'||err==='network'||err==='language-not-supported'){fb('info','🎙️ Speaking isn\'t available right now. Tap or type your answer!');return;}
+    if(!alts.length){fb('info','I did not hear anything. Tap 🎤 and try again, or tap your answer.');return;}
+    vqAnswer(q,alts);
+  };
+  cb.interim=function(t){fb('info','🎙️ I hear: “'+esc(t)+'”');};
+  VQ.ctl=listenOnce(cb);
+  if(!VQ.ctl){vqStop();}
+}
+function vqAnswer(q,alts){
+  var heard=esc(alts[0]);
+  if(q.kind==='choice'){
+    var btns=[].slice.call(document.querySelectorAll('#qui .opt')).filter(function(b){return !b.classList.contains('dim');}),i=spokenToOption(alts,btns);
+    if(i>=0){QS.voice=true;S.vstat=S.vstat||{n:0};S.vstat.n++;fb('info','🗣️ You said “'+heard+'”');btns[i].click();return;}
+  }else{
+    var fd=q.fields[0],exp=[fd.answer].concat(fd.alts||[]),hit=false;
+    alts.forEach(function(a){exp.forEach(function(e){if(matchSentence(String(e),a).pass)hit=true;});});
+    if(hit){QS.voice=true;S.vstat=S.vstat||{n:0};S.vstat.n++;var f=document.querySelector('#qui .qform'),inp=f&&f.querySelector('input');if(inp){inp.value=String(fd.answer);f.dispatchEvent(new Event('submit',{cancelable:true}));}return;}
+  }
+  VQ.tries++;fb('info','I heard “'+heard+'”. That is not one of the answers yet. Try again! 🎤');
+  say('I heard '+alts[0]+'. Try again, or tap your answer!',true);
+}
+function setupVoiceAnswer(q){
+  vqStop();VQ.tries=0;
+  if(!vqAvailable(q))return;
+  var h=$('#wHint');if(!h||$('#wMic'))return;
+  h.insertAdjacentHTML('afterend','<button class="btn ghost micq" id="wMic" type="button" title="Say your answer (V)">🎤 Say it<kbd>V</kbd></button>');
+  $('#wMic').addEventListener('click',function(){ac();vqToggle();});
+  CL.push(function(){vqStop();});
+}
+/* Quick Quiz: Byte reads each question, then listens for the spoken answer */
+function peekCustom(n){
+  var pool=(S.custom||[]).filter(function(c){return c.on!==false;});
+  pool.sort(function(a,b){return (a.used||0)-(b.used||0)||(a.created||0)-(b.created||0);});
+  return pool.slice(0,n).map(function(c){try{return customToQ(c);}catch(e){return null;}}).filter(Boolean);
+}
+function quickQuizCard(){
+  return '<div class="card qqcard"><div class="row" style="align-items:center;flex-wrap:nowrap"><div class="vlbot" aria-hidden="true">🗣️</div><div style="flex:1;min-width:0"><h3 style="margin:0">Quick Quiz: say your answer!</h3><p class="sub" style="margin:2px 0 0">5 questions. Byte reads each one, then you answer out loud.</p></div><button class="btn" data-qq="1" type="button">Start</button></div></div>';
+}
+function quickQuiz(){
+  ac();unlockMedia();
+  var raw=buildQuizRaw('qq'+Date.now());commitHist(QH_LAST);
+  var qs=peekCustom(2).concat(raw).slice(0,5);qs.forEach(function(q,i){q.id='qq'+i;});
+  openSession({kind:'mini',qs:qs,i:0,res:[],voiceFirst:true,back:'lab',onDone:function(){
+    var ok=SES.res.filter(function(r){return r&&r.ok;}).length,vc=SES.res.filter(function(r){return r&&r.v;}).length;SFX.win();party(true);save();
+    var o=openModal('<div class="big">🗣️</div><h2 style="text-align:center">Great talking!</h2><p style="text-align:center">You got <b>'+ok+' / '+SES.qs.length+'</b> right'+(vc?' and spoke <b>'+vc+'</b> answer'+(vc>1?'s':'')+' out loud':'')+'!</p>'+(ok>=4?noteWin('Wonderful speaking, '+PROFILE.first+'!'):'')+'<div class="row"><button class="btn ok" id="qqAgain" type="button">Play again</button><button class="btn ghost" id="qqBack" type="button">Back to Lab</button></div>');
+    $('#qqAgain',o).addEventListener('click',function(){closeModal();quickQuiz();});$('#qqBack',o).addEventListener('click',function(){closeModal();go('lab');});
+  }});
+}
+document.addEventListener('click',function(e){var b=e.target.closest&&e.target.closest('[data-qq]');if(b)quickQuiz();});
+
+/* ===== 3. family voice notes ===== */
+function notePick(){
+  if(S.setup.notes===false)return null;
+  var l=(S.vnotes||[]).filter(function(n){return n.on!==false&&n.data;});if(!l.length)return null;
+  var n=l[(S.vnIdx||0)%l.length];S.vnIdx=(S.vnIdx||0)+1;return n;
+}
+function playNote(n,cb){
+  var done=false,fin=function(ok){if(done)return;done=true;if(cb){try{cb(ok);}catch(e){}}};
+  try{
+    stopSpeak();var a=mediaEl();if(!a){fin(false);return;}
+    try{a.pause();}catch(e){}
+    a.onended=function(){fin(true);};a.onerror=function(){fin(false);};
+    a.src=n.data;a.muted=false;a.volume=1;
+    var p=a.play();
+    if(p&&p.catch)p.catch(function(){tapToHear(n);fin(false);});   /* blocked by Safari: ask for one tap */
+    setTimeout(function(){fin(true);},Math.max(3000,(n.ms||3000)+2500));
+  }catch(e){fin(false);}
+}
+function tapToHear(n){
+  var old=document.getElementById('tapnote');if(old&&old.parentNode)old.parentNode.removeChild(old);
+  var b=document.createElement('button');b.id='tapnote';b.type='button';b.className='btn big tapnote';b.textContent='💌 Tap to hear a message from '+n.who;
+  b.addEventListener('click',function(){unlockMedia();if(b.parentNode)b.parentNode.removeChild(b);playNote(n);});
+  document.body.appendChild(b);setTimeout(function(){if(b.parentNode)b.parentNode.removeChild(b);},15000);
+}
+function noteCardHtml(n){
+  n=n||notePick();if(!n)return '';FN.cur=n;
+  return '<div class="card fnote"><span class="fnico">💌</span><div style="flex:1"><b>A message from '+esc(n.who)+'</b><br><small>Tap to hear it again</small></div><button class="btn sm" data-fnote="'+n.id+'" type="button">▶ Play</button></div>';
+}
+function noteWin(thenText){            /* returns the card html, plays the note, then Byte says thenText */
+  var n=notePick();
+  if(!n){if(thenText)setTimeout(function(){say(thenText);},600);return '';}
+  setTimeout(function(){playNote(n,function(){if(thenText)setTimeout(function(){say(thenText);},200);});},600);
+  return noteCardHtml(n);
+}
+function familyThenSay(text){var n=FN.cur;FN.cur=null;if(!n){n=notePick();}if(!n){setTimeout(function(){say(text);},700);return;}FN.cur=n;setTimeout(function(){playNote(n,function(){setTimeout(function(){say(text);},200);});},700);}
+document.addEventListener('click',function(e){var b=e.target.closest&&e.target.closest('[data-fnote]');if(!b)return;ac();unlockMedia();var id=b.getAttribute('data-fnote'),n=(S.vnotes||[]).filter(function(x){return x.id===id;})[0];if(n)playNote(n);});
+
+/* --- parent: record / upload --- */
+var REC={mr:null,stream:null,chunks:[],timer:null,tick:null};
+function fnMsg(t,bad){var m=$('#fnMsg');if(!m)return;m.style.display=t?'block':'none';m.className='note '+(bad?'badn':'good');m.textContent=t||'';}
+function addNote(who,data,mime,ms){
+  if((S.vnotes||[]).length>=6){fnMsg('You can keep up to 6 notes. Delete one first.',true);return false;}
+  if(data.length>450000){fnMsg('That clip is too big. Keep it to a few seconds.',true);return false;}
+  var total=(S.vnotes||[]).reduce(function(a,n){return a+n.data.length;},0)+data.length;
+  if(total>1600000){fnMsg('Notes use too much space. Delete an old one first.',true);return false;}
+  var n={id:rid(5),who:who,data:data,mime:mime||'',ms:ms||3000,on:true,created:Date.now()};S.vnotes.push(n);
+  if(!saveOk()){S.vnotes.pop();fnMsg('The iPad storage is full, so this note could not be saved.',true);return false;}
+  return true;
+}
+function blobToData(blob,cb){try{var fr=new FileReader();fr.onload=function(){cb(String(fr.result||''));};fr.onerror=function(){cb('');};fr.readAsDataURL(blob);}catch(e){cb('');}}
+function recStop(){try{if(REC.mr&&REC.mr.state!=='inactive')REC.mr.stop();}catch(e){}}
+function recStart(who){
+  if(REC.mr){recStop();return;}
+  if(!navigator.mediaDevices||!navigator.mediaDevices.getUserMedia||!window.MediaRecorder){fnMsg('Recording is not available in this browser. Please use Upload audio instead.',true);return;}
+  fnMsg('');
+  navigator.mediaDevices.getUserMedia({audio:true}).then(function(stream){
+    var mt=['audio/mp4','audio/webm;codecs=opus','audio/webm','audio/ogg'].filter(function(t){try{return MediaRecorder.isTypeSupported&&MediaRecorder.isTypeSupported(t);}catch(e){return false;}})[0],mr;
+    try{mr=mt?new MediaRecorder(stream,{mimeType:mt}):new MediaRecorder(stream);}catch(e){stream.getTracks().forEach(function(t){t.stop();});fnMsg('Could not start recording here. Please use Upload audio.',true);return;}
+    REC.mr=mr;REC.stream=stream;REC.chunks=[];var t0=Date.now(),btn=$('#fnRec');
+    mr.ondataavailable=function(e){if(e.data&&e.data.size)REC.chunks.push(e.data);};
+    mr.onstop=function(){
+      clearTimeout(REC.timer);clearInterval(REC.tick);try{stream.getTracks().forEach(function(t){t.stop();});}catch(e){}
+      var ms=Date.now()-t0,type=mr.mimeType||mt||'audio/mp4',blob=new Blob(REC.chunks,{type:type});REC.mr=null;
+      var b2=$('#fnRec');if(b2){b2.classList.remove('rec');b2.textContent='🎙️ Record (up to 5 sec)';}
+      blobToData(blob,function(d){if(!d||d.length<200){fnMsg('Nothing was recorded. Try again.',true);return;}if(addNote(who(),d,type,ms)){SFX.ok();renderParent();}});
+    };
+    try{mr.start();}catch(e){REC.mr=null;fnMsg('Could not start recording.',true);return;}
+    if(btn){btn.classList.add('rec');btn.textContent='⏹ Stop (5)';}
+    REC.tick=setInterval(function(){var left=Math.max(0,5-Math.floor((Date.now()-t0)/1000)),b=$('#fnRec');if(b)b.textContent='⏹ Stop ('+left+')';},250);
+    REC.timer=setTimeout(recStop,5000);                                     /* notes are short on purpose */
+  }).catch(function(){fnMsg('The microphone is blocked. Allow it in Safari settings, or use Upload audio.',true);});
+}
+function famHtml(){
+  var l=S.vnotes||[],who=['Dad','Mom','Family','Grandparents'];
+  return '<div class="card"><h3>💌 Family voice notes</h3><p class="sub" style="margin:0 0 8px">Record or upload a short message (about 3 seconds), like “Great job, Rudraksh! Proud of you!”. Byte plays one when he finishes the worksheet, wins a game or does well in a quiz.</p>'+
+    '<div class="row" style="align-items:center"><select id="fnWho" class="fi" style="width:auto">'+who.map(function(w){return '<option>'+w+'</option>';}).join('')+'</select><button class="btn sm" id="fnRec" type="button">🎙️ Record (up to 5 sec)</button><label class="btn ghost sm" style="cursor:pointer">⬆️ Upload audio<input type="file" id="fnUp" accept="audio/*" style="display:none"></label></div>'+
+    '<div class="note" id="fnMsg" style="display:none"></div><div id="fnList">'+(l.length?l.map(function(n){return '<div class="cqrow"><span class="ctag">'+esc(n.who)+'</span><div class="cqt"><b>'+(Math.round((n.ms||0)/100)/10)+' sec voice note</b><small>'+new Date(n.created).toLocaleDateString()+(n.on===false?' · paused':'')+'</small></div><button type="button" class="btn ghost sm" data-fn="pl" data-id="'+n.id+'" title="Play">▶</button><button type="button" class="btn ghost sm" data-fn="on" data-id="'+n.id+'" title="Pause / resume">'+(n.on===false?'▷':'⏸')+'</button><button type="button" class="btn ghost sm" data-fn="rm" data-id="'+n.id+'" title="Delete">🗑️</button></div>';}).join(''):'<p class="sub">No notes yet.</p>')+'</div>'+
+    '<div class="row"><button class="btn ghost sm" id="fnOn" type="button">'+(S.setup.notes===false?'💌 Family notes: off':'💌 Family notes: on')+'</button></div><small>Stored only on this iPad (and in your backup file).</small></div>';
+}
+function alarmHtml(){
+  return '<div class="card"><h3>⏰ Evening reminder</h3><p class="sub" style="margin:0 0 8px">From 3:30 PM to 9:30 PM, if today\'s worksheet is not finished and the app sits untouched, Byte speaks and shows a big pop-up. It repeats every hour until the worksheet is done.</p>'+
+    '<div class="row" style="align-items:center"><button class="btn ghost sm" id="alToggle" type="button">'+(S.setup.alarm===false?'⏰ Reminder: off':'⏰ Reminder: on')+'</button><label style="font-weight:600">Idle for <select id="alIdle" class="fi" style="width:auto;display:inline-block">'+[10,15,20,30].map(function(m){return '<option'+(m===(S.setup.alarmIdle||15)?' selected':'')+'>'+m+'</option>';}).join('')+'</select> min</label><button class="btn ghost sm" id="alTest" type="button">▶ Test it now</button></div><div class="note good" style="margin-top:8px">'+esc(alarmInfo())+'</div>'+
+    '<small>Safari cannot run alarms when the app is closed or the iPad is asleep. Keep the app open on the iPad (Settings → Display &amp; Brightness → Auto-Lock → Never, or use Guided Access).</small></div>'+
+    '<div class="card"><h3>🎤 Speak-your-answer</h3><div class="row"><button class="btn ghost sm" id="vqToggle" type="button">'+(S.setup.vq===false?'🎤 Mic answer buttons: off':'🎤 Mic answer buttons: on')+'</button></div><small>Adds a “Say it” button to quiz and custom questions so Rudraksh can answer out loud. Correct spoken answers earn +2 XP.</small></div>';
+}
+function bindFamily(){
+  var q=function(id,fn){var x=$(id);if(x)x.addEventListener('click',fn);};
+  var who=function(){var w=$('#fnWho');return w?w.value:'Family';};
+  q('#fnRec',function(){ac();recStart(who);});
+  var up=$('#fnUp');if(up)up.addEventListener('change',function(){
+    var f=up.files&&up.files[0];up.value='';if(!f)return;
+    if(f.size>600000){fnMsg('That file is too big. Please use a clip of about 3 to 10 seconds.',true);return;}
+    blobToData(f,function(d){
+      if(!d){fnMsg('Could not read that file.',true);return;}
+      var a=new Audio(),w=who(),finish=function(ms){if(addNote(w,d,f.type,ms)){SFX.ok();renderParent();}};
+      a.preload='metadata';var to=setTimeout(function(){finish(3000);},2500);
+      a.onloadedmetadata=function(){clearTimeout(to);var s=a.duration;if(isFinite(s)&&s>12){fnMsg('That clip is '+Math.round(s)+' seconds. Please keep it under 12 seconds.',true);return;}finish(isFinite(s)?Math.round(s*1000):3000);};
+      a.onerror=function(){clearTimeout(to);fnMsg('That audio file could not be played in Safari. Try a .m4a or .mp3 file.',true);};
+      a.src=d;
+    });
+  });
+  q('#fnOn',function(){S.setup.notes=(S.setup.notes===false);save();renderParent();});
+  [].forEach.call(document.querySelectorAll('#fnList [data-fn]'),function(b){b.addEventListener('click',function(){
+    var id=b.getAttribute('data-id'),n=(S.vnotes||[]).filter(function(x){return x.id===id;})[0],a=b.getAttribute('data-fn');if(!n)return;
+    if(a==='pl'){ac();unlockMedia();playNote(n);}else if(a==='on'){n.on=(n.on===false);save();renderParent();}
+    else if(a==='rm'){if(confirm('Delete this voice note?')){S.vnotes=S.vnotes.filter(function(x){return x.id!==id;});save();renderParent();}}
+  });});
+  q('#alToggle',function(){S.setup.alarm=(S.setup.alarm===false);save();if(S.setup.alarm===false)alarmHide();renderParent();});
+  var ai=$('#alIdle');if(ai)ai.addEventListener('change',function(){S.setup.alarmIdle=+ai.value;save();renderParent();});
+  q('#alTest',function(){ac();unlockMedia();alarmShow(true);});
+  q('#vqToggle',function(){S.setup.vq=(S.setup.vq===false);save();renderParent();});
+}
+
 /* ---------- 11. BOOT ---------- */
 applyKbMode();
 function handleHash(){
@@ -3092,7 +3408,7 @@ function handleHash(){
   go('home');setTimeout(function(){handlePayload(raw);},300);
 }
 function init(){
-  buildTabs();renderSplash();go('splash');setupPWA();initVoices();
+  buildTabs();renderSplash();go('splash');setupPWA();initVoices();startAlarm();
   window.addEventListener('hashchange',handleHash);
   if(S.setup.done&&!S.setup.appUrl&&location.protocol.indexOf('http')===0){S.setup.appUrl=location.href.split('#')[0].split('?')[0];save();}
   if((location.hash||'').indexOf('reward=')>=0&&S.setup.done)handleHash();

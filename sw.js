@@ -1,5 +1,5 @@
 /* IT Geek Academy service worker: offline-first. Bump VERSION when index.html changes. */
-const VERSION='geek-v3-1';
+const VERSION='geek-v4-1';
 const CORE=['./','./index.html','./manifest.webmanifest','./icon-180.png','./icon-192.png','./icon-512.png'];
 const EXT='geek-ext-v1';
 self.addEventListener('install',e=>{
