@@ -508,6 +508,51 @@ body.nokb .tab kbd{position:absolute;top:4px;right:calc(50% - 40px);margin:0;fon
 .qqcard{background:linear-gradient(135deg,#e6f7ff,#efe6ff)}
 #fnRec.rec{background:#e63946;color:#fff;animation:micp 1s ease-in-out infinite}
 .verbadge{text-align:center;font-size:13px;font-weight:700;color:#6b6890;opacity:.8;margin:14px 0 6px;letter-spacing:.3px;user-select:none}
+/* ---- v5: cartoon pointer, graph feedback, family footer ---- */
+#bcur{position:fixed;left:0;top:0;z-index:10001;pointer-events:none;opacity:0;transition:opacity .15s;will-change:transform;contain:layout style}
+#bcur.on{opacity:1}
+#bcur .bci{width:44px;height:48px;transform-origin:4px 3px;animation:bcidle 2.4s ease-in-out infinite;transition:filter .2s}
+@keyframes bcidle{0%,100%{transform:rotate(-4deg) translateY(0)}50%{transform:rotate(5deg) translateY(-2px)}}
+#bcur .bci.hot{animation:bcspin .55s cubic-bezier(.3,1.5,.5,1) 1,bcidle 1.2s ease-in-out .55s infinite;filter:hue-rotate(-40deg) saturate(1.3) drop-shadow(0 0 6px #ffc833)}
+@keyframes bcspin{0%{transform:rotate(0) scale(1)}50%{transform:rotate(200deg) scale(1.4)}100%{transform:rotate(0) scale(1.25)}}
+#bcur .bci.press{animation:bcpress .28s ease-out 1}
+@keyframes bcpress{0%{transform:scale(1)}35%{transform:scale(.7) rotate(-8deg)}100%{transform:scale(1.1)}}
+body.bcur,body.bcur *{cursor:none!important}
+@media (prefers-reduced-motion:reduce){#bcur .bci,#bcur .bci.hot{animation:none}}
+/* bars */
+.gbar{position:relative;transform-origin:50% 100%;animation:gbgrow .7s cubic-bezier(.3,1.4,.5,1) backwards;animation-delay:calc(var(--i,0)*90ms);transition:transform .18s,box-shadow .18s}
+@keyframes gbgrow{from{transform:scaleY(0)}to{transform:scaleY(1)}}
+.gbar::after{content:attr(data-tip);position:absolute;left:50%;bottom:calc(100% + 8px);transform:translateX(-50%) scale(.6);transform-origin:50% 100%;opacity:0;pointer-events:none;white-space:nowrap;background:#26214f;color:#fff;font-weight:800;font-size:17px;padding:5px 12px;border-radius:12px;box-shadow:0 4px 12px rgba(0,0,0,.25);transition:opacity .15s,transform .18s;z-index:3}
+.gbar::before{content:"";position:absolute;top:0;right:100%;width:calc(var(--i,0)*86px + 22px);border-top:3px dashed #26214f;opacity:0;transition:opacity .15s;pointer-events:none}
+.gbar.sel{outline:4px solid #7c4dff;outline-offset:3px;box-shadow:inset 0 5px 0 rgba(255,255,255,.35),0 0 20px 6px rgba(124,77,255,.55);animation:gbsel .45s ease-out}
+.gbar.sel::after{opacity:1;transform:translateX(-50%) scale(1);background:#7c4dff}.gbar.sel::before{opacity:.85}
+@keyframes gbsel{0%{transform:scaleY(.9)}60%{transform:scaleY(1.06)}100%{transform:scaleY(1)}}
+@media (hover:hover) and (pointer:fine){
+  .gbar{cursor:pointer}
+  .gbar:hover{transform:translateY(-7px) scale(1.05,1.02);box-shadow:inset 0 5px 0 rgba(255,255,255,.45),0 0 0 4px #fff,0 0 22px 8px rgba(255,200,51,.9);z-index:2}
+  .gbar:hover::after{opacity:1;transform:translateX(-50%) scale(1)}.gbar:hover::before{opacity:.85}
+  .pgr:hover{background:#fff4c9}
+  .gb .slot:hover{outline:none;box-shadow:0 0 0 4px #ffc833,0 0 18px 6px rgba(255,200,51,.7);transform:translateY(-3px)}
+}
+/* pictograph rows */
+.pgr{position:relative;transition:background .15s,box-shadow .15s}.pgr[data-tip]{cursor:pointer}
+.pgr::after{content:attr(data-tip);position:absolute;right:10px;top:50%;transform:translateY(-50%) scale(.7);opacity:0;background:#26214f;color:#fff;font-weight:800;font-size:16px;padding:4px 12px;border-radius:12px;pointer-events:none;transition:opacity .15s,transform .15s;z-index:2}
+.pgr:hover::after,.pgr.sel::after{opacity:1;transform:translateY(-50%) scale(1)}
+.pgr.sel{background:#e9e1ff;box-shadow:inset 5px 0 0 #7c4dff}
+.pgr .blk{animation:blkpop .35s cubic-bezier(.3,1.6,.5,1) backwards;animation-delay:calc(var(--k,0)*45ms)}
+@keyframes blkpop{from{transform:scale(0)}to{transform:scale(1)}}
+/* graph builder slots */
+.gb .slot{position:relative;transition:transform .15s,box-shadow .15s}
+.gb .slot::after{content:attr(data-cnt);position:absolute;top:-10px;right:8px;background:#7c4dff;color:#fff;font-weight:800;font-size:14px;padding:2px 10px;border-radius:10px;opacity:0;transform:scale(.7);transition:opacity .15s,transform .15s;pointer-events:none;z-index:2}
+.gb .slot:hover::after,.gb .slot.over::after,.gb .slot.full::after{opacity:1;transform:scale(1)}
+.gb .slot.full::after{background:#1fa36a}
+.gb .slot.over{box-shadow:0 0 0 4px #ffc833,0 0 18px 6px rgba(255,200,51,.7)}
+/* family credit */
+.famfoot{text-align:center;margin:16px auto 8px;padding:0 12px}
+.famcredit{display:inline-block;font-size:16px;font-weight:700;color:#7a5aa8;background:rgba(255,255,255,.55);padding:8px 18px;border-radius:99px;box-shadow:0 2px 8px rgba(124,77,255,.12)}
+.famcredit .hrt{display:inline-block;animation:hrt 1.8s ease-in-out infinite}
+@keyframes hrt{0%,100%{transform:scale(1)}50%{transform:scale(1.25)}}
+@media (prefers-reduced-motion:reduce){.famcredit .hrt,.gbar,.pgr .blk{animation:none}}
 </style>
 </head>
 <body>
@@ -1090,13 +1135,13 @@ function graphHtml(d,style){
     h='<div class="gchart"><div class="gtitle">'+d.title+'</div><div class="gplot"><div class="gyl">How many</div><div class="gy">';
     for(i=0;i<=8;i++)h+='<span style="bottom:'+(i*26-9)+'px">'+i+'</span>';
     h+='</div><div><div class="gcols" style="width:'+(d.length*86+20)+'px">';
-    d.forEach(function(x){h+='<div class="gbar" style="height:'+(x.v*26)+'px;background:linear-gradient(180deg,'+x.c+','+x.c+')"></div>';});
+    d.forEach(function(x,gi){h+='<div class="gbar" data-tip="'+x.e+' '+x.n+': '+x.v+'" data-say="'+x.n+': '+x.v+'" style="--i:'+gi+';height:'+(x.v*26)+'px;background:linear-gradient(180deg,'+x.c+','+x.c+')"></div>';});
     h+='</div><div class="glabs" style="padding-left:13px">';
     d.forEach(function(x){h+='<div>'+x.e+'<small>'+x.n+'</small></div>';});
     return h+'</div></div></div></div>';
   }
   h='<div class="pgraph"><div class="gtitle">'+d.title+'</div><div class="pgt">';
-  d.forEach(function(x){var b='';for(i=0;i<x.v;i++)b+='<span class="blk" style="background:'+x.c+'">'+x.e+'</span>';h+='<div class="pgr"><div class="pgl">'+x.e+' '+x.n+'</div><div class="pgb">'+b+'</div></div>';});
+  d.forEach(function(x){var b='';for(i=0;i<x.v;i++)b+='<span class="blk" style="--k:'+i+';background:'+x.c+'">'+x.e+'</span>';h+='<div class="pgr" data-tip="= '+x.v+'" data-say="'+x.n+': '+x.v+'"><div class="pgl">'+x.e+' '+x.n+'</div><div class="pgb">'+b+'</div></div>';});
   return h+'</div><div class="pgkey">Key: 1 block = 1</div></div>';
 }
 function qGraphRead(r){
@@ -1205,7 +1250,7 @@ function botSolve(L){
 
 /* ---------- 3. STATE (localStorage) ---------- */
 const KEY='rudra_it_geek_v1';
-const DEF={setup:{done:false,momEmail:'phandroshni@gmail.com',dadEmail:'bwagh4@gmail.com',sendTo:'dad',pin:'',appUrl:'',qrMode:'pin',maxMin:15,sound:true,speak:true,p1ws:4,p1qz:2,adapt:true,vol:.8,voice:'',alarm:true,alarmIdle:15,notes:true,vq:true},
+const DEF={setup:{done:false,momEmail:'phandroshni@gmail.com',dadEmail:'bwagh4@gmail.com',sendTo:'dad',pin:'',appUrl:'',qrMode:'pin',maxMin:15,sound:true,speak:true,p1ws:4,p1qz:2,adapt:true,vol:.8,voice:'',alarm:true,alarmIdle:15,notes:true,vq:true,cur:true},
   xp:0,streak:0,lastDone:'',days:{},resets:{},tokens:{},pending:'',lastChannel:'',ch:{},badges:[],stk:[],rec:[],qzq:null,pinFail:0,pinLock:0,qz:{},gw:{d:'',n:0,paid:0},gd:{d:'',done:{},memPaid:0},botSet:0,custom:[],log:[],stat:{},dom:{},hist:{},sess:[],scene:null,lastBackup:0,best:0,voice:{d:'',done:false,days:0,total:0},vnotes:[],vnIdx:0,alarm:{d:'',last:0,n:0},vstat:{n:0}};
 let S=loadState();
 function loadState(){
@@ -1670,7 +1715,7 @@ function renderHome(){
   }
   h+='</div>'+albumCard()+'<div class="card"><h3>🏅 My badges</h3><div class="badges">'+BADGES.map(function(b){return '<span class="bdg'+(S.badges.indexOf(b[0])>=0?' on':'')+'" title="'+b[2]+'">'+b[1]+'</span>';}).join('')+'</div></div>';
   h+='<div class="card" id="hLab" style="cursor:pointer" tabindex="0" role="button"><h3>🧪 Geek Lab</h3><p class="sub" style="margin:0">Typing games, device sorting and how QR scanning really works →</p></div>';
-  h+='<div class="verbadge" title="App version">IT Geek Academy · v'+APP_VER+' · build '+APP_BUILD+'</div></div>';
+  h+='<div class="famfoot"><span class="famcredit">Developed by Mom and Dad with love for '+esc(PROFILE.first)+' <span class="hrt">❤️</span></span></div><div class="verbadge" title="App version">IT Geek Academy · v'+APP_VER+' · build '+APP_BUILD+'</div></div>';
   $('#s-home').innerHTML=h;
   var g=$('#hGo');if(g)g.addEventListener('click',function(){ac();startWorksheet();});
   $('#hLab').addEventListener('click',function(){go('lab');});
@@ -2458,7 +2503,7 @@ function renderParent(){
 }
 
 /* ---------- 12. v2 UPGRADE: syllabus, analytics, adaptive, backup, playground ---------- */
-const APP_VER='4.1.0',APP_BUILD='2026-11-18';
+const APP_VER='4.2.0',APP_BUILD='2026-11-19';
 function shuf(a){a=a.slice();for(var i=a.length-1;i>0;i--){var j=Math.floor(Math.random()*(i+1)),t=a[i];a[i]=a[j];a[j]=t;}return a;}
 function lastNDays(n){var a=[],t=Date.now(),i;for(i=n-1;i>=0;i--)a.push(ymd(new Date(t-i*864e5)));return a;}
 function pctOf(f,n){return n?Math.round(f/n*100):0;}
@@ -3395,6 +3440,7 @@ function alarmHtml(){
   return '<div class="card"><h3>⏰ Evening reminder</h3><p class="sub" style="margin:0 0 8px">From 3:30 PM to 9:30 PM, if today\'s worksheet is not finished and the app sits untouched, Byte speaks and shows a big pop-up. It repeats every hour until the worksheet is done.</p>'+
     '<div class="row" style="align-items:center"><button class="btn ghost sm" id="alToggle" type="button">'+(S.setup.alarm===false?'⏰ Reminder: off':'⏰ Reminder: on')+'</button><label style="font-weight:600">Idle for <select id="alIdle" class="fi" style="width:auto;display:inline-block">'+[10,15,20,30].map(function(m){return '<option'+(m===(S.setup.alarmIdle||15)?' selected':'')+'>'+m+'</option>';}).join('')+'</select> min</label><button class="btn ghost sm" id="alTest" type="button">▶ Test it now</button></div><div class="note good" style="margin-top:8px">'+esc(alarmInfo())+'</div>'+
     '<small>Safari cannot run alarms when the app is closed or the iPad is asleep. Keep the app open on the iPad (Settings → Display &amp; Brightness → Auto-Lock → Never, or use Guided Access).</small></div>'+
+    '<div class="card"><h3>🖱️ Cartoon mouse pointer</h3><div class="row"><button class="btn ghost sm" id="curToggle" type="button">'+(S.setup.cur===false?'🖱️ Cartoon pointer: off':'🖱️ Cartoon pointer: on')+'</button></div><small>A friendly arrow follows the Bluetooth mouse. It never shows for finger touches. iPadOS also draws its own round dot, so you may see both.</small></div>'+
     '<div class="card"><h3>🎤 Speak-your-answer</h3><div class="row"><button class="btn ghost sm" id="vqToggle" type="button">'+(S.setup.vq===false?'🎤 Mic answer buttons: off':'🎤 Mic answer buttons: on')+'</button></div><small>Adds a “Say it” button to quiz and custom questions so Rudraksh can answer out loud. Correct spoken answers earn +2 XP.</small></div>';
 }
 function bindFamily(){
@@ -3422,8 +3468,64 @@ function bindFamily(){
   q('#alToggle',function(){S.setup.alarm=(S.setup.alarm===false);save();if(S.setup.alarm===false)alarmHide();renderParent();});
   var ai=$('#alIdle');if(ai)ai.addEventListener('change',function(){S.setup.alarmIdle=+ai.value;save();renderParent();});
   q('#alTest',function(){ac();unlockMedia();alarmShow(true);});
+  q('#curToggle',function(){S.setup.cur=(S.setup.cur===false);save();curApplySetting();renderParent();});
   q('#vqToggle',function(){S.setup.vq=(S.setup.vq===false);save();renderParent();});
 }
+
+/* ---------- 15. v5: cartoon pointer, graph feedback, family footer ---------- */
+const BCUR={el:null,inner:null,x:-99,y:-99,raf:0,on:false,hot:false,enabled:true};
+const HOT_SEL='button,[role=button],.opt,.chip,.slot,.game,.tab,.icon,.pstk,a,select,label,input[type=checkbox],input[type=radio],input[type=range],.gbar,.pgr,.pit,.gcell,.k,.card[role=button]';
+function curSvg(){
+  return '<svg viewBox="0 0 48 52" width="44" height="48" aria-hidden="true"><defs><linearGradient id="bcg" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#ffd84d"/><stop offset="1" stop-color="#ff5c8a"/></linearGradient></defs>'+
+    '<path d="M4 3 L40 22 Q44 24.5 39.5 26.5 L27 31 L22 44 Q20 49 17.5 44 Z" fill="url(#bcg)" stroke="#fff" stroke-width="3.5" stroke-linejoin="round"/>'+
+    '<path d="M4 3 L40 22 Q44 24.5 39.5 26.5 L27 31 L22 44 Q20 49 17.5 44 Z" fill="none" stroke="#5b35c9" stroke-width="1.6" stroke-linejoin="round"/>'+
+    '<circle cx="19" cy="22" r="3" fill="#fff"/><circle cx="26.5" cy="25" r="3" fill="#fff"/><circle cx="19.8" cy="22.4" r="1.5" fill="#26214f"/><circle cx="27.3" cy="25.4" r="1.5" fill="#26214f"/>'+
+    '<path d="M18 29 Q22 33 26 30.5" fill="none" stroke="#26214f" stroke-width="1.6" stroke-linecap="round"/></svg>';
+}
+function curShow(on){
+  if(!BCUR.el||BCUR.on===on)return;BCUR.on=on;
+  BCUR.el.classList.toggle('on',on);document.body.classList.toggle('bcur',on);
+  if(!on){BCUR.hot=false;BCUR.inner.classList.remove('hot','press');}
+}
+function curPaint(){BCUR.raf=0;if(BCUR.el)BCUR.el.style.transform='translate3d('+BCUR.x+'px,'+BCUR.y+'px,0)';}
+function startCursor(){
+  if(BCUR.el||!('onpointermove' in window))return;
+  var el=document.createElement('div');el.id='bcur';el.setAttribute('aria-hidden','true');el.innerHTML='<div class="bci">'+curSvg()+'</div>';
+  document.body.appendChild(el);BCUR.el=el;BCUR.inner=el.firstChild;
+  var allowed=function(){return S.setup.cur!==false;};
+  document.addEventListener('pointermove',function(e){
+    if(e.pointerType!=='mouse'){curShow(false);return;}          /* fingers and pencil never see the cursor */
+    if(!allowed()){curShow(false);return;}
+    BCUR.x=e.clientX;BCUR.y=e.clientY;if(!BCUR.raf)BCUR.raf=requestAnimationFrame(curPaint);
+    if(!BCUR.on)curShow(true);
+    var t=e.target,hot=!!(t&&t.closest&&t.closest(HOT_SEL)&&!(t.closest('button:disabled,.dim')));
+    if(hot!==BCUR.hot){BCUR.hot=hot;BCUR.inner.classList.toggle('hot',hot);}
+  },{passive:true,capture:true});
+  document.addEventListener('pointerdown',function(e){
+    if(e.pointerType!=='mouse'){curShow(false);return;}
+    if(!BCUR.on)return;BCUR.inner.classList.remove('press');void BCUR.inner.offsetWidth;BCUR.inner.classList.add('press');
+  },{passive:true,capture:true});
+  document.addEventListener('pointerup',function(){if(BCUR.inner)BCUR.inner.classList.remove('press');},{passive:true,capture:true});
+  document.addEventListener('touchstart',function(){curShow(false);},{passive:true,capture:true});
+  document.documentElement.addEventListener('mouseleave',function(){curShow(false);});
+  document.addEventListener('visibilitychange',function(){if(document.hidden)curShow(false);});
+}
+function curApplySetting(){if(S.setup.cur===false)curShow(false);}
+
+/* ===== graph feedback ===== */
+function bgSelect(el,sel){
+  var p=el.parentNode;[].forEach.call(p.children,function(c){if(c!==el)c.classList.remove('sel');});
+  var on=!el.classList.contains('sel');el.classList.toggle('sel',on);
+  try{SFX.pop();}catch(e){}
+  if(on&&el.getAttribute('data-say'))say(el.getAttribute('data-say'));
+}
+document.addEventListener('click',function(e){
+  var b=e.target.closest&&e.target.closest('.gbar,.pgr');if(b&&b.hasAttribute('data-tip'))bgSelect(b);
+});
+function gbCounts(){[].forEach.call(document.querySelectorAll('.gb .slot'),function(s){
+  var need=(s.querySelector('.sl b')||{}).textContent||'?',have=s.querySelectorAll('.drop .chip').length;
+  s.setAttribute('data-cnt',have+' of '+need);s.classList.toggle('full',String(have)===need);});}
+['pointerover','pointerup','click','keyup'].forEach(function(n){document.addEventListener(n,function(){setTimeout(gbCounts,40);},{passive:true});});
 
 /* ---------- 11. BOOT ---------- */
 applyKbMode();
@@ -3435,7 +3537,7 @@ function handleHash(){
   go('home');setTimeout(function(){handlePayload(raw);},300);
 }
 function init(){
-  buildTabs();renderSplash();go('splash');setupPWA();initVoices();startAlarm();
+  buildTabs();renderSplash();go('splash');setupPWA();initVoices();startAlarm();startCursor();
   window.addEventListener('hashchange',handleHash);
   if(S.setup.done&&!S.setup.appUrl&&location.protocol.indexOf('http')===0){S.setup.appUrl=location.href.split('#')[0].split('?')[0];save();}
   if((location.hash||'').indexOf('reward=')>=0&&S.setup.done)handleHash();
