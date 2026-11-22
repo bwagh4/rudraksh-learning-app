@@ -596,6 +596,70 @@ button.bcell{cursor:pointer;font-family:inherit}
 .bkcard{background:linear-gradient(135deg,#e0f7fa,#e9e4ff)}.bkunits{display:grid;grid-template-columns:repeat(auto-fit,minmax(130px,1fr));gap:10px}
 .bku{display:flex;flex-direction:column;align-items:center;gap:2px;padding:10px 6px;position:relative}.bku span{font-size:34px;line-height:1}.bku small{font-size:13px;font-weight:600;opacity:.85}.bku em{position:absolute;top:4px;right:8px;font-style:normal}
 .bku.u1{background:linear-gradient(135deg,#ffb347,#ff7a1a)}.bku.u2{background:linear-gradient(135deg,#43c6ac,#1f8f7a)}.bku.u3{background:linear-gradient(135deg,#5b8def,#3a56d4)}.bku.u4{background:linear-gradient(135deg,#b06ab3,#7c4dff)}.bku.um{background:linear-gradient(135deg,#ff6a95,#ff5c8a)}
+/* ---- v7: life skills, weekly report, ergonomics ---- */
+.bigemo{font-size:72px;text-align:center;line-height:1.1;margin:2px 0}
+.mchips{display:flex;flex-wrap:wrap;gap:10px;justify-content:center;margin:8px 0}
+.mchip{position:relative;display:flex;align-items:center;gap:8px;padding:12px 16px 12px 36px;min-height:60px;border-radius:18px;border:3px solid #cfcbea;background:#fff;font:inherit;font-weight:700;font-size:20px;color:#26214f;cursor:pointer;transition:transform .15s,box-shadow .15s,background .15s}
+.mchip i{font-style:normal;font-size:34px}.mchip .nb{position:absolute;left:8px;top:8px}
+.mchip.on{background:#e9e1ff;border-color:#7c4dff;box-shadow:0 0 0 4px rgba(124,77,255,.25);transform:scale(1.04)}
+.mchip.okc{background:#d9f7e6;border-color:#1fa36a}.mchip.bad{background:#ffe0e3;border-color:#e63946}.mchip.dim{opacity:.45;pointer-events:none}
+.mchip.pulse{animation:micp .8s ease-in-out 3}
+@media (hover:hover) and (pointer:fine){.mchip:hover{transform:translateY(-3px);box-shadow:0 0 0 4px #ffc833}}
+.ideas{display:flex;flex-wrap:wrap;gap:8px;justify-content:center;margin:4px 0}.idea{background:#fff3c4;border-radius:14px;padding:6px 12px;font-weight:700}
+.dzfoot .btn.rec,.btn.rec{animation:micp 1s ease-in-out infinite;background:#ffe0e6;color:#c0143c}
+/* rule switch */
+.rsw{text-align:center}.rsrule{display:inline-block;font-size:26px;padding:8px 22px;border-radius:99px;background:#e9e1ff;margin:4px 0 10px;transition:background .2s}
+.rsrule.colour{background:#ffe1ee}.rsrule.shape{background:#dff1ff}.rsrule.sw{background:#ffc833;animation:bcspin .6s}
+.rsitem{height:130px;display:flex;align-items:center;justify-content:center;animation:blkpop .3s}
+.rsbins{display:flex;gap:16px;justify-content:center;margin:10px 0;flex-wrap:wrap}
+.rsbin{position:relative;display:flex;flex-direction:column;align-items:center;gap:6px;min-width:150px;padding:14px 20px 12px;border-radius:22px;border:4px dashed #b9b3e6;background:#fff;font:inherit;font-weight:800;font-size:22px;color:#26214f;cursor:pointer;transition:transform .15s,box-shadow .15s}
+.rsbin .nb{position:absolute;left:8px;top:8px}.rsbin .sw{display:block;width:44px;height:44px;border-radius:50%;border:3px solid #26214f}
+.rsbin.okc{background:#d9f7e6;border-color:#1fa36a}.rsbin.bad{background:#ffe0e3;border-color:#e63946;animation:shake .4s}.rsbin.pulse{animation:micp .8s ease-in-out 3}
+@media (hover:hover) and (pointer:fine){.rsbin:hover{transform:translateY(-4px);box-shadow:0 0 0 4px #ffc833}}
+.rsprog{display:flex;gap:6px;justify-content:center;margin-top:6px}.rsprog span{width:14px;height:14px;border-radius:50%;background:#d9d5f2}.rsprog .d{background:#34c77b}.rsprog .c{background:#7c4dff;transform:scale(1.25)}
+/* say it */
+.sayc{text-align:center;margin:8px auto;max-width:640px;padding:16px;border-radius:22px;background:#fff7d6;border:3px solid #ffc833}
+.sayp{font-size:30px;font-weight:800;color:#26214f}.sayh{margin-top:6px;font-weight:700;color:#7a5aa8}
+#sayGo{min-width:200px}
+/* phone trainer */
+.who{text-align:center;font-weight:800;font-size:22px;margin:4px 0}
+.chunks{display:flex;gap:12px;justify-content:center;flex-wrap:wrap;margin:8px 0}
+.chunk{display:flex;flex-direction:column;align-items:center;gap:4px;padding:14px 20px;border-radius:24px;border:4px solid #fff;box-shadow:0 4px 0 rgba(0,0,0,.15);font:inherit;color:#26214f;cursor:pointer}
+.chunk .cd{display:flex;gap:6px}.chunk i{font-style:normal;font-size:44px;font-weight:800;transition:transform .15s;display:inline-block}.chunk i.lit{transform:scale(1.5) translateY(-6px);color:#fff;text-shadow:0 0 8px #26214f}
+.chunk small{font-size:15px;font-weight:700}
+.phrhythm{text-align:center;color:#7a5aa8;font-weight:700;margin:4px 0}
+.dtgt{text-align:center;font-size:24px;margin:6px 0}
+.dispn{display:flex;align-items:center;justify-content:center;gap:6px;flex-wrap:wrap;margin:8px 0}.dispn.shk{animation:shake .4s}
+.dch{display:flex;gap:4px}.dsep{font-weight:800;font-size:26px;color:#7a5aa8}
+.dg{display:inline-flex;align-items:center;justify-content:center;width:40px;height:52px;border-radius:12px;border:3px solid #b9b3e6;background:#fff;font-size:28px;font-weight:800;color:#26214f}
+.dg.pre{background:#eee9ff;color:#7a5aa8}.dg.cur{border-color:#ff5c8a;box-shadow:0 0 0 4px rgba(255,92,138,.3);animation:micp 1.2s ease-in-out infinite}.dg.ok{background:#d9f7e6;border-color:#1fa36a}.dg.pop{animation:blkpop .3s}
+.keypad{display:grid;grid-template-columns:repeat(3,minmax(0,92px));gap:10px;justify-content:center;margin:10px auto}
+.pk{height:70px;border-radius:20px;border:3px solid #fff;background:hsl(var(--h,260),85%,86%);box-shadow:0 4px 0 rgba(0,0,0,.18);font:inherit;color:#26214f;display:flex;flex-direction:column;align-items:center;justify-content:center;line-height:1;cursor:pointer;transition:transform .08s}
+.pk b{font-size:30px}.pk small{font-size:11px;letter-spacing:1px;margin-top:2px}.pk.bk{background:#ffe0e3;font-size:28px}
+.pk:active{transform:translateY(3px);box-shadow:0 1px 0 rgba(0,0,0,.18)}.pk.bad{background:#ffb3bb;animation:shake .35s}.pk.glow{animation:micp .6s ease-in-out 3;box-shadow:0 0 0 5px #ffc833}
+@media (hover:hover) and (pointer:fine){.pk:hover{box-shadow:0 4px 0 rgba(0,0,0,.18),0 0 0 4px #ffc833}}
+/* life card */
+.lscard{background:linear-gradient(135deg,#fff3d6,#e6f7ff)}
+.bkgrid{display:flex;flex-wrap:wrap;gap:10px}
+.lsb{flex:1;min-width:150px;flex-direction:column;display:flex;align-items:center;gap:2px;padding:12px 8px}.lsb span{font-size:34px}.lsb small{opacity:.8;font-weight:600}.lsb em{font-style:normal}.lsb.dn{background:#d9f7e6;color:#127a47}
+.phline{margin-top:10px;text-align:center;font-size:20px;padding:8px;border-radius:16px;background:rgba(255,255,255,.7);cursor:pointer}.phline span{font-size:14px;color:#7a5aa8;font-weight:700}
+/* weekly */
+.wknote{display:flex;gap:14px;align-items:center;background:linear-gradient(135deg,#fff0b8,#ffd6ea);border:3px solid #ffc833;animation:wkp 2.4s ease-in-out infinite}.wkb{font-size:58px;animation:albounce 1.6s ease-in-out infinite}
+@keyframes wkp{0%,100%{box-shadow:0 0 0 0 rgba(255,200,51,.6)}50%{box-shadow:0 0 0 10px rgba(255,200,51,0)}}
+.wkstrip{display:flex;gap:6px;margin:10px 0}.wkd{flex:1;text-align:center;border-radius:12px;background:#f1f0fa;padding:4px 0}.wkd.on{background:#e9e1ff}.wkd.ws{background:#d9f7e6}.wkd b{display:block;height:20px}
+.wkt{width:100%;border-collapse:collapse;font-size:15px}.wkt th{text-align:left;font-size:13px;color:#7a5aa8;padding:4px}.wkt td{padding:6px 4px;border-top:1px solid #ece9fa}.gu{color:#127a47;font-weight:800}.gd{color:#c0143c;font-weight:800}.gn{color:#8a87a8}
+.wkgood{border-left:6px solid #34c77b}.wkfocus{border-left:6px solid #ff9f43}.wkgood ul,.wkfocus ul{margin:6px 0 0;padding-left:20px}.wkgood li,.wkfocus li{margin:6px 0}
+@media print{#tabs,.ptabs,.btn,#bcur{display:none!important}.screen{position:static!important;overflow:visible!important}}
+/* bottom clearance so answers stay above the iPadOS Dock */
+#s-work{padding-bottom:calc(120px + env(safe-area-inset-bottom,0px))}
+#s-work .tray{margin-bottom:14px}
+.dzhint{text-align:center;font-size:14px;color:#7a5aa8;font-weight:600;margin:8px 0 0}
+@media (max-height:820px){
+  #s-work{padding-top:calc(env(safe-area-inset-top) + 8px);padding-bottom:calc(150px + env(safe-area-inset-bottom,0px))}
+  #s-work .qcard{padding:12px 18px}#s-work .qprompt{font-size:26px;margin:2px 0 6px}#s-work .slots .slot{padding:6px 12px}#s-work .tray{min-height:64px;padding:6px}
+  .bigemo{font-size:54px}
+}
+@media (orientation:portrait) and (min-width:700px){#s-work{padding-bottom:calc(170px + env(safe-area-inset-bottom,0px))}}
 </style>
 </head>
 <body>
@@ -1675,6 +1739,12 @@ function dragUI(q,host,api){
       c.addEventListener('pointermove',mv);c.addEventListener('pointerup',up);c.addEventListener('pointercancel',up);
     });
   });
+  foot.appendChild(el('<div class="dzhint">👆 Tap a tile, then tap a box. Keys: 1–9 pick a tile, then 1–9 pick a box, Enter to check.</div>'));
+  setKeys(function(e){
+    var n=parseInt(e.key,10);if(!(n>=1&&n<=9)||QS.done)return false;
+    if(sel===null){var un=q.items.filter(function(i){return !placed[i.id]&&!chips[i.id].classList.contains('lock');}),it=un[n-1];if(it){setSel(it.id);SFX.pop();return true;}return false;}
+    var t=q.targets[n-1];if(t){place(sel,t.id);return true;}return false;
+  });
   chk.addEventListener('click',function(){
     if(QS.done)return;var allOk=true;
     q.items.forEach(function(it){
@@ -1725,6 +1795,7 @@ function finishQ(ok){
   var q0=SES.qs[SES.i],pts=ok?Math.max(10-QS.wrongs*3,3):0;if(ok&&QS.wrongs===0&&q0&&q0.lvl>0)pts+=2;if(ok&&QS.wrongs===0&&QS.voice)pts+=2;if(SES.noLog)pts=0;
   SES.res[SES.i]={w:QS.wrongs,ok:ok,p:pts,v:QS.voice?1:0};S.xp+=pts;if(q0)logAns(q0,ok,QS.wrongs);
   if(ok){SFX.ok();fb('ok','⭐ '+pick(PRAISE)+' +'+pts+' XP');party(false);}else fb('info','Good try! Now you know the answer 🌟');
+  if(q0&&q0.after){var f2=$('#fb');if(f2)f2.innerHTML+='<br><small>'+q0.after+'</small>';setTimeout(function(){if(QS&&QS.done)say(q0.after.replace(/<[^>]+>/g,''));},900);}
   if(SES.persist)SES.persist();else save();
   $('#wDots').innerHTML=dotsHtml();$('#wNext').disabled=false;try{$('#wNext').focus();}catch(e){}
 }
@@ -1750,7 +1821,7 @@ function renderHome(){
   h+='<div class="wrap"><div class="hero"><div class="byte">🤖</div><div class="bubble">'+greet()+', <b>'+PROFILE.first+'</b>!<br>'+heroLine(day)+'</div></div>';
   h+='<div class="stats"><div class="stat">⭐ XP<b>'+S.xp+'</b></div><div class="stat">🔥 Streak<b>'+S.streak+' day'+(S.streak===1?'':'s')+'</b></div><div class="stat">Level<b style="font-size:21px">'+lv.name+'</b><div class="bar"><i style="width:'+lv.pct+'%"></i></div></div></div>';
   if(S.pending&&S.tokens[S.pending]){h+='<div class="card" style="background:#fff5d6"><b>🎁 Your reward is ready to finish!</b><div class="row"><button class="btn ok" id="hResume" type="button">▶ Continue video</button></div></div>';}
-  h+=quizCard()+voiceCard()+bonusCards();
+  h+=wkNoticeHtml()+quizCard()+voiceCard()+lifeCard()+bonusCards();
   h+='<div class="card todayc"><h2>📝 Today\'s Worksheet</h2>';
   if(day&&day.done){
     var t=S.tokens[day.token],st=domStars(day);
@@ -1777,7 +1848,7 @@ function startWorksheet(){
 }
 function finishWorksheet(){
   var d=todayStr(),day=S.days[d];day.done=true;day.i=day.qs.length;
-  var y=ymd(new Date(Date.now()-864e5));S.streak=(S.lastDone===y)?S.streak+1:(S.lastDone===d?S.streak:1);S.lastDone=d;histDay(d).ws=1;if(S.streak>(S.best||0))S.best=S.streak;
+  var y=ymd(new Date(Date.now()-864e5));S.streak=(S.lastDone===y)?S.streak+1:(S.lastDone===d?S.streak:1);S.lastDone=d;histDay(d).ws=1;evLog('ws',{});if(S.streak>(S.best||0))S.best=S.streak;
   issueToken(d);
   var add=function(k){if(S.badges.indexOf(k)<0)S.badges.push(k);};
   add('first');if(S.streak>=3)add('streak3');if(S.streak>=7)add('streak7');
@@ -1882,7 +1953,7 @@ let factI=0;
 function renderLab(){
   var f=FACTS[factI];
   $('#s-lab').innerHTML='<div class="wrap"><h1>🧪 Geek Lab</h1><div class="card fact" id="fact"><div class="e">'+f[0]+'</div><h2>'+f[1]+'</h2><p>'+f[2]+'</p><div class="row" style="justify-content:center"><button class="btn sm ghost" id="fPrev" type="button">◀</button><button class="btn sm ghost" data-say="'+esc(f[1]+'. '+f[2])+'" type="button">🔊 Read</button><button class="btn sm" id="fNext" type="button">Next fact ▶</button></div></div>'+
-    voiceCard()+quickQuizCard()+bookLabCard()+gamesBanner()+'<h3>🎮 Mini games (+XP)</h3><div class="games">'+newGameButtons()+'</div>'+
+    voiceCard()+quickQuizCard()+bookLabCard()+lifeCard()+gamesBanner()+'<h3>🎮 Mini games (+XP)</h3><div class="games">'+newGameButtons()+'</div>'+
     '<div class="card" style="margin-top:14px"><h3>🔍 How does scanning work?</h3><p class="sub" style="margin:0 0 8px">A QR code is a picture made of black and white squares.</p><button class="btn" id="lHow" type="button">Show me!</button></div></div>';
   $('#fPrev').addEventListener('click',function(){factI=(factI+FACTS.length-1)%FACTS.length;renderLab();});
   $('#fNext').addEventListener('click',function(){factI=(factI+1)%FACTS.length;renderLab();});
@@ -1890,7 +1961,7 @@ function renderLab(){
   [].forEach.call(document.querySelectorAll('.game'),function(b){b.addEventListener('click',function(){ac();startMini(b.getAttribute('data-g'));});});
 }
 function startMini(type){
-  CURG=type;
+  CURG=type;evLog('gstart',{id:type});
   if(GAMES[type]){GAMES[type]();return;}
   var qs=buildMini(type,Date.now());
   openSession({kind:'mini',qs:qs,i:0,res:[],onDone:function(){
@@ -1923,7 +1994,7 @@ function issueBonus(kind,lbl){
   S.tokens[t.id]=t;S.lastChannel=c.key;save();return t;
 }
 function recordWin(){
-  var g=gwToday(),msg;LASTB=null;g.n++;S.xp+=15;
+  var g=gwToday(),msg;LASTB=null;g.n++;S.xp+=15;evLog('gwin',{id:CURG||''});
   msg='<p style="text-align:center;font-weight:600">⭐ Game won! +15 XP<br>Wins today: '+Math.min(g.n,WINS_FOR_REWARD)+' / '+WINS_FOR_REWARD+'</p>';
   if(g.n>=WINS_FOR_REWARD&&S.badges.indexOf('gamer')<0)S.badges.push('gamer');
   if(g.n>=WINS_FOR_REWARD&&g.paid<MAX_GAME_REWARDS_PER_DAY){
@@ -2264,7 +2335,7 @@ function startQuiz(){
 function finishQuiz(){
   var d=todayStr(),ok=SES.res.filter(function(r){return r&&r.ok;}).length;
   if(S.qz[d]&&S.qz[d].done){go('home');return;}
-  S.xp+=30;histDay(d).qz=1;if(S.badges.indexOf('quiz')<0)S.badges.push('quiz');
+  S.xp+=30;histDay(d).qz=1;evLog('qz',{ok:ok});if(S.badges.indexOf('quiz')<0)S.badges.push('quiz');
   var t=issueBonus('quiz','the Daily Tech Quiz');S.qz[d]={done:true,token:t?t.id:'',score:ok};save();
   SFX.win();go('home');party(true);
   var extra='<p style="text-align:center;font-weight:700">Score: '+ok+' / 5<br>+30 Bonus XP ⚡<br>Badge: Daily Quiz Master 🏅</p>'+noteWin('Daily Quiz Master! You earned thirty bonus XP!');
@@ -2548,7 +2619,7 @@ function renderParent(){
 }
 
 /* ---------- 12. v2 UPGRADE: syllabus, analytics, adaptive, backup, playground ---------- */
-const APP_VER='4.3.1',APP_BUILD='2026-11-20';
+const APP_VER='4.4.0',APP_BUILD='2026-11-21';
 function shuf(a){a=a.slice();for(var i=a.length-1;i>0;i--){var j=Math.floor(Math.random()*(i+1)),t=a[i];a[i]=a[j];a[j]=t;}return a;}
 function lastNDays(n){var a=[],t=Date.now(),i;for(i=n-1;i>=0;i--)a.push(ymd(new Date(t-i*864e5)));return a;}
 function pctOf(f,n){return n?Math.round(f/n*100):0;}
@@ -2781,7 +2852,7 @@ function setHtml(){
   var h='<div class="card"><h3>📲 Install &amp; offline</h3><div class="note '+(PWA.s==='ready'||PWA.s==='update'?'good':'badn')+'">'+offTxt+'</div><p style="margin:6px 0">Home Screen app: <b>'+(standalone()?'installed ✅':'not yet')+'</b> · Protected storage: <b>'+(PWA.persist?'yes':'not guaranteed')+'</b> · Version <b>'+APP_VER+'</b></p>'+(standalone()?'':'<small>To install: open this page in <b>Safari</b>, tap <b>Share</b> (square with arrow), then <b>Add to Home Screen</b>.</small>')+'</div>';
   h+='<div class="card"><h3>💾 Backup &amp; restore</h3><div class="note '+(warn?'badn':'good')+'">'+(age===null?'⚠️ No backup yet. Save one so progress and custom questions are never lost.':age>=7?'⚠️ Last backup was '+age+' days ago.':'✅ Last backup: '+(age===0?'today':age+' day'+(age===1?'':'s')+' ago')+'.')+'</div><div class="row"><button class="btn sm" id="pBk" type="button">⬇️ Save backup file</button><label class="btn ghost sm" style="cursor:pointer">⬆️ Restore from file<input type="file" id="pRs" accept=".json,application/json" style="display:none"></label></div><small>The file holds XP, streaks, stickers, analytics and all custom questions. On iPad, choose <b>Save to Files</b> in the share sheet.</small></div>';
   h+='<div class="card"><h3>🔊 Sound &amp; learning</h3><div class="row"><label style="display:flex;align-items:center;gap:10px;font-weight:600">Volume <input type="range" id="pVol" min="0" max="100" value="'+Math.round((S.setup.vol==null?.8:S.setup.vol)*100)+'" style="width:180px"></label><button class="btn ghost sm" id="pTestSnd" type="button">▶ Test sounds</button><button class="btn ghost sm" id="pAdapt" type="button">'+(S.setup.adapt===false?'🎯 Adaptive difficulty: off':'🎯 Adaptive difficulty: on')+'</button></div><small>Adaptive: after about 6 answers in an area the app adds hints (accuracy under 50%) or removes helpers (88% or more).</small></div>';
-  h+=alarmHtml()+famHtml();
+  h+=alarmHtml()+famHtml()+phoneSetHtml();
   h+='<div class="card"><h3>🗣️ Byte\'s voice</h3><div class="row"><select id="pVoice" class="fi" style="flex:1;min-width:220px"></select><button class="btn ghost sm" id="pVoiceTest" type="button">▶ Hear Byte</button></div><small id="pVoiceSt"></small><br><small>Byte picks the friendliest English voice on the iPad (Enhanced, Premium, Ava, Samantha…) and speaks a little slower and higher so it is easy to follow. For the best sound: Settings → Accessibility → Spoken Content → Voices → English → download an <b>Enhanced</b> voice.</small></div>';
   h+='<div class="card"><div class="row"><button class="btn warn sm" id="pWipe" type="button">Erase all app data</button></div></div>';
   return h;
@@ -2790,8 +2861,8 @@ function PM(k){return '\u0001'+k+'\u0001';}
 function parentAssemble(h){
   var parts=h.split('\u0001'),pre=parts[0],secs={},i;
   for(i=1;i<parts.length;i+=2)secs[parts[i]]=(secs[parts[i]]||'')+parts[i+1];
-  secs.prog=dashHtml()+(secs.prog||'');secs.syl=sylHtml();secs.set=(secs.set||'')+setHtml();
-  var T4=[['today','🏠','Today'],['prog','📊','Progress'],['syl','🎓','Syllabus'],['set','⚙️','Settings']];
+  secs.prog=dashHtml()+(secs.prog||'');secs.week=weeklyHtml();secs.syl=sylHtml();secs.set=(secs.set||'')+setHtml();
+  var T4=[['today','🏠','Today'],['prog','📊','Progress'],['week','📈','Weekly'],['syl','🎓','Syllabus'],['set','⚙️','Settings']];
   var bar='<div class="ptabs" role="tablist">'+T4.map(function(t){return '<button type="button" role="tab" class="pt'+(PT===t[0]?' on':'')+'" data-pt="'+t[0]+'" aria-selected="'+(PT===t[0])+'">'+t[1]+' '+t[2]+'</button>';}).join('')+'</div>';
   return pre+bar+(secs[PT]||'')+'</div>';
 }
@@ -2807,7 +2878,8 @@ function bindParentV2(){
   fillVoiceSel();var pv=$('#pVoice');if(pv)pv.addEventListener('change',function(){S.setup.voice=pv.value;save();say('Hi Rudraksh! I am Byte.',true);});
   q('#pVoiceTest',function(){ac();say('Hi Rudraksh! I am Byte. Let\'s learn something fun today!',true);});
   if(PT==='syl')bindSyl();
-  if(PT==='set')bindFamily();
+  if(PT==='set'){bindFamily();bindV7();}
+  if(PT==='week')bindWeek();
 }
 
 /* ===== interactive sticker playground ===== */
@@ -3175,7 +3247,7 @@ function vlNext(skipped){
   if(VL.i>=VL.items.length-1){vlFinish();return;}
   VL.i++;vlShow();
 }
-function vlFinish(){
+function vlFinish(){evLog('vl',{});
   var v=voiceState(),t=todayStr(),first=!(v.d===t&&v.done),xp=first?VL.xp:0;
   if(first){S.xp+=xp;v.d=t;v.done=true;v.days=(v.days||0)+1;v.total=(v.total||0)+xp;if(S.badges.indexOf('voice')<0)S.badges.push('voice');histDay(t).vl=1;save();}
   SFX.win();party(true);
@@ -3538,23 +3610,42 @@ function startCursor(){
   if(BCUR.el||!('onpointermove' in window))return;
   var el=document.createElement('div');el.id='bcur';el.setAttribute('aria-hidden','true');el.innerHTML='<div class="bci">'+curSvg()+'</div>';
   document.body.appendChild(el);BCUR.el=el;BCUR.inner=el.firstChild;
-  var allowed=function(){return S.setup.cur!==false;};
-  document.addEventListener('pointermove',function(e){
-    if(e.pointerType!=='mouse'){curShow(false);return;}          /* fingers and pencil never see the cursor */
+  var allowed=function(){return S.setup.cur!==false;},T={mouse:0,touch:0};
+  var track=function(x,y,t){
     if(!allowed()){curShow(false);return;}
-    BCUR.x=e.clientX;BCUR.y=e.clientY;if(!BCUR.raf)BCUR.raf=requestAnimationFrame(curPaint);
+    BCUR.x=x;BCUR.y=y;if(!BCUR.raf)BCUR.raf=requestAnimationFrame(curPaint);
     if(!BCUR.on)curShow(true);
-    var t=e.target,hot=!!(t&&t.closest&&t.closest(HOT_SEL)&&!(t.closest('button:disabled,.dim')));
+    var hot=!!(t&&t.closest&&t.closest(HOT_SEL)&&!t.closest('button:disabled,.dim'));
     if(hot!==BCUR.hot){BCUR.hot=hot;BCUR.inner.classList.toggle('hot',hot);}
+  };
+  var fingerRecent=function(){return Date.now()-T.touch<700;};
+  /* the mouse: pointer events first, plain mouse events as a second chance (some iPad browser builds drop one of them) */
+  document.addEventListener('pointermove',function(e){
+    if(e.pointerType==='touch'||e.pointerType==='pen'){T.touch=Date.now();curShow(false);return;}
+    T.mouse=Date.now();track(e.clientX,e.clientY,e.target);
   },{passive:true,capture:true});
+  document.addEventListener('mousemove',function(e){
+    if(fingerRecent()||(e.sourceCapabilities&&e.sourceCapabilities.firesTouchEvents))return;
+    T.mouse=Date.now();track(e.clientX,e.clientY,e.target);
+  },{passive:true,capture:true});
+  ['pointerover','mouseover','pointerenter','mouseenter'].forEach(function(n){document.addEventListener(n,function(e){
+    if(e.pointerType==='touch'||e.pointerType==='pen'||fingerRecent())return;
+    if(e.clientX||e.clientY)track(e.clientX,e.clientY,e.target);
+  },{passive:true,capture:true});});
   document.addEventListener('pointerdown',function(e){
-    if(e.pointerType!=='mouse'){curShow(false);return;}
-    if(!BCUR.on)return;BCUR.inner.classList.remove('press');void BCUR.inner.offsetWidth;BCUR.inner.classList.add('press');
+    if(e.pointerType==='touch'||e.pointerType==='pen'){T.touch=Date.now();curShow(false);return;}
+    track(e.clientX,e.clientY,e.target);
+    BCUR.inner.classList.remove('press');void BCUR.inner.offsetWidth;BCUR.inner.classList.add('press');
   },{passive:true,capture:true});
+  document.addEventListener('mousedown',function(e){if(fingerRecent())return;track(e.clientX,e.clientY,e.target);},{passive:true,capture:true});
   document.addEventListener('pointerup',function(){if(BCUR.inner)BCUR.inner.classList.remove('press');},{passive:true,capture:true});
-  document.addEventListener('touchstart',function(){curShow(false);},{passive:true,capture:true});
-  document.documentElement.addEventListener('mouseleave',function(){curShow(false);});
+  document.addEventListener('pointercancel',function(){if(BCUR.inner)BCUR.inner.classList.remove('press');},{passive:true,capture:true});
+  document.addEventListener('touchstart',function(){T.touch=Date.now();curShow(false);},{passive:true,capture:true});
+  /* leaving the page (or entering the video frame) hides it; the very next mouse move brings it back */
+  document.addEventListener('mouseout',function(e){if(!e.relatedTarget||e.relatedTarget.tagName==='IFRAME')curShow(false);},{passive:true});
+  window.addEventListener('blur',function(){curShow(false);});
   document.addEventListener('visibilitychange',function(){if(document.hidden)curShow(false);});
+  window.addEventListener('scroll',function(){if(BCUR.on&&!BCUR.raf)BCUR.raf=requestAnimationFrame(curPaint);},{passive:true,capture:true});
 }
 function curApplySetting(){if(S.setup.cur===false)curShow(false);}
 
@@ -4210,7 +4301,7 @@ function startBook(u){
 function bookDone(u){
   var n=SES.qs.length,ok=SES.res.filter(function(x){return x&&x.ok;}).length,good=ok>=Math.ceil(n*.7),t=todayStr();
   if(!S.bk||typeof S.bk!=='object')S.bk={d:'',u:{}};if(S.bk.d!==t){S.bk.d=t;S.bk.u={};}
-  S.bk.u[u]=(S.bk.u[u]||0)+1;if(good){S.xp+=15;if(S.badges.indexOf('book')<0)S.badges.push('book');}
+  S.bk.u[u]=(S.bk.u[u]||0)+1;evLog('bk',{u:u});if(good){S.xp+=15;if(S.badges.indexOf('book')<0)S.badges.push('book');}
   save();SFX.win();party(true);
   var o=openModal('<div class="big">📘</div><h2 style="text-align:center">Book Lab complete!</h2><p style="text-align:center">You got <b>'+ok+' / '+n+'</b> right'+(good?' and earned <b>+15 bonus XP</b>!':'. Try again to learn more!')+'</p>'+(good?noteWin('Wonderful work, '+PROFILE.first+'!'):'')+'<div class="row"><button class="btn ok" id="bkAgain" type="button">Play again</button><button class="btn ghost" id="bkBack" type="button">Back to Lab</button></div>');
   $('#bkAgain',o).addEventListener('click',function(){closeModal();startBook(u);});$('#bkBack',o).addEventListener('click',function(){closeModal();go('lab');});
@@ -4228,6 +4319,466 @@ function bookProgressCard(){
   return '<div class="card"><h3>📘 Computing Book coverage</h3>'+rows.map(function(x){var p=x[1]?Math.round(x[2]/x[1]*100):0;return '<div class="abar"><span class="al1">'+ic[x[0]]+' Unit '+x[0]+': '+BK_UNITS[x[0]]+'</span><div class="atrk"><div class="afill" style="width:'+p+'%;background:#0a8fa8"></div></div><b>'+(x[1]?p+'%':'–')+'</b><small>'+(x[1]?x[1]+' Q':'')+'</small></div>';}).join('')+(any?'':'<p class="sub">No book questions answered yet. They appear in the daily worksheet, the Daily Quiz and the Book Lab.</p>')+'<small>First-try accuracy. See "Weak spots" below for the topics to revisit.</small></div>';
 }
 
+/* ---------- 17. v7: life skills (brain flexibility, personal safety, phone number), weekly report ---------- */
+DOMS.flex={n:'Think Outside the Box',e:'🧠',c:'#e67e22'};DOMS.safe={n:'Smart & Safe',e:'🛡️',c:'#1f9d6b'};DOMS.phone={n:'Dad\'s Number',e:'📞',c:'#d6246e'};
+BADGES.push(['brain','🧠','Think Outside the Box'],['safe','🛡️','Smart & Safe'],['dial','📞','Knows the number']);
+function evLog(k,o){try{if(!Array.isArray(S.ev))S.ev=[];var e={t:Date.now(),d:todayStr(),k:k},x;for(x in (o||{}))e[x]=o[x];S.ev.push(e);if(S.ev.length>900)S.ev.splice(0,S.ev.length-900);}catch(er){}}
+function lsToday(){var d=todayStr();if(!S.ls||S.ls.d!==d)S.ls={d:d};return S.ls;}
+function famFootHtml(){return '<div class="famfoot"><span class="famcredit">Developed by Mom and Dad with love for '+esc(PROFILE.first)+' <span class="hrt">❤️</span></span></div>';}
+function addFoot(sel){var w=document.querySelector(sel);if(w&&!w.querySelector('.famfoot'))w.insertAdjacentHTML('beforeend',famFootHtml());}
+function shapeSvg(s,c,z){
+  var p={circle:'<circle cx="50" cy="50" r="40"/>',square:'<rect x="12" y="12" width="76" height="76" rx="8"/>',triangle:'<polygon points="50,8 94,88 6,88"/>',star:'<polygon points="50,6 61,38 95,38 67,58 78,92 50,71 22,92 33,58 5,38 39,38"/>'};
+  return '<svg viewBox="0 0 100 100" width="'+(z||90)+'" height="'+(z||90)+'" aria-hidden="true"><g fill="'+c+'" stroke="#26214f" stroke-width="4" stroke-linejoin="round">'+p[s]+'</g></svg>';
+}
+/* ===== 1. Think Outside the Box ===== */
+const ALT=[
+ {k:'spoon',e:'🥄',n:'a spoon',ask:'Besides eating food, what else could you use a <b>spoon</b> for?',good:[['🏖️','dig in the sand'],['🥁','tap a drum beat'],['🥚','carry a marble'],['🪴','scoop soil for a plant'],['🎭','be a puppet face']],bad:[['🚀','fly to the moon'],['👟','wear it as a shoe'],['🚗','drive to school']]},
+ {k:'box',e:'📦',n:'a box',ask:'Besides holding things, what else could you do with a <b>cardboard box</b>?',good:[['🤖','make a robot costume'],['🏰','build a toy fort'],['🚗','be a pretend car'],['🪑','sit on it as a seat'],['🥁','use it as a drum']],bad:[['🍽️','eat it for lunch'],['📞','phone a friend with it'],['🌧️','make it rain']]},
+ {k:'sock',e:'🧦',n:'a sock',ask:'Besides wearing it on your foot, what else could a <b>sock</b> be?',good:[['🧸','a hand puppet'],['🧹','a dust cleaner'],['🪙','a coin holder'],['⛄','a snowman\'s scarf'],['🎣','a bean bag to throw']],bad:[['🍲','a bowl of soup'],['🚲','a bicycle'],['☀️','a new sun']]},
+ {k:'cup',e:'🥤',n:'a paper cup',ask:'Besides drinking, what else could you use a <b>paper cup</b> for?',good:[['🪴','a tiny plant pot'],['📞','a string telephone'],['✏️','a pencil holder'],['🥁','a mini drum'],['🏖️','a sand scooper']],bad:[['🚁','a helicopter'],['🍕','a pizza'],['👓','a TV']]},
+ {k:'umbrella',e:'☂️',n:'an umbrella',ask:'Besides staying dry in the rain, what else could an <b>umbrella</b> do?',good:[['☀️','give shade from the sun'],['🏕️','be the roof of a fort'],['🪂','pretend to be a parachute'],['🦯','be a pretend magic wand'],['🎪','be a circus tent']],bad:[['🥣','be a cereal bowl'],['🚂','be a train'],['🔊','be a loud speaker']]},
+ {k:'paper',e:'📄',n:'a sheet of paper',ask:'Besides drawing, what else could you do with a sheet of <b>paper</b>?',good:[['✈️','fold a paper plane'],['⛵','fold a boat'],['🎩','make a party hat'],['🪭','make a fan'],['🔭','roll a spy telescope']],bad:[['🍲','cook it for dinner'],['🚌','ride it to school'],['🔌','charge a phone']]},
+ {k:'bucket',e:'🪣',n:'a bucket',ask:'Besides carrying water, what else could you use a <b>bucket</b> for?',good:[['🏰','make sand castles'],['🥁','play it like a drum'],['🧸','store toys'],['🪑','turn it over to sit'],['🎩','wear it as a funny hat']],bad:[['📱','call Grandma'],['🌙','touch the moon'],['🍰','bake it as a cake']]},
+ {k:'towel',e:'🧣',n:'a towel',ask:'Besides drying yourself, what else could a <b>towel</b> be?',good:[['🦸','a superhero cape'],['🧺','a picnic mat'],['🏕️','a fort roof'],['🧸','a bed for a teddy'],['🌀','a pretend flying carpet']],bad:[['🍕','a hot pizza'],['🚗','a toy car engine'],['🔋','a battery']]},
+ {k:'book',e:'📚',n:'a book',ask:'Besides reading it, what else could you use a <b>book</b> for?',good:[['📱','a stand for a tablet'],['🚪','a door stopper'],['🌸','press a flower'],['🏗️','build a tower'],['🎭','hide behind it like a spy']],bad:[['🍽️','eat it as a snack'],['🚲','ride it'],['🌧️','make a rain cloud']]}
+];
+const ATTR=[
+ {k:'round',ask:'Tap <b>3 round things</b> you see or use every day!',need:3,good:[['🍽️','plate'],['🕐','clock'],['🛞','wheel'],['🪙','coin'],['⚽','ball'],['🍪','cookie'],['🍕','pizza'],['🌕','moon']],bad:[['📕','book'],['🚪','door'],['✉️','envelope'],['🧱','brick'],['📺','TV screen']],why:'Round things have no corners.'},
+ {k:'cold',ask:'Tap <b>2 cold things</b> that are <b>NOT ice cream</b>!',need:2,good:[['❄️','snow'],['🧊','ice cube'],['🥛','cold milk'],['🏔️','snowy mountain'],['🌬️','winter wind'],['🥶','a freezing day']],bad:[['🍦','ice cream'],['🔥','fire'],['☀️','the sun'],['🍲','hot soup'],['☕','hot tea']],why:'Ice cream is cold, but this time we need something else!'},
+ {k:'wheels',ask:'Tap <b>3 things with wheels</b>!',need:3,good:[['🚲','bicycle'],['🚗','car'],['🛒','shopping cart'],['🛹','skateboard'],['🚌','bus'],['🚜','tractor']],bad:[['🏠','house'],['🌳','tree'],['📚','book'],['🐟','fish']],why:'Wheels roll round and round.'},
+ {k:'fly',ask:'Tap <b>3 things that can fly</b>!',need:3,good:[['🐦','bird'],['✈️','aeroplane'],['🪁','kite'],['🦋','butterfly'],['🎈','balloon'],['🚁','helicopter']],bad:[['🚗','car'],['🐟','fish'],['🌳','tree'],['👟','shoe']],why:'They go up in the air.'},
+ {k:'soft',ask:'Tap <b>3 soft things</b>!',need:3,good:[['🧸','teddy bear'],['🛏️','pillow'],['🧦','sock'],['☁️','cloud'],['🐑','sheep'],['🧶','wool']],bad:[['🧱','brick'],['🔨','hammer'],['🪨','rock'],['🥄','metal spoon']],why:'Soft things feel squishy and gentle.'},
+ {k:'sound',ask:'Tap <b>3 things that make a sound</b>!',need:3,good:[['🔔','bell'],['🥁','drum'],['📻','radio'],['🐕','dog'],['🎺','trumpet'],['⏰','alarm clock']],bad:[['🧱','brick'],['🪨','rock'],['🧦','sock'],['📄','paper']],why:'You can hear them!'},
+ {k:'open',ask:'Tap <b>3 things you can open</b>!',need:3,good:[['🚪','door'],['📖','book'],['🎁','present'],['🧳','suitcase'],['🪟','window'],['🥫','tin can']],bad:[['🪨','rock'],['🌳','tree'],['⚽','ball'],['🧱','brick']],why:'You can open them to see inside!'}
+];
+function chipOptions(r,list,badList,nGood,nBad){
+  var g=r.fresh(list.map(function(x){return x[1];}),nGood),b=r.fresh(badList.map(function(x){return x[1];}),nBad),o=[];
+  list.forEach(function(x){if(g.indexOf(x[1])>=0)o.push({e:x[0],t:x[1],ok:true});});
+  badList.forEach(function(x){if(b.indexOf(x[1])>=0)o.push({e:x[0],t:x[1],ok:false});});
+  return r.shuffle(o);
+}
+function mkAlt(r){
+  var a=r.fresh(ALT,1)[0];
+  return {domain:'flex',topic:'Creative uses',kind:'multi',prompt:a.ask+'<br><small>Pick <b>2 good ideas</b>, or tap 🎤 and tell me your own idea!</small>',visual:'<div class="bigemo">'+a.e+'</div>',options:chipOptions(r,a.good,a.bad,4,2),need:2,idea:true,
+    hint:'There are no wrong ideas, but some are silly and impossible. Which ones could really work?',say:a.ask.replace(/<[^>]+>/g,'')+' Pick two good ideas, or say your own idea.',after:'Wow! You can use one thing in many different ways. That is called <b>creative thinking</b>!'};
+}
+function mkAttr(r){
+  var a=r.fresh(ATTR,1)[0];
+  return {domain:'flex',topic:'Category switch',kind:'multi',prompt:a.ask+'<br><small>Or tap 🎤 and name some out loud!</small>',options:chipOptions(r,a.good,a.bad,5,2),need:a.need,idea:true,
+    hint:a.why,say:a.ask.replace(/<[^>]+>/g,''),after:a.why+' Great switching!'};
+}
+function mkRuleSwitch(r){
+  var cols=r.shuffle([['red','Red','#e63946'],['blue','Blue','#3d8bff'],['green','Green','#1fa36a'],['yellow','Yellow','#f2b01e']]).slice(0,2),
+      shs=r.shuffle([['circle','Circle'],['square','Square'],['triangle','Triangle'],['star','Star']]).slice(0,2),combos=[],trials=[];
+  cols.forEach(function(c){shs.forEach(function(s){combos.push({c:c,s:s});});});
+  var first=r.chance(.5)?'colour':'shape',second=first==='colour'?'shape':'colour',order=[first,second,first],counts=[3,4,3];
+  order.forEach(function(rule,pi){r.shuffle(combos).slice(0,counts[pi]).forEach(function(cb){trials.push({c:cb.c[0],cc:cb.c[2],s:cb.s[0],rule:rule,ph:pi});});});
+  return {domain:'flex',topic:'Rule switch',kind:'ruleswitch',prompt:'🔄 <b>Brain switch!</b> Sort each shape. Listen: Byte will change the rule!',cols:cols,shs:shs,trials:trials,first:first,
+    hint:'Is the rule COLOUR or SHAPE right now? Look at the rule banner at the top.',say:'Let\'s play the switch game! First, sort by '+first+'. Be ready, because I will change the rule!',after:'Your brain can switch rules fast. That is a superpower!'};
+}
+function multiUI(q,host,api){
+  var sel={},ideas=[],box=el('<div class="mchips" role="group"></div>'),foot=el('<div class="dzfoot"></div>'),chk=el('<button type="button" class="btn ok" disabled>✔ Check</button>'),btns=[],mic=null,ctl=null;
+  host.appendChild(box);
+  q.options.forEach(function(o,i){
+    var b=el('<button type="button" class="mchip" aria-pressed="false"><span class="nb">'+(i+1)+'</span><i>'+o.e+'</i><b>'+esc(o.t)+'</b></button>');
+    b.addEventListener('click',function(){if(QS.done||b.classList.contains('dim'))return;toggle(i);});
+    btns.push(b);box.appendChild(b);
+  });
+  var ideaBox=el('<div class="ideas" id="ideaBox"></div>');host.appendChild(ideaBox);
+  if(q.idea&&srClass()&&S.setup.vq!==false){
+    mic=el('<button type="button" class="btn ghost" id="mIdea">🎤 Say an idea<kbd>V</kbd></button>');foot.appendChild(mic);
+    mic.addEventListener('click',function(){ac();listen();});
+  }
+  foot.appendChild(chk);host.appendChild(foot);
+  function count(){return Object.keys(sel).filter(function(k){return sel[k];}).length+ideas.length;}
+  function upd(){var c=count();chk.disabled=c<q.need;chk.textContent='✔ Check ('+Math.min(c,q.need)+'/'+q.need+')';}
+  function toggle(i){sel[i]=!sel[i];btns[i].classList.toggle('on',!!sel[i]);btns[i].setAttribute('aria-pressed',sel[i]?'true':'false');SFX.pop();upd();}
+  function addIdea(t){ideas.push(t);ideaBox.innerHTML=ideas.map(function(x){return '<span class="idea">💬 '+esc(x)+'</span>';}).join('');upd();}
+  function listen(){
+    if(QS.done)return;if(ctl){try{ctl.stop();}catch(e){}return;}
+    stopSpeak();mic.classList.add('rec');mic.innerHTML='🎙️ Listening…';
+    var cb=function(alts,err){
+      ctl=null;mic.classList.remove('rec');mic.innerHTML='🎤 Say an idea<kbd>V</kbd>';
+      if(QS.done)return;
+      if(err==='not-allowed'||err==='service-not-allowed'){fb('info','🔒 The microphone is blocked. Tap the pictures instead!');return;}
+      if(err==='unsupported'||err==='network'){fb('info','🎙️ Speaking is not available now. Tap the pictures!');return;}
+      if(!alts.length){fb('info','I did not hear you. Tap 🎤 and try again, or tap the pictures.');return;}
+      var said=alts[0],hit=-1;
+      q.options.forEach(function(o,i){if(hit<0&&o.ok&&alts.some(function(a){return matchSentence(o.t,a).pass;}))hit=i;});
+      if(hit>=0&&!sel[hit]){toggle(hit);fb('ok','🗣️ I heard “'+esc(said)+'”! I picked it for you.');}
+      else if(hit<0){addIdea(said);QS.voice=true;fb('ok','💡 What a creative idea: “'+esc(said)+'”!');say('What a creative idea! '+said,true);}
+    };
+    cb.interim=function(t){fb('info','🎙️ I hear: “'+esc(t)+'”');};
+    ctl=listenOnce(cb);if(!ctl){mic.classList.remove('rec');mic.innerHTML='🎤 Say an idea<kbd>V</kbd>';}
+  }
+  CL.push(function(){try{if(ctl)ctl.abort();}catch(e){}});
+  chk.addEventListener('click',function(){
+    if(QS.done)return;var badOnes=[];
+    btns.forEach(function(b,i){if(sel[i]&&!q.options[i].ok)badOnes.push(i);});
+    if(badOnes.length){badOnes.forEach(function(i){sel[i]=false;btns[i].classList.remove('on');btns[i].classList.add('bad','dim');});upd();api.wrong();return;}
+    btns.forEach(function(b,i){if(sel[i])b.classList.add('okc');});api.right();
+  });
+  setKeys(function(e){
+    var n=parseInt(e.key,10);if(n>=1&&n<=btns.length&&!QS.done){toggle(n-1);return true;}
+    if((e.key==='v'||e.key==='V')&&mic){mic.click();return true;}return false;
+  });
+  upd();
+  return {hint:function(){var g=q.options.map(function(o,i){return i;}).filter(function(i){return q.options[i].ok&&!sel[i];})[0];if(g!==undefined){btns[g].classList.add('pulse');setTimeout(function(){btns[g].classList.remove('pulse');},2500);}},
+    reveal:function(){btns.forEach(function(b,i){if(q.options[i].ok)b.classList.add('okc');});}};
+}
+RENDER.multi=multiUI;
+function ruleswitchUI(q,host,api){
+  var i=0,errs=0,pers=0,lock=true,w=el('<div class="rsw"><div class="rsrule" id="rsRule"></div><div class="rsitem" id="rsItem"></div><div class="rsbins" id="rsBins"></div><div class="rsprog" id="rsProg"></div></div>');
+  host.appendChild(w);
+  function bins(rule){return rule==='colour'?q.cols.map(function(c){return {k:c[0],t:c[1],h:'<span class="sw" style="background:'+c[2]+'"></span>'};}):q.shs.map(function(s){return {k:s[0],t:s[1],h:shapeSvg(s[0],'#d9d5f2',40)};});}
+  function ruleText(r){return r==='colour'?'🎨 Sort by <b>COLOUR</b>':'🔷 Sort by <b>SHAPE</b>';}
+  function draw(){
+    var t=q.trials[i],bs=bins(t.rule);
+    $('#rsRule').innerHTML=ruleText(t.rule);$('#rsRule').className='rsrule '+t.rule;
+    $('#rsItem').innerHTML=shapeSvg(t.s,t.cc,120);
+    $('#rsBins').innerHTML=bs.map(function(b,n){return '<button type="button" class="rsbin" data-k="'+b.k+'"><span class="nb">'+(n+1)+'</span>'+b.h+'<b>'+b.t+'</b></button>';}).join('');
+    [].forEach.call(document.querySelectorAll('#rsBins .rsbin'),function(b){b.addEventListener('click',function(){choose(b.getAttribute('data-k'),b);});});
+    $('#rsProg').innerHTML=q.trials.map(function(x,n){return '<span class="'+(n<i?'d':n===i?'c':'')+'"></span>';}).join('');
+    lock=false;
+  }
+  function choose(k,b){
+    if(lock||QS.done)return;var t=q.trials[i],want=t.rule==='colour'?t.c:t.s;
+    if(k===want){SFX.ok();if(b)b.classList.add('okc');i++;
+      if(i>=q.trials.length){QS.wrongs=Math.min(errs,2);evLog('flexsw',{err:errs,pers:pers});api.right();return;}
+      var nt=q.trials[i];
+      if(nt.ph!==t.ph){lock=true;var msg='🔄 SWITCH! Now sort by '+(nt.rule==='colour'?'COLOUR':'SHAPE')+'!';
+        $('#rsRule').innerHTML=msg;$('#rsRule').className='rsrule sw';try{SFX.chime();}catch(e){}say('Switch! Now sort by '+nt.rule+'!',true);setTimeout(function(){if(!QS.done)draw();},1500);}
+      else setTimeout(draw,220);
+    }else{
+      errs++;SFX.bad();if(t.ph>0){var old=t.rule==='colour'?t.s:t.c;if(k===old)pers++;}
+      if(b){b.classList.add('bad');setTimeout(function(){b.classList.remove('bad');},500);}
+      fb('bad','Not that one. Listen to the rule: <b>'+t.rule.toUpperCase()+'</b>! 🔄');
+    }
+  }
+  setKeys(function(e){var n=parseInt(e.key,10);if(n===1||n===2){var b=document.querySelectorAll('#rsBins .rsbin')[n-1];if(b){b.click();return true;}}return false;});
+  draw();
+  return {hint:function(){var t=q.trials[i],want=t.rule==='colour'?t.c:t.s,b=document.querySelector('#rsBins .rsbin[data-k="'+want+'"]');if(b){b.classList.add('pulse');setTimeout(function(){b.classList.remove('pulse');},2200);}},reveal:function(){}};
+}
+RENDER.ruleswitch=ruleswitchUI;
+/* ===== 2. Smart & Safe ===== */
+const SAFEQ=[
+ {k:'lure1',vis:'🧑‍🦱🍬',p:'A grown-up you do not know says, <b>"I have candy! Come with me!"</b> What do you do?',a:'Say a loud NO! and go to a safe grown-up',w:['Take the candy and go with them','Go with them, but only a little way'],h:'A stranger is someone you do not know. We never go with a stranger.',af:'Super! Say <b>NO!</b> loudly, go to a safe grown-up like a guard, a shopkeeper or a mom with kids, and never go with a stranger.'},
+ {k:'lure2',vis:'🧑‍🦰🗣️',p:'Someone you do not know says, <b>"Come with me, your Dad sent me!"</b> What should you do?',a:'Say NO and go to a safe grown-up. Mom and Dad always tell me first',w:['Go with them, because they said Dad sent them','Tell them my home address'],h:'Mom and Dad will always tell you before someone picks you up.',af:'Right! Mom and Dad always tell you first. Say <b>NO</b>, move away, and tell a safe grown-up.'},
+ {k:'lost',vis:'🏬😟',p:'You cannot find Mom and Dad in a <b>mall</b> or <b>park</b>. What is the safest thing to do?',a:'Stay in a bright, busy place and ask a guard or shopkeeper to call Dad',w:['Walk outside to look for the car','Go with a kind stranger who offers help'],h:'Stay put, stay where people can see you, and ask for help from the right people.',af:'Well done! <b>Stay put</b> in a bright, busy spot and ask a guard, a shopkeeper or a mom with kids to call Dad.'},
+ {k:'who',vis:'👮🛍️',p:'You are lost. Who is the <b>safest</b> person to ask for help?',a:'A guard in uniform, a shopkeeper, or a mom with kids',w:['Someone alone in the parking lot','A stranger who says, "Come to my car"'],h:'Look for people who work nearby, or a parent with children.',af:'Yes! Guards, shopkeepers and moms with kids are safe helpers.'},
+ {k:'phone',vis:'📞👮',p:'A guard asks, <b>"What is your Dad\'s phone number?"</b> What do you do?',a:'Say Dad\'s number slowly and clearly',w:['Stay quiet and hide','Say a different number'],h:'This is why we practise Dad\'s number!',af:'Great! A guard can call Dad if you say the number clearly. Keep practising it!'},
+ {k:'door',vis:'🚪🔔',p:'You are at home and the <b>doorbell</b> rings. A stranger says, <b>"Open the door!"</b>',a:'Do not open the door. Tell a grown-up or call Mom or Dad',w:['Open the door to see who it is','Open it just a tiny bit'],h:'Keep the door closed for people you do not know.',af:'Smart! Keep the door closed, and tell a grown-up or call Mom or Dad.'},
+ {k:'online',vis:'💻🕵️',p:'Someone online asks, <b>"What is your home address and phone number?"</b>',a:'Do not share it. Tell Mom or Dad',w:['Tell them, they seem friendly','Tell them just my street name'],h:'Private things stay private, even online.',af:'Yes! Never share your address or phone number with people online. Tell Mom or Dad.'},
+ {k:'body',vis:'🧍💛',p:'<b>My body belongs to me!</b> If someone touches you in a way that feels yucky or wrong, what do you do?',a:'Say NO, go away, and tell Mom or Dad',w:['Stay quiet and keep it a secret','Wait and see if it happens again'],h:'Remember: No. Go. Tell.',af:'Brave! Remember <b>No, Go, Tell</b>. Say No, go to a safe place, and tell Mom or Dad. It is never your fault.'},
+ {k:'secret',vis:'🤫❓',p:'A grown-up says, <b>"This is our secret. Do not tell your parents!"</b> about something that feels wrong.',a:'Tell Mom or Dad. Safe grown-ups never ask for yucky secrets',w:['Keep the secret','Tell only my friends'],h:'Surprise gifts are fun, but yucky secrets are not.',af:'Right! Tell Mom or Dad. A good surprise is fun, but a secret that feels wrong must be told.'},
+ {k:'ask',vis:'🌳🧒',p:'A friend says, <b>"Let\'s go to the park! Don\'t tell your parents!"</b>',a:'Say, "No thanks, I will ask my parents first"',w:['Go quietly with my friend','Go but come back quickly'],h:'Parents always need to know where you are.',af:'Good thinking! Always ask Mom or Dad before going anywhere.'},
+ {k:'scared',vis:'😨🏪',p:'You feel scared and nobody you know is near. What is a good idea?',a:'Go to a shop or bright place with people and ask for help',w:['Hide somewhere quiet and dark','Walk far away alone'],h:'Look for light and people.',af:'Smart! Bright places with people are safe places to ask for help.'}
+];
+const ROLE=[
+ {s:'A stranger says, <b>"Come with me, I have candy!"</b>',p:'No, thank you! I am going to my parents!'},
+ {s:'You are lost in a mall and you see a guard.',p:'I am lost. Please call my Dad.'},
+ {s:'Someone makes you feel yucky or uncomfortable.',p:'No! My body belongs to me! I will tell Mom and Dad!'},
+ {s:'A stranger rings the bell when you are at home.',p:'I cannot open the door. Please ask my Mom or Dad.'}
+];
+function mkSafe(r,sc){
+  var opts=r.shuffle([sc.a].concat(sc.w)).map(function(x){return mkOpt(x,esc(x));});
+  return {domain:'safe',topic:'Safety: '+({lure1:'strangers',lure2:'strangers',lost:'getting lost',who:'getting lost',phone:'getting lost',door:'home alone',online:'online',body:'my body',secret:'my body',ask:'asking first',scared:'asking for help'})[sc.k],kind:'choice',cols:1,
+    prompt:sc.p,visual:'<div class="bigemo">'+sc.vis+'</div>',options:opts,answer:sc.a,hint:sc.h,after:sc.af,say:sc.p.replace(/<[^>]+>/g,'')};
+}
+function mkRole(r,ro){
+  return {domain:'safe',topic:'Say it loud',kind:'sayit',mode:'phrase',phrase:ro.p,prompt:'🎭 <b>Practice time!</b><br>'+ro.s+'<br>Be brave and say it loud!',visual:'<div class="bigemo">📣</div>',
+    hint:'Take a deep breath and say it clearly. You can do it!',after:'You were loud, clear and brave. 💪',say:ro.s.replace(/<[^>]+>/g,'')+' Say it loud, '+ro.p};
+}
+/* say-it kind: roleplay phrases and the phone number */
+function digitsFromSpeech(s){
+  var map={zero:0,oh:0,o:0,one:1,two:2,to:2,too:2,three:3,four:4,for:4,five:5,six:6,seven:7,eight:8,ate:8,nine:9},t=String(s).toLowerCase().replace(/[^a-z0-9 ]/g,' ').split(/\s+/).filter(Boolean),o='',rep=1,i;
+  for(i=0;i<t.length;i++){var w=t[i];
+    if(w==='double'){rep=2;continue;}if(w==='triple'){rep=3;continue;}
+    if(/^\d+$/.test(w)){o+=w;rep=1;continue;}
+    if(map[w]!==undefined){var d=String(map[w]),n=rep;while(n--)o+=d;rep=1;}
+  }
+  return o;
+}
+function sayitUI(q,host,api){
+  var tries=0,ctl=null,card=el('<div class="sayc"><div class="sayp" id="sayP"></div><div class="sayh" id="sayH"></div></div>'),foot=el('<div class="dzfoot"></div>'),go=null,self=null;
+  host.appendChild(card);host.appendChild(foot);
+  var shown=q.mode==='digits'?chunkNum(q.digits).join(' – '):'“'+q.phrase+'”';
+  $('#sayP').innerHTML=shown;
+  var can=!!srClass()&&S.setup.vq!==false;
+  if(can){go=el('<button type="button" class="btn big" id="sayGo">🎤 Say it!<kbd>V</kbd></button>');foot.appendChild(go);go.addEventListener('click',function(){ac();listen();});}
+  self=el('<button type="button" class="btn ghost" id="sayOk" style="'+(can?'display:none':'')+'">✅ I said it out loud!</button>');foot.appendChild(self);
+  self.addEventListener('click',function(){if(QS.done)return;QS.voice=false;api.right();});
+  function reset(){if(go){go.classList.remove('rec');go.innerHTML='🎤 Say it!<kbd>V</kbd>';}ctl=null;}
+  function listen(){
+    if(QS.done)return;if(ctl){try{ctl.stop();}catch(e){}return;}
+    stopSpeak();go.classList.add('rec');go.innerHTML='🎙️ Listening…';
+    var cb=function(alts,err){
+      reset();if(QS.done)return;
+      if(err==='not-allowed'||err==='service-not-allowed'){fb('info','🔒 The microphone is blocked. Say it out loud, then tap the button.');self.style.display='';return;}
+      if(err==='unsupported'||err==='network'){fb('info','🎙️ Listening is not available now. Say it out loud, then tap the button.');self.style.display='';return;}
+      if(!alts.length){fb('info','I did not hear you. Tap 🎤 and try again!');return;}
+      var ok=false,best=0;
+      if(q.mode==='digits'){alts.forEach(function(a){var d=digitsFromSpeech(a);if(d.indexOf(q.digits)>=0)ok=true;var k=0;while(k<d.length&&k<q.digits.length&&d.charAt(k)===q.digits.charAt(k))k++;if(k>best)best=k;});}
+      else alts.forEach(function(a){if(matchSentence(q.phrase,a).pass)ok=true;});
+      if(ok){QS.voice=true;fb('ok','🗣️ I heard: “'+esc(alts[0])+'”');api.right();}
+      else{tries++;
+        fb('bad','I heard “'+esc(alts[0])+'”.'+(q.mode==='digits'?(best>=3?' You got the first '+best+' digits right! Try again!':' Try again, slowly: one digit at a time.'):' Try again, a little slower!'));
+        if(tries>=2)self.style.display='';}
+    };
+    cb.interim=function(t){fb('info','🎙️ I hear: “'+esc(t)+'”');};
+    ctl=listenOnce(cb);if(!ctl)reset();
+  }
+  CL.push(function(){try{if(ctl)ctl.abort();}catch(e){}});
+  setKeys(function(e){if((e.key==='v'||e.key==='V'||e.key===' ')&&go){go.click();return true;}return false;});
+  return {hint:function(){var h=$('#sayH');if(h)h.textContent=q.mode==='digits'?'Say each digit slowly: '+numWords(q.digits):'Say the words slowly and clearly.';},reveal:function(){}};
+}
+RENDER.sayit=sayitUI;
+/* ===== 3. Phone number trainer ===== */
+const PNOTE=[262,294,330,392,440,523,587,659,784,880];
+const DT={'1':[697,1209],'2':[697,1336],'3':[697,1477],'4':[770,1209],'5':[770,1336],'6':[770,1477],'7':[852,1209],'8':[852,1336],'9':[852,1477],'0':[941,1336]};
+function dtmf(d,t,len){var f=DT[d];if(!f)return;voice(f[0],t||0,len||.17,{v:.07});voice(f[1],t||0,len||.17,{v:.07});}
+function chunkNum(n){n=String(n).replace(/\D/g,'');if(n.length===10)return [n.slice(0,3),n.slice(3,6),n.slice(6)];var o=[],i;for(i=0;i<n.length;i+=3)o.push(n.slice(i,i+3));if(o.length>1&&o[o.length-1].length===1){var l=o.pop();o[o.length-1]+=l;}return o;}
+function numWords(s){return String(s).split('').map(function(d){return NUMW[+d];}).join(' ');}
+function phoneState(){
+  var p=S.phone;if(!p||typeof p!=='object')p=S.phone={};
+  if(!p.a||typeof p.a!=='object'||!/^\d{6,15}$/.test(p.a.n||''))p.a={who:'Dad',n:'9823684814'};
+  if(!p.b||typeof p.b!=='object')p.b={who:'Mom',n:''};
+  p.lvl=p.lvl||0;p.i=p.i||0;return p;
+}
+function phoneList(){var p=phoneState();return [p.a].concat(/^\d{6,15}$/.test(p.b.n||'')?[p.b]:[]);}
+function learnUI(q,host,api){
+  var ch=chunkNum(q.num),played=false,busy=false,cards=el('<div class="chunks"></div>'),foot=el('<div class="dzfoot"></div>'),pbtn=el('<button type="button" class="btn big" id="lnPlay">▶ Play the tune<kbd>P</kbd></button>'),rdy=el('<button type="button" class="btn ok" id="lnOk" disabled>✅ I got it!</button>');
+  var colors=['#ff8fb1','#7fc8ff','#ffd35c'];
+  ch.forEach(function(c,ci){var b=el('<button type="button" class="chunk" style="background:'+colors[ci%3]+'" data-c="'+ci+'"><span class="cd">'+c.split('').map(function(d){return '<i>'+d+'</i>';}).join('')+'</span><small>'+numWords(c)+'</small></button>');
+    b.addEventListener('click',function(){ac();playChunk(ci,0);});cards.appendChild(b);});
+  host.appendChild(el('<div class="who">📞 '+esc(q.who)+'\'s number</div>'));host.appendChild(cards);host.appendChild(el('<div class="phrhythm">Tap a block to hear it, or play the whole tune!</div>'));
+  host.appendChild(foot);foot.appendChild(pbtn);foot.appendChild(rdy);
+  var tm=[];
+  function playChunk(ci,t0){
+    var c=ch[ci],k;for(k=0;k<c.length;k++){(function(k){voice(PNOTE[+c.charAt(k)],t0+k*.34,.3,{v:.16,type:'triangle'});tm.push(setTimeout(function(){var d=cards.children[ci].querySelectorAll('i')[k];if(d){d.classList.add('lit');setTimeout(function(){d.classList.remove('lit');},300);}},(t0+k*.34)*1000));})(k);}
+    return c.length*.34;
+  }
+  function playAll(){
+    if(busy)return;busy=true;ac();stopSpeak();var t=0;
+    ch.forEach(function(c,ci){t+=playChunk(ci,t)+.35;});
+    tm.push(setTimeout(function(){sayQ(ch.map(function(c){return {t:numWords(c)+'.',rate:.8,pitch:1.1};}));},t*1000+250));
+    tm.push(setTimeout(function(){busy=false;played=true;rdy.disabled=false;fb('ok','🎵 Now say it with me: '+ch.join(' – '));},t*1000+250+ch.length*1700));
+  }
+  pbtn.addEventListener('click',playAll);
+  rdy.addEventListener('click',function(){if(QS.done)return;api.right();});
+  CL.push(function(){tm.forEach(clearTimeout);});
+  setKeys(function(e){if(e.key==='p'||e.key==='P'||e.key===' '){pbtn.click();return true;}return false;});
+  return {hint:function(){fb('info','💡 Three small chunks are easier than ten digits! Tap each block.');},reveal:function(){}};
+}
+RENDER.learn=learnUI;
+function dialUI(q,host,api){
+  var num=q.num,len=num.length,need=[],k=0,i,boxes=[],ch=chunkNum(num);
+  for(i=0;i<len;i++)if(q.mode!=='blank'||q.blanks.indexOf(i)>=0)need.push(i);
+  var disp=el('<div class="dispn" aria-live="polite"></div>'),pos=0;
+  ch.forEach(function(c,ci){var g=el('<span class="dch"></span>');c.split('').forEach(function(d,di){var idx=pos+di,pre=(q.mode==='blank'&&q.blanks.indexOf(idx)<0),b=el('<b class="dg'+(pre?' pre':'')+'" data-i="'+idx+'">'+(pre?d:'')+'</b>');boxes[idx]=b;g.appendChild(b);});pos+=c.length;disp.appendChild(g);if(ci<ch.length-1)disp.appendChild(el('<span class="dsep">–</span>'));});
+  if(q.mode==='dial')host.appendChild(el('<div class="dtgt">Dial: <b>'+ch.join(' – ')+'</b></div>'));
+  else if(q.mode==='memory')host.appendChild(el('<div class="dtgt">From memory! 🧠 (tap 💡 if you need a peek)</div>'));
+  host.appendChild(disp);
+  var pad=el('<div class="keypad"></div>'),keys={};
+  ['1','2','3','4','5','6','7','8','9','⌫','0',''].forEach(function(d){
+    if(d===''){pad.appendChild(el('<span></span>'));return;}
+    var b=el('<button type="button" class="pk'+(d==='⌫'?' bk':'')+'" data-d="'+d+'" aria-label="'+(d==='⌫'?'Backspace':d)+'" style="'+(d==='⌫'?'':'--h:'+(+d*36))+'">'+(d==='⌫'?'⌫':'<b>'+d+'</b><small>'+['','','ABC','DEF','GHI','JKL','MNO','PQRS','TUV','WXYZ'][+d]+'</small>')+'</button>');
+    b.addEventListener('click',function(){press(d);});keys[d]=b;pad.appendChild(b);
+  });
+  host.appendChild(pad);
+  function cur(){boxes.forEach(function(b){b.classList.remove('cur');});if(k<need.length)boxes[need[k]].classList.add('cur');}
+  function press(d){
+    if(QS.done)return;ac();
+    if(d==='⌫'){if(k>0){k--;boxes[need[k]].textContent='';boxes[need[k]].classList.remove('ok','pop');SFX.pop();cur();}return;}
+    var want=num.charAt(need[k]);dtmf(d);
+    if(d===want){var b=boxes[need[k]];b.textContent=d;b.classList.add('ok','pop');k++;cur();
+      if(k>=need.length){setTimeout(function(){for(var j=0;j<4;j++)voice(PNOTE[5+j]||880,j*.11,.25,{v:.14,type:'triangle'});},180);api.right();return;}}
+    else{keys[d].classList.add('bad');setTimeout(function(){keys[d].classList.remove('bad');},350);disp.classList.remove('shk');void disp.offsetWidth;disp.classList.add('shk');
+      var m=api.miss('Not that one. Look at the number 👀');if(m>=2)glow();}
+  }
+  function glow(){var w=num.charAt(need[k]||0),b=keys[w];if(b){b.classList.add('glow');setTimeout(function(){b.classList.remove('glow');},1800);}}
+  CL.push(function(){});
+  setKeys(function(e){
+    if(/^[0-9]$/.test(e.key)){press(e.key);return true;}
+    if(e.key==='Backspace'||e.key==='Delete'){press('⌫');return true;}
+    return false;
+  });
+  cur();
+  return {hint:function(){glow();if(q.mode==='memory')fb('info','💡 The next digit is <b>'+num.charAt(need[k])+'</b>');},
+    reveal:function(){need.forEach(function(ix){boxes[ix].textContent=num.charAt(ix);boxes[ix].classList.add('ok');});}};
+}
+RENDER.dial=dialUI;
+function mkPhoneQs(r){
+  var list=phoneList(),p=phoneState(),who=list[p.i%list.length],n=who.n,len=n.length,ch=chunkNum(n),qs=[],lvl=p.lvl,bl=[],start=0;
+  ch.forEach(function(c){var cnt=lvl>=1?2:1,idx=[],j;for(j=0;j<c.length;j++)idx.push(start+j);r.shuffle(idx).slice(0,cnt).forEach(function(x){bl.push(x);});start+=c.length;});
+  var common={domain:'phone',num:n,who:who.who};
+  qs.push(Object.assign({topic:'Learn the chunks',kind:'learn',prompt:'📞 Let\'s learn <b>'+esc(who.who)+'\'s</b> phone number in small chunks!',say:'Let\'s learn '+who.who+'\'s phone number in small chunks! Tap play and listen to the tune.'},common));
+  qs.push(Object.assign({topic:'Keypad dialer',kind:'dial',mode:lvl>=2?'memory':'dial',prompt:lvl>=2?'📞 Dial <b>'+esc(who.who)+'\'s</b> number from memory!':'📞 Dial <b>'+esc(who.who)+'\'s</b> number on the keypad!',hint:'Say the chunks: '+ch.join(', '),say:'Dial '+who.who+'\'s number on the keypad.'},common));
+  qs.push(Object.assign({topic:'Missing digits',kind:'dial',mode:'blank',blanks:bl.sort(function(a,b){return a-b;}),prompt:'🧩 Fill in the <b>missing digits</b> of '+esc(who.who)+'\'s number!',hint:'Say the chunks in your head.',say:'Fill in the missing digits of '+who.who+'\'s number.'},common));
+  qs.push(Object.assign({topic:'Say it out loud',kind:'sayit',mode:'digits',digits:n,prompt:'🗣️ Say <b>'+esc(who.who)+'\'s</b> number out loud, one digit at a time!',visual:'<div class="bigemo">📣</div>',hint:'Say it in chunks: '+ch.map(numWords).join(' . '),after:'You know '+who.who+'\'s number!',say:'Say '+who.who+'\'s number out loud, one digit at a time.'},common));
+  return qs;
+}
+/* ===== sessions + cards ===== */
+function lifeFinish(kind,title,emoji,badge,msg){
+  var n=SES.qs.length,ok=SES.res.filter(function(x){return x&&x.ok;}).length,good=ok>=Math.ceil(n*.7),l=lsToday(),first=!l[kind];
+  l[kind]=(l[kind]||0)+1;evLog(kind,{n:n,ok:ok});
+  if(good){S.xp+=15;if(badge&&S.badges.indexOf(badge)<0)S.badges.push(badge);}
+  save();SFX.win();party(true);
+  var back=SES.origin||'lab',o=openModal('<div class="big">'+emoji+'</div><h2 style="text-align:center">'+title+'</h2><p style="text-align:center">You got <b>'+ok+' / '+n+'</b> right'+(good?' and earned <b>+15 bonus XP</b>!':'. Try again to learn more!')+'</p><p style="text-align:center">'+msg+'</p>'+(good?noteWin('Wonderful work, '+PROFILE.first+'!'):'')+'<div class="row"><button class="btn ok" id="lfAgain" type="button">Play again</button><button class="btn ghost" id="lfBack" type="button">Back</button></div>');
+  $('#lfAgain',o).addEventListener('click',function(){closeModal();startLife(kind,back);});$('#lfBack',o).addEventListener('click',function(){closeModal();go(back);});
+}
+function startLife(kind,origin){
+  ac();origin=origin||(cur==='home'?'home':'lab');
+  var r=makeRng(hashStr(kind+'|'+Date.now()),mkHist(true)),qs=[],title,emoji,badge,msg;
+  if(kind==='flex'){qs=[mkAlt(r),mkAttr(r),mkRuleSwitch(r)];qs.push(r.chance(.5)?mkAlt(r):mkAttr(r));title='Brain stretched!';emoji='🧠';badge='brain';msg='Your brain can think in new ways!';}
+  else if(kind==='safe'){var sc=r.fresh(SAFEQ,4),ro=r.fresh(ROLE,1)[0];qs=sc.map(function(s){return mkSafe(r,s);});qs.splice(3,0,mkRole(r,ro));title='Smart &amp; Safe!';emoji='🛡️';badge='safe';msg='Remember: <b>No. Go. Tell.</b>';}
+  else{qs=mkPhoneQs(r);title='Number champion!';emoji='📞';badge='dial';msg='Keep practising every day!';}
+  qs.forEach(function(q,i){q.id=kind+i;});
+  openSession({kind:'mini',qs:qs,i:0,res:[],back:origin,origin:origin,onDone:function(){
+    if(kind==='phone'){var p=phoneState();p.i++;if(SES.res.filter(function(x){return x&&x.ok&&x.w===0;}).length>=3)p.lvl=Math.min(3,p.lvl+1);}
+    lifeFinish(kind,title,emoji,badge,msg);}});
+}
+function lifeCard(){
+  var l=lsToday(),p=phoneList()[0],ch=chunkNum(p.n).join(' · ');
+  var b=function(k,e,t,s){return '<button class="btn bku lsb'+(l[k]?' dn':'')+'" data-ls="'+k+'" type="button"><span>'+e+'</span><b>'+t+'</b><small>'+s+'</small>'+(l[k]?'<em>✅</em>':'')+'</button>';};
+  return '<div class="card lscard"><h3 style="margin:0 0 4px">🌟 Life skills</h3><p class="sub" style="margin:0 0 8px">Short daily brain and safety practice with Byte.</p><div class="bkgrid">'+
+    b('flex','🧠','Think Outside the Box','be creative')+b('safe','🛡️','Smart &amp; Safe','say No, Go, Tell')+b('phone','📞',esc(p.who)+'\'s Number','learn it by heart')+'</div>'+
+    '<div class="phline" data-ls="tune" role="button" tabindex="0" title="Tap to hear">📞 '+esc(p.who)+': <b>'+ch+'</b> <span>▶ hear</span></div></div>';
+}
+document.addEventListener('click',function(e){
+  var b=e.target.closest&&e.target.closest('[data-ls]');if(!b)return;var k=b.getAttribute('data-ls');
+  if(k==='tune'){ac();var p=phoneList()[0],c=chunkNum(p.n),t=0;c.forEach(function(x,ci){x.split('').forEach(function(d,di){voice(PNOTE[+d],t+di*.3,.26,{v:.15,type:'triangle'});});t+=x.length*.3+.3;});return;}
+  startLife(k);
+});
+document.addEventListener('keydown',function(e){if((e.key==='Enter'||e.key===' ')&&e.target&&e.target.classList&&e.target.classList.contains('phline')){e.preventDefault();e.target.click();}});
+/* parent settings card for the emergency numbers */
+function phoneSetHtml(){
+  var p=phoneState();
+  return '<div class="card"><h3>📞 Emergency numbers (memory trainer)</h3><p class="sub" style="margin:0 0 8px">Rudraksh practises these in Life skills. The primary number is Dad\'s mobile by default.</p>'+
+    '<div class="row"><input class="fi" id="phAw" style="width:110px" maxlength="14" value="'+esc(p.a.who)+'" aria-label="Primary name"><input class="fi" id="phAn" style="flex:1;min-width:180px" inputmode="tel" maxlength="16" value="'+esc(p.a.n)+'" aria-label="Primary number"></div>'+
+    '<div class="row"><input class="fi" id="phBw" style="width:110px" maxlength="14" value="'+esc(p.b.who)+'" aria-label="Second name"><input class="fi" id="phBn" style="flex:1;min-width:180px" inputmode="tel" maxlength="16" placeholder="Second number (optional)" value="'+esc(p.b.n)+'" aria-label="Second number"></div>'+
+    '<div class="row"><button class="btn sm" id="phSave" type="button">💾 Save numbers</button></div><div class="note" id="phMsg" style="display:none"></div></div>';
+}
+function bindV7(){
+  var s=$('#phSave');if(!s)return;
+  s.addEventListener('click',function(){
+    var an=$('#phAn').value.replace(/[^\d]/g,''),bn=$('#phBn').value.replace(/[^\d]/g,''),m=$('#phMsg'),bad=function(t){m.style.display='block';m.className='note badn';m.textContent=t;};
+    if(!/^\d{6,15}$/.test(an))return bad('The main number needs 6 to 15 digits.');
+    if(bn&&!/^\d{6,15}$/.test(bn))return bad('The second number needs 6 to 15 digits (or leave it empty).');
+    var p=phoneState();p.a={who:($('#phAw').value.trim()||'Dad').slice(0,14),n:an};p.b={who:($('#phBw').value.trim()||'Mom').slice(0,14),n:bn};p.i=0;save();
+    m.style.display='block';m.className='note good';m.textContent='Saved ✅ Now practising: '+chunkNum(an).join(' – ')+(bn?' and '+chunkNum(bn).join(' – '):'');
+  });
+}
+/* ===== 4. Weekly growth report ===== */
+function wkWindow(off){var o=[],k;for(k=off;k<off+7;k++)o.push(ymd(new Date(Date.now()-k*864e5)));return o;}
+function wkStats(days){
+  var set={},s={days:days,act:0,n:0,f:0,ms:0,ws:0,qz:0,vl:0,flex:0,safe:0,phone:0,bk:0,gp:0,gw:0,games:{},per:[]};
+  days.forEach(function(d){set[d]=1;});
+  days.forEach(function(d){
+    var h=S.hist[d]||{},w=!!(h.ws||(S.days[d]&&S.days[d].done)),q=!!(h.qz||(S.qz[d]&&S.qz[d].done));
+    s.n+=h.n||0;s.f+=h.f||0;s.ms+=h.ms||0;if(w)s.ws++;if(q)s.qz++;s.per.push({d:d,n:h.n||0,ws:w,qz:q});
+  });
+  (S.ev||[]).forEach(function(e){
+    if(!set[e.d])return;
+    if(e.k==='vl'||e.k==='flex'||e.k==='safe'||e.k==='phone'||e.k==='bk')s[e.k]++;
+    if(e.k==='gstart'){s.gp++;(s.games[e.id]||(s.games[e.id]={p:0,w:0})).p++;}
+    if(e.k==='gwin'){s.gw++;(s.games[e.id]||(s.games[e.id]={p:0,w:0})).w++;}
+  });
+  s.act=s.per.filter(function(x){return x.n>0;}).length;
+  s.acc=s.n?Math.round(s.f/s.n*100):null;s.spd=s.n?Math.round(s.ms/s.n/100)/10:null;s.wr=s.gp?Math.round(Math.min(s.gw,s.gp)/s.gp*100):null;
+  return s;
+}
+function wkTopics(days){
+  var set={},by={},dm={};days.forEach(function(d){set[d]=1;});
+  (S.log||[]).forEach(function(l){if(!set[l.d])return;var a=by[l.top]||(by[l.top]={t:l.top,dom:l.dom,n:0,f:0}),b=dm[l.dom]||(dm[l.dom]={n:0,f:0});a.n++;a.f+=l.f;b.n++;b.f+=l.f;});
+  var arr=Object.keys(by).map(function(k){var a=by[k];a.p=Math.round(a.f/a.n*100);return a;}).filter(function(a){return a.n>=3;});
+  return {topics:arr,doms:dm};
+}
+const WK_TIPS={english:'Read one short story together. Ask him to point to words and spell three of them.',math:'Use real things (fruit, blocks, coins) to count, add and compare before the worksheet.',cs:'Let him name the parts of a computer or phone and say if each is input or output.',forms:'Fill in a paper form together. Ask him to point to the boxes, lists and tick boxes.',custom:'Look at your own syllabus questions together and add a fresh one on the same topic.',book:'Ask "What will happen next?" before pressing GO on the Bee-Bot or reading a table.',flex:'At home ask "What else could we use this for?" about a spoon, a box or a sock.',safe:'Role-play No, Go, Tell calmly. Praise a loud, clear voice every time.',phone:'Chant the number in chunks (982 – 368 – 4814) on walks or in the car.',vl:'Let him read a Byte fact aloud, then say it again in his own words.'};
+function wkTip(a){
+  var t=String(a.t||'');
+  if(/graph|chart/i.test(t))return 'Make a quick tally chart at home (for example the colours of the cars you see) and read it together.';
+  if(/typing|keyboard|key/i.test(t))return 'Five minutes of the typing game with the Bluetooth keyboard, using both hands.';
+  if(/bee|program|sequence|bug|debug/i.test(t))return 'Act it out: be the Bee-Bot and let him give you forward, turn and go commands.';
+  if(/network|wi-?fi|online|internet/i.test(t))return 'Walk around the house and spot which things join the Wi-Fi and which do not.';
+  return WK_TIPS[a.dom]||'Practise this topic together for five minutes with real objects, then try the app again.';
+}
+function wkGrowth(a,b,inv){
+  if(a===null||a===undefined)return '<span class="gn">–</span>';
+  if(b===null||b===undefined||b===0)return a>0?'<span class="gu">🆕</span>':'<span class="gn">–</span>';
+  var p=Math.round((a-b)/b*100);if(p===0)return '<span class="gn">= 0%</span>';
+  var good=inv?p<0:p>0;return '<span class="'+(good?'gu':'gd')+'">'+(p>0?'▲ +':'▼ ')+p+'%</span>';
+}
+function wkPP(a,b){if(a===null||b===null)return '<span class="gn">–</span>';var d=a-b;return d===0?'<span class="gn">= 0</span>':'<span class="'+(d>0?'gu':'gd')+'">'+(d>0?'▲ +':'▼ ')+d+' pts</span>';}
+function wkGameName(id){var g=GAMELIST.filter(function(x){return x[0]===id;})[0];return g?g[2]+' '+g[3]:id;}
+function wkAchievement(w){
+  if(!w.n&&!w.gp)return '';
+  var best=null;Object.keys(w.games).forEach(function(k){var g=w.games[k];if(g.w>0&&(!best||g.w>best.w))best={k:k,w:g.w};});
+  if(w.ws>=5)return 'finished '+w.ws+' worksheets this week';
+  if(best&&best.w>=2)return 'won '+best.w+' rounds of '+wkGameName(best.k);
+  if(w.acc!==null&&w.acc>=85&&w.n>=20)return 'answered '+w.n+' questions with '+w.acc+'% right first time';
+  if(w.n)return 'answered '+w.n+' questions on '+w.act+' day'+(w.act===1?'':'s');
+  return 'played '+w.gp+' game'+(w.gp===1?'':'s');
+}
+function wkSummaryText(){
+  var w=wkStats(wkWindow(0)),p=wkStats(wkWindow(7)),t=wkTopics(wkWindow(0)),L=[];
+  L.push('IT Geek Academy - weekly report for '+PROFILE.first+' ('+wkWindow(6)[0]+' to '+wkWindow(0)[0]+')','');
+  L.push('Questions answered: '+w.n+' (last week '+p.n+')','First-try accuracy: '+(w.acc===null?'-':w.acc+'%')+' (last week '+(p.acc===null?'-':p.acc+'%')+')','Active days: '+w.act+'/7','Worksheets: '+w.ws+', Daily quizzes: '+w.qz,
+    'Voice Lab: '+w.vl+', Think Outside the Box: '+w.flex+', Smart & Safe: '+w.safe+', Phone number: '+w.phone,'Games played: '+w.gp+', won: '+w.gw+(w.wr===null?'':' ('+w.wr+'% win rate)'),'');
+  var sh=t.topics.slice().sort(function(a,b){return b.p-a.p||b.n-a.n;}).slice(0,3),fo=t.topics.slice().sort(function(a,b){return a.p-b.p||b.n-a.n;}).slice(0,3);
+  if(sh.length)L.push('Where '+PROFILE.first+' shines: '+sh.map(function(a){return a.t+' ('+a.p+'%)';}).join(', '));
+  if(fo.length)L.push('Practise next week: '+fo.map(function(a){return a.t+' ('+a.p+'%)';}).join(', '));
+  return L.join('\n');
+}
+function weeklyHtml(){
+  var days=wkWindow(0),w=wkStats(days),p=wkStats(wkWindow(7)),t=wkTopics(days),h='',any=w.n||w.gp||w.vl||w.flex||w.safe||w.phone;
+  h+='<div class="card wkc"><h3>📈 Weekly Growth Report</h3><p class="sub" style="margin:0">'+days[6]+' to '+days[0]+' compared with the 7 days before.</p>';
+  if(!any)h+='<div class="note">No activity this week yet. The report fills in as Rudraksh learns!</div>';
+  h+='<div class="wkstrip">'+w.per.slice().reverse().map(function(x){var dd=new Date(x.d+'T00:00');return '<div class="wkd'+(x.ws?' ws':x.n?' on':'')+'" title="'+x.d+'"><small>'+'SMTWTFS'.charAt(dd.getDay())+'</small><b>'+(x.ws?'✅':x.n?'•':'')+'</b></div>';}).join('')+'</div>';
+  var rows=[['Questions answered',w.n,p.n,wkGrowth(w.n,p.n)],['First-try accuracy',w.acc===null?'–':w.acc+'%',p.acc===null?'–':p.acc+'%',wkPP(w.acc,p.acc)],['Seconds per question',w.spd===null?'–':w.spd,p.spd===null?'–':p.spd,wkGrowth(w.spd,p.spd,true)],
+    ['Days practised',w.act+'/7',p.act+'/7',wkGrowth(w.act,p.act)],['Worksheets finished',w.ws,p.ws,wkGrowth(w.ws,p.ws)],['Daily quizzes',w.qz,p.qz,wkGrowth(w.qz,p.qz)],['Byte\'s Voice Lab',w.vl,p.vl,wkGrowth(w.vl,p.vl)],
+    ['🧠 Think Outside the Box',w.flex,p.flex,wkGrowth(w.flex,p.flex)],['🛡️ Smart & Safe',w.safe,p.safe,wkGrowth(w.safe,p.safe)],['📞 Phone number',w.phone,p.phone,wkGrowth(w.phone,p.phone)],['📘 Computing Book',w.bk,p.bk,wkGrowth(w.bk,p.bk)],
+    ['🎮 Games played',w.gp,p.gp,wkGrowth(w.gp,p.gp)],['⭐ Games won',w.gw,p.gw,wkGrowth(w.gw,p.gw)],['Win rate',w.wr===null?'–':w.wr+'%',p.wr===null?'–':p.wr+'%',wkPP(w.wr,p.wr)]];
+  h+='<table class="wkt"><thead><tr><th></th><th>This week</th><th>Before</th><th>Growth</th></tr></thead><tbody>'+rows.map(function(r){return '<tr><td>'+r[0]+'</td><td><b>'+r[1]+'</b></td><td>'+r[2]+'</td><td>'+r[3]+'</td></tr>';}).join('')+'</tbody></table></div>';
+  /* games */
+  var gk=Object.keys(w.games);
+  if(gk.length)h+='<div class="card"><h3>🎮 Geek Lab games this week</h3>'+gk.sort(function(a,b){return w.games[b].p-w.games[a].p;}).map(function(k){var g=w.games[k],pc=g.p?Math.round(Math.min(g.w,g.p)/g.p*100):0;return '<div class="abar"><span class="al1">'+esc(wkGameName(k))+'</span><div class="atrk"><div class="afill" style="width:'+pc+'%;background:#7c4dff"></div></div><span class="ap">'+g.w+'/'+g.p+' won</span></div>';}).join('')+'</div>';
+  /* strengths / focus */
+  var sh=t.topics.filter(function(a){return a.p>=70;}).sort(function(a,b){return b.p-a.p||b.n-a.n;}).slice(0,4);
+  var fo=t.topics.slice().sort(function(a,b){return a.p-b.p||b.n-a.n;}).filter(function(a){return a.p<85;}).slice(0,3);
+  var bestG=null;gk.forEach(function(k){var g=w.games[k];if(g.p>=2&&g.w>0&&(!bestG||g.w/g.p>bestG.r))bestG={k:k,r:g.w/g.p};});
+  h+='<div class="card wkgood"><h3>🌟 Where '+esc(PROFILE.first)+' shines</h3>'+(sh.length||bestG?'<ul>'+sh.map(function(a){return '<li><b>'+esc(a.t)+'</b>: '+a.p+'% right first time ('+a.n+' questions)</li>';}).join('')+(bestG?'<li><b>'+esc(wkGameName(bestG.k))+'</b>: best game this week</li>':'')+'</ul>':'<p class="sub">Not enough answers yet. Aim for at least 3 questions per topic.</p>')+'</div>';
+  var skipped=[['flex','🧠 Think Outside the Box'],['safe','🛡️ Smart & Safe'],['phone','📞 Phone number trainer'],['vl','🗣️ Byte\'s Voice Lab']].filter(function(x){return !w[x[0]];});
+  h+='<div class="card wkfocus"><h3>🎯 Areas to practise next week</h3>'+(fo.length||skipped.length?'<ul>'+fo.map(function(a){return '<li><b>'+esc(a.t)+'</b>: '+a.p+'% first time ('+a.n+' questions)<br><small>💡 '+esc(wkTip(a))+'</small></li>';}).join('')+skipped.map(function(x){return '<li><b>'+x[1]+'</b>: not tried this week<br><small>💡 '+esc(WK_TIPS[x[0]])+'</small></li>';}).join('')+'</ul>':'<p class="sub">Everything looks strong. Keep going! 🎉</p>')+'</div>';
+  h+='<div class="card"><div class="row"><button class="btn" id="wkMail" type="button">📧 Email report</button><button class="btn ghost" id="wkCopy" type="button">📋 Copy</button><button class="btn ghost" id="wkPrint" type="button">🖨️ Print</button></div><div class="note good" id="wkMsg" style="display:none"></div><small>The report is made on this iPad from the last 14 days. Nothing leaves the device unless you email or copy it.</small></div>';
+  return h;
+}
+function bindWeek(){
+  var q=function(id,fn){var x=$(id);if(x)x.addEventListener('click',fn);},m=function(t){var n=$('#wkMsg');if(n){n.style.display='block';n.textContent=t;}};
+  q('#wkMail',function(){var to=[S.setup.dadEmail,S.setup.momEmail].filter(Boolean).join(','),body=wkSummaryText();location.href='mailto:'+encodeURIComponent(to).replace(/%40/g,'@').replace(/%2C/g,',')+'?subject='+encodeURIComponent('Weekly report: '+PROFILE.first)+'&body='+encodeURIComponent(body.slice(0,1800));m('Opening your email app…');});
+  q('#wkCopy',function(){var t=wkSummaryText();try{navigator.clipboard.writeText(t).then(function(){m('Copied ✅');},function(){m('Could not copy. Use Email instead.');});}catch(e){m('Could not copy. Use Email instead.');}});
+  q('#wkPrint',function(){window.print();});
+  if(S.wkn){S.wkn.seen=todayStr();save();}
+}
+/* home banner every 7 days (or Sunday evening) */
+function wkDue(){
+  var t=todayStr(),w=S.wkn;if(!w||typeof w!=='object'){w=S.wkn={last:'',start:t};save();}
+  var base=w.last||w.start,days=Math.round((new Date(t+'T00:00')-new Date(base+'T00:00'))/864e5),now=new Date();
+  return days>=7||(now.getDay()===0&&now.getHours()>=17&&days>=2);
+}
+function wkNoticeHtml(){
+  try{
+    if(!wkDue())return '';var w=wkStats(wkWindow(0)),a=wkAchievement(w);if(!a)return '';
+    return '<div class="card wknote" role="status"><div class="wkb">🏆</div><div style="flex:1;min-width:0"><h3 style="margin:0">Weekly Growth Report is ready!</h3><p style="margin:4px 0 8px"><b>'+esc(PROFILE.first)+'</b> '+esc(a)+'. Mom and Dad can see the full report in the Parent tab.</p><div class="row" style="margin:0"><button class="btn sm ok" data-wkn="view" type="button">👨‍👩‍👦 Show Mom &amp; Dad</button><button class="btn sm ghost" data-wkn="later" type="button">Later</button></div></div></div>';
+  }catch(e){return '';}
+}
+document.addEventListener('click',function(e){
+  var b=e.target.closest&&e.target.closest('[data-wkn]');if(!b)return;var k=b.getAttribute('data-wkn');
+  S.wkn=S.wkn||{start:todayStr()};S.wkn.last=todayStr();save();
+  if(k==='view'){pinPrompt(function(){PT='week';go('parent');});}else renderHome();
+});
+
+(function(){var l=renderLab,d=renderDone,sp=renderSplash;renderLab=function(){l.apply(this,arguments);addFoot('#s-lab .wrap');};renderDone=function(){d.apply(this,arguments);addFoot('#s-done .wrap');};renderSplash=function(){sp.apply(this,arguments);var sc=document.querySelector('#s-splash .splash');if(sc&&!sc.querySelector('.famfoot'))sc.insertAdjacentHTML('beforeend',famFootHtml());};})();
 /* ---------- 11. BOOT ---------- */
 applyKbMode();
 function handleHash(){
