@@ -660,6 +660,41 @@ button.bcell{cursor:pointer;font-family:inherit}
   .bigemo{font-size:54px}
 }
 @media (orientation:portrait) and (min-width:700px){#s-work{padding-bottom:calc(170px + env(safe-area-inset-bottom,0px))}}
+
+/* ---- v8: reading syllabus ---- */
+.rdsteps{display:flex;gap:10px;justify-content:center;align-items:center;flex-wrap:wrap;margin-top:6px}.rdsteps .stp{background:none;box-shadow:none;padding:0}
+.rds{background:var(--c)!important;color:#fff!important;position:relative}.rds b,.rds small{color:#fff!important;opacity:1!important}.rds small{opacity:.92!important}
+.rds em{position:absolute;right:8px;top:6px;font-size:12px;background:rgba(255,255,255,.9);color:#26214f;border-radius:99px;padding:1px 8px;font-weight:800}
+.rds.pass{background:var(--c)!important}
+.hw{border-radius:8px;padding:0 3px;transition:background .15s,transform .15s}
+.hw.on{background:#ffd23f;transform:scale(1.12);box-shadow:0 0 0 3px #ffd23f;color:#26214f}
+.hlbox .hw{cursor:pointer}
+.sentbox{font-size:32px;font-weight:700;line-height:1.5;text-align:center;margin:6px 0}
+.storybox{font-size:26px;font-weight:600;line-height:1.7}.storybox .sl{padding:2px 8px;border-radius:12px}.storybox .sl.hintl{background:#fff0b8;box-shadow:0 0 0 3px #ffc833}
+.storybox .ln{display:inline-block;width:26px;height:26px;line-height:26px;text-align:center;border-radius:50%;background:#e9e1ff;font-size:14px;margin-right:6px;vertical-align:middle}
+.stp{font-weight:700;color:#7a5aa8;font-size:14px}.stp2{pointer-events:none}
+.rdo{display:flex;flex-direction:column;align-items:center;gap:2px}.rdo i{font-style:normal;font-size:46px;line-height:1.1}.rdo b{font-size:22px}
+.swd{font-size:34px;font-weight:800;letter-spacing:1px}.swd.s{font-size:22px;letter-spacing:0}.swd.big{font-size:56px;text-align:center}
+.ltr{display:inline-block;min-width:90px;padding:0 18px;border-radius:24px;background:#ffe1ee;color:#c0143c;font-size:76px;font-weight:800;line-height:1.15}.ltr.dg2{background:#dff1ff;color:#1b5fb8}
+.flashbox{min-height:110px;display:flex;align-items:center;justify-content:center}
+.flashw{font-size:64px;font-weight:800;color:#26214f;animation:flashfade 2.6s ease-in forwards}
+@keyframes flashfade{0%,60%{opacity:1;transform:scale(1)}100%{opacity:0;transform:scale(.8)}}
+.soundbox{text-align:center}.phs{display:flex;gap:6px;justify-content:center;align-items:center;margin:8px 0;flex-wrap:wrap}.plus{font-style:normal;font-weight:800;color:#7a5aa8;font-size:24px}
+.ph{display:inline-block;min-width:54px;padding:6px 12px;border-radius:16px;background:#e9e1ff;font-size:44px;font-weight:800;color:#26214f;transition:transform .15s,background .15s}.ph.on{background:#ffd23f;transform:scale(1.25) translateY(-4px)}
+.soundbox.whole .ph{background:#d9f7e6;transform:scale(1.05)}
+.train{display:flex;align-items:center;justify-content:center;gap:6px;margin:6px 0}.eng{font-size:48px}
+.car{min-width:96px;padding:12px 18px;border-radius:14px;background:#2fbf71;color:#fff;font-size:26px;font-weight:800;text-align:center;box-shadow:0 4px 0 rgba(0,0,0,.2)}.car.lead{background:#3d8bff}
+.osl{display:flex;flex-wrap:wrap;gap:10px;justify-content:center;margin:10px 0}
+.oslot{position:relative;min-width:86px;min-height:64px;padding:8px 14px;border-radius:16px;border:4px dashed #b9b3e6;background:#fff;font:inherit;font-weight:800;font-size:26px;color:#26214f;cursor:pointer;transition:transform .15s,box-shadow .15s}
+.oslot .nb{position:absolute;left:6px;top:3px;font-size:11px;opacity:.55}.oslot.full{border-style:solid;border-color:#7c4dff;background:#f3eeff}.oslot.okc{background:#d9f7e6;border-color:#1fa36a}.oslot.bad{background:#ffe0e3;border-color:#e63946;animation:shake .4s}.oslot.dim{opacity:.9}.oslot.glow{animation:micp .6s ease-in-out 3;box-shadow:0 0 0 5px #ffc833}
+.osl.train .oslot{background:#e8f6ee;border-color:#2fbf71;border-radius:14px;min-width:120px}.osl.train .oslot.full{background:#2fbf71;color:#fff}
+.otray{display:flex;flex-wrap:wrap;gap:10px;justify-content:center;margin:12px 0}
+.otile{position:relative;min-width:70px;min-height:60px;padding:10px 18px 10px 24px;border-radius:16px;border:3px solid #fff;background:#ffe9a8;box-shadow:0 4px 0 rgba(0,0,0,.18);font:inherit;font-weight:800;font-size:26px;color:#26214f;cursor:pointer;transition:transform .12s,box-shadow .12s}
+.otile .nb{position:absolute;left:6px;top:3px;font-size:11px;opacity:.55}.otile.used{opacity:.25;pointer-events:none}.otile.glow{animation:micp .6s ease-in-out 3;box-shadow:0 0 0 5px #ffc833}
+@media (hover:hover) and (pointer:fine){.otile:hover,.oslot:hover{transform:translateY(-3px);box-shadow:0 0 0 4px #ffc833}}
+.rdcard{background:linear-gradient(135deg,#fff0f6,#eaf3ff)}
+.rds{border:3px solid transparent}.rds.cur{border-color:var(--c);box-shadow:0 0 0 3px rgba(255,210,63,.6)}.rds.pass{background:#d9f7e6}.rds small{font-size:12px}
+@media (max-height:820px){.ltr{font-size:58px}.flashw{font-size:52px}.storybox{font-size:22px}.sentbox{font-size:26px}}
 </style>
 </head>
 <body>
@@ -1178,7 +1213,8 @@ function formUI(q,host,api){
 function buildWorksheet(date,n){
   var H=mkHist(false),r=makeRng(hashStr('rudra-it|'+date+'|'+(n||0)),H),qs=[];
   function dom(name,fns,n){r.shuffle(fns).slice(0,n||fns.length).forEach(function(f){var q=f(r);q.domain=name;qs.push(q);});}
-  dom('english',[qVerb,qPronoun,qDigraph,qReading,qPrep,qSpellWord],5);
+  dom('english',[qVerb,qPronoun,qDigraph,qPrep,qSpellWord],4);
+  var rq=qReadAdaptive(r);rq.domain='english';qs.push(rq);   /* one staged reading item every day (adapts to recent accuracy) */
   dom('math',[qNumbers,qPosition,qPattern,qSpelling,qAddSub,qMatchCounts],5);
   dom('cs',[qKey,qTyping,qHardware,qNetwork,qIO,qTypeDevice],5);
   [1,2,3,4].forEach(function(u){var f=r.fresh(SYL[u],1)[0],q=f(r);q.domain='book';qs.push(q);});   /* Computing Book: one question from each unit */
@@ -1190,11 +1226,11 @@ function buildWorksheet(date,n){
 }
 function buildMini(type,seed){
   var r=makeRng(hashStr('mini|'+type+'|'+seed),mkHist(true)),qs=[],i;
-  if(type==='typing'){for(i=0;i<3;i++)qs.push(qKey(r));for(i=0;i<3;i++)qs.push(qTyping(r));qs.push(qKey(r));}
+  if(type==='typing'){for(i=0;i<3;i++)qs.push(qKey(r));for(i=0;i<2;i++)qs.push(qTyping(r));var sw=r.pick(RD_SIGHT);qs.push(T('Reading: Sight words',sw.toUpperCase(),'Type the word <b>'+sw+'</b>','Type the word '+sw+'.','<div class="swd big" style="text-align:center">'+sw+'</div>','Say it: "'+sw+'". Follow the glowing keys.',{mode:'guide',rd:2}));qs.push(qKey(r));}
   else if(type==='io'){['sort','type','sort','type'].forEach(function(v){qs.push(qIO(r,v));});}
   else if(type==='net'){['sort','type','sort','type'].forEach(function(v){qs.push(qNetwork(r,v));});}
   else if(type==='defs'){['tech','hw','tech','hw'].forEach(function(v){qs.push(qDefs(r,v));});}
-  else if(type==='spell3'){for(i=0;i<5;i++)qs.push(spellQ(r.pick(i%2?TECHW:W3),i%2?'Tech spelling':'3-letter spelling'));}
+  else if(type==='spell3'){for(i=0;i<5;i++){if(i===4){var bw=r.pick(RD_BLEND);qs.push(T('Reading: Blending',bw[0].toUpperCase(),'Blend the sounds, then <b>type the word</b>','Blend the sounds, then type the word.',soundVisual(bw[0],bw[1]),'Say it slowly: '+rdSoundTiles(bw[0]).join(' - ')+'.',{mode:'guide',rd:1}));}else qs.push(spellQ(r.pick(i%2?TECHW:W3),i%2?'Tech spelling':'3-letter spelling'));}}
   else if(type==='numsp'){for(i=0;i<5;i++)qs.push(qSpelling(r));}
   else if(type==='graph'){qs.push(qGraphRead(r));qs.push(qGraphRead(r));qs.push(qGraphBuild(r));qs.push(qGraphBuild(r));}
   else{['match','typename','match','typename'].forEach(function(v){qs.push(qHardware(r,v));});}
@@ -1322,7 +1358,8 @@ function buildQuiz(date){
 }
 function buildQuizRaw(date){
   var H=mkHist(false),r=makeRng(hashStr('quiz|'+date),H);QH_LAST=H;
-  var syl=r.fresh(SYL_MCQ,2).map(function(f,i){var sq=f(r);sq.id='z'+(3+i);return sq;});
+  var syl=r.fresh(SYL_MCQ,1).map(function(f,i){var sq=f(r);sq.id='z'+(3+i);return sq;});
+  var rdq=qReadChoice(r);rdq.id='z4';rdq.domain='english';syl.push(rdq);
   return r.shuffle(r.fresh(QBANK,3).map(function(b,i){
     var opts=r.shuffle([b[1]].concat(b[2])).map(function(x){return mkOpt(x,'<b style="font-size:26px">'+x+'</b>');});
     return {topic:'Daily Tech Quiz',kind:'choice',cols:1,prompt:b[0],say:b[0].replace(/<[^>]+>/g,''),visual:b[3]?(b[3].charAt(0)==='<'?b[3]:'<div class="bigemoji">'+b[3]+'</div>'):'',options:opts,answer:b[1],hint:b[4],domain:'cs',id:'z'+i};
@@ -1821,7 +1858,7 @@ function renderHome(){
   h+='<div class="wrap"><div class="hero"><div class="byte">🤖</div><div class="bubble">'+greet()+', <b>'+PROFILE.first+'</b>!<br>'+heroLine(day)+'</div></div>';
   h+='<div class="stats"><div class="stat">⭐ XP<b>'+S.xp+'</b></div><div class="stat">🔥 Streak<b>'+S.streak+' day'+(S.streak===1?'':'s')+'</b></div><div class="stat">Level<b style="font-size:21px">'+lv.name+'</b><div class="bar"><i style="width:'+lv.pct+'%"></i></div></div></div>';
   if(S.pending&&S.tokens[S.pending]){h+='<div class="card" style="background:#fff5d6"><b>🎁 Your reward is ready to finish!</b><div class="row"><button class="btn ok" id="hResume" type="button">▶ Continue video</button></div></div>';}
-  h+=wkNoticeHtml()+quizCard()+voiceCard()+lifeCard()+bonusCards();
+  h+=wkNoticeHtml()+quizCard()+voiceCard()+readCard()+lifeCard()+bonusCards();
   h+='<div class="card todayc"><h2>📝 Today\'s Worksheet</h2>';
   if(day&&day.done){
     var t=S.tokens[day.token],st=domStars(day);
@@ -1953,7 +1990,7 @@ let factI=0;
 function renderLab(){
   var f=FACTS[factI];
   $('#s-lab').innerHTML='<div class="wrap"><h1>🧪 Geek Lab</h1><div class="card fact" id="fact"><div class="e">'+f[0]+'</div><h2>'+f[1]+'</h2><p>'+f[2]+'</p><div class="row" style="justify-content:center"><button class="btn sm ghost" id="fPrev" type="button">◀</button><button class="btn sm ghost" data-say="'+esc(f[1]+'. '+f[2])+'" type="button">🔊 Read</button><button class="btn sm" id="fNext" type="button">Next fact ▶</button></div></div>'+
-    voiceCard()+quickQuizCard()+bookLabCard()+lifeCard()+gamesBanner()+'<h3>🎮 Mini games (+XP)</h3><div class="games">'+newGameButtons()+'</div>'+
+    voiceCard()+quickQuizCard()+readCard()+bookLabCard()+lifeCard()+gamesBanner()+'<h3>🎮 Mini games (+XP)</h3><div class="games">'+newGameButtons()+'</div>'+
     '<div class="card" style="margin-top:14px"><h3>🔍 How does scanning work?</h3><p class="sub" style="margin:0 0 8px">A QR code is a picture made of black and white squares.</p><button class="btn" id="lHow" type="button">Show me!</button></div></div>';
   $('#fPrev').addEventListener('click',function(){factI=(factI+FACTS.length-1)%FACTS.length;renderLab();});
   $('#fNext').addEventListener('click',function(){factI=(factI+1)%FACTS.length;renderLab();});
@@ -2078,7 +2115,7 @@ function shk(e){e.classList.remove('shk');void e.offsetWidth;e.classList.add('sh
 const WFC=['#ffc2d4','#bfe6ff','#c8f2b0','#ffe08a','#dac6ff','#ffd2a8'];
 function gameWordFind(){
   var body=gameShell('🔎 Word Find','#1fa3a3'),r=makeRng(Date.now()>>>0,mkHist(true)),N=9,seen={},pool=[],grid=[],placed=[],i,j,found=0,start=null,downC=null,fi=0;
-  W3.concat(TECHW).forEach(function(w){if(!seen[w[0]]&&w[0].length<=5){seen[w[0]]=1;pool.push(w);}});
+  W3.concat(TECHW,RD_BLEND.map(function(b){return [b[0],b[1],'Reading word'];})).forEach(function(w){if(!seen[w[0]]&&w[0].length<=5){seen[w[0]]=1;pool.push(w);}});
   for(i=0;i<N;i++){grid.push([]);for(j=0;j<N;j++)grid[i].push('');}
   var dirs=[[0,1],[1,0],[1,1],[0,-1]];   /* right, down, diagonal, and BACKWARDS */
   r.fresh(pool,6).forEach(function(w){
@@ -2619,7 +2656,7 @@ function renderParent(){
 }
 
 /* ---------- 12. v2 UPGRADE: syllabus, analytics, adaptive, backup, playground ---------- */
-const APP_VER='4.4.0',APP_BUILD='2026-11-21';
+const APP_VER='4.5.0',APP_BUILD='2026-11-22';
 function shuf(a){a=a.slice();for(var i=a.length-1;i>0;i--){var j=Math.floor(Math.random()*(i+1)),t=a[i];a[i]=a[j];a[j]=t;}return a;}
 function lastNDays(n){var a=[],t=Date.now(),i;for(i=n-1;i>=0;i--)a.push(ymd(new Date(t-i*864e5)));return a;}
 function pctOf(f,n){return n?Math.round(f/n*100):0;}
@@ -2630,7 +2667,7 @@ function logAns(q,ok,wr){
   try{
     if(SES&&SES.noLog)return;
     var d=todayStr(),ms=Math.min(Date.now()-(QS.t0||Date.now()),120000),first=(ok&&wr===0)?1:0,dom=q.domain||'cs',top=q.topic||'Other';
-    S.log.push({t:Date.now(),d:d,dom:dom,top:top,f:first,ms:ms});if(S.log.length>600)S.log.splice(0,S.log.length-600);
+    S.log.push({t:Date.now(),d:d,dom:dom,top:top,f:first,ms:ms});if(q.rd)rdRecord(q,first);if(S.log.length>600)S.log.splice(0,S.log.length-600);
     var a=S.stat[top]||(S.stat[top]={n:0,f:0,dom:dom});a.n++;a.f+=first;a.dom=dom;
     var b=S.dom[dom]||(S.dom[dom]={n:0,f:0});b.n++;b.f+=first;
     var h=histDay(d);h.n++;h.f+=first;h.ms+=ms;
@@ -4672,7 +4709,7 @@ function bindV7(){
 /* ===== 4. Weekly growth report ===== */
 function wkWindow(off){var o=[],k;for(k=off;k<off+7;k++)o.push(ymd(new Date(Date.now()-k*864e5)));return o;}
 function wkStats(days){
-  var set={},s={days:days,act:0,n:0,f:0,ms:0,ws:0,qz:0,vl:0,flex:0,safe:0,phone:0,bk:0,gp:0,gw:0,games:{},per:[]};
+  var set={},s={days:days,act:0,n:0,f:0,ms:0,ws:0,qz:0,vl:0,flex:0,safe:0,phone:0,bk:0,rd:0,gp:0,gw:0,games:{},per:[]};
   days.forEach(function(d){set[d]=1;});
   days.forEach(function(d){
     var h=S.hist[d]||{},w=!!(h.ws||(S.days[d]&&S.days[d].done)),q=!!(h.qz||(S.qz[d]&&S.qz[d].done));
@@ -4680,7 +4717,7 @@ function wkStats(days){
   });
   (S.ev||[]).forEach(function(e){
     if(!set[e.d])return;
-    if(e.k==='vl'||e.k==='flex'||e.k==='safe'||e.k==='phone'||e.k==='bk')s[e.k]++;
+    if(e.k==='vl'||e.k==='flex'||e.k==='safe'||e.k==='phone'||e.k==='bk')s[e.k]++;if(e.k==='read')s.rd++;
     if(e.k==='gstart'){s.gp++;(s.games[e.id]||(s.games[e.id]={p:0,w:0})).p++;}
     if(e.k==='gwin'){s.gw++;(s.games[e.id]||(s.games[e.id]={p:0,w:0})).w++;}
   });
@@ -4737,7 +4774,7 @@ function weeklyHtml(){
   h+='<div class="wkstrip">'+w.per.slice().reverse().map(function(x){var dd=new Date(x.d+'T00:00');return '<div class="wkd'+(x.ws?' ws':x.n?' on':'')+'" title="'+x.d+'"><small>'+'SMTWTFS'.charAt(dd.getDay())+'</small><b>'+(x.ws?'✅':x.n?'•':'')+'</b></div>';}).join('')+'</div>';
   var rows=[['Questions answered',w.n,p.n,wkGrowth(w.n,p.n)],['First-try accuracy',w.acc===null?'–':w.acc+'%',p.acc===null?'–':p.acc+'%',wkPP(w.acc,p.acc)],['Seconds per question',w.spd===null?'–':w.spd,p.spd===null?'–':p.spd,wkGrowth(w.spd,p.spd,true)],
     ['Days practised',w.act+'/7',p.act+'/7',wkGrowth(w.act,p.act)],['Worksheets finished',w.ws,p.ws,wkGrowth(w.ws,p.ws)],['Daily quizzes',w.qz,p.qz,wkGrowth(w.qz,p.qz)],['Byte\'s Voice Lab',w.vl,p.vl,wkGrowth(w.vl,p.vl)],
-    ['🧠 Think Outside the Box',w.flex,p.flex,wkGrowth(w.flex,p.flex)],['🛡️ Smart & Safe',w.safe,p.safe,wkGrowth(w.safe,p.safe)],['📞 Phone number',w.phone,p.phone,wkGrowth(w.phone,p.phone)],['📘 Computing Book',w.bk,p.bk,wkGrowth(w.bk,p.bk)],
+    ['🧠 Think Outside the Box',w.flex,p.flex,wkGrowth(w.flex,p.flex)],['🛡️ Smart & Safe',w.safe,p.safe,wkGrowth(w.safe,p.safe)],['📞 Phone number',w.phone,p.phone,wkGrowth(w.phone,p.phone)],['📘 Computing Book',w.bk,p.bk,wkGrowth(w.bk,p.bk)],['📚 Reading Quest',w.rd,p.rd,wkGrowth(w.rd,p.rd)],
     ['🎮 Games played',w.gp,p.gp,wkGrowth(w.gp,p.gp)],['⭐ Games won',w.gw,p.gw,wkGrowth(w.gw,p.gw)],['Win rate',w.wr===null?'–':w.wr+'%',p.wr===null?'–':p.wr+'%',wkPP(w.wr,p.wr)]];
   h+='<table class="wkt"><thead><tr><th></th><th>This week</th><th>Before</th><th>Growth</th></tr></thead><tbody>'+rows.map(function(r){return '<tr><td>'+r[0]+'</td><td><b>'+r[1]+'</b></td><td>'+r[2]+'</td><td>'+r[3]+'</td></tr>';}).join('')+'</tbody></table></div>';
   /* games */
@@ -4779,6 +4816,280 @@ document.addEventListener('click',function(e){
 });
 
 (function(){var l=renderLab,d=renderDone,sp=renderSplash;renderLab=function(){l.apply(this,arguments);addFoot('#s-lab .wrap');};renderDone=function(){d.apply(this,arguments);addFoot('#s-done .wrap');};renderSplash=function(){sp.apply(this,arguments);var sc=document.querySelector('#s-splash .splash');if(sc&&!sc.querySelector('.famfoot'))sc.insertAdjacentHTML('beforeend',famFootHtml());};})();
+/* ================= v8: Playful Reading Syllabus (5 stages) ================= */
+var RD_STAGES=[null,
+ {n:'Sound Detective',e:'🕵️',c:'#ff5c8a',d:'Letter sounds, sh/ch/th/wh/ck and blending'},
+ {n:'Flash-Catch Words',e:'⚡',c:'#ff9f43',d:'Words we see all the time'},
+ {n:'Train Car Chunks',e:'🚂',c:'#2fbf71',d:'Little word trains: I am… Look at…'},
+ {n:'Sentence Puzzle',e:'🧩',c:'#3d8bff',d:'Read and build short sentences'},
+ {n:'Story Quest',e:'📖',c:'#7c4dff',d:'Tiny stories with read-along'}];
+var PH={s:'sss',a:'ah',t:'tuh',p:'puh',i:'ih',n:'nnn',m:'mmm',d:'duh',o:'oh',g:'guh',c:'kuh',k:'kuh',e:'eh',u:'uh',r:'rrr',h:'huh',b:'buh',f:'fff',l:'lll',w:'wuh',j:'juh',v:'vvv',x:'ks',y:'yuh',z:'zzz',q:'kwuh',sh:'shhh',ch:'chuh',th:'thhh',wh:'wuh',ck:'kuh'};
+var RD_LET=[['s','sun','☀️'],['a','apple','🍎'],['t','tiger','🐯'],['p','pig','🐷'],['i','ink','🖋️'],['n','nest','🪺'],['m','moon','🌙'],['d','dog','🐶'],['o','orange','🍊'],['g','goat','🐐'],['c','cat','🐱'],['e','egg','🥚'],['u','umbrella','☂️'],['r','rabbit','🐰'],['h','hat','🎩'],['b','ball','⚽'],['f','fish','🐟'],['l','lion','🦁']];
+var RD_DIG={sh:[['ship','🚢'],['shop','🛍️'],['sheep','🐑'],['shell','🐚']],ch:[['chip','🍟'],['cheese','🧀'],['chick','🐥'],['chair','🪑']],th:[['thumb','👍'],['three','3️⃣'],['bath','🛁'],['moth','🦋']],wh:[['whale','🐳'],['wheel','🛞'],['whisk','🥄'],['white','⬜']],ck:[['duck','🦆'],['clock','🕐'],['sock','🧦'],['rock','🪨']]};
+var RD_BLEND=[['sun','☀️'],['hat','🎩'],['pig','🐷'],['cup','☕'],['bed','🛏️'],['dog','🐶'],['bus','🚌'],['cat','🐱'],['pen','🖊️'],['net','🥅'],['web','🕸️'],['jam','🍓'],['box','📦'],['fox','🦊'],['bug','🐞'],['sit','🪑'],['ship','🚢'],['chip','🍟'],['fish','🐟'],['duck','🦆'],['clock','🕐'],['thumb','👍'],['whale','🐳'],['shop','🛍️']];
+var RD_SIGHT=['the','is','am','are','we','they','he','she','I','go','to','my','see','look','can','a','and','in','on','it'];
+var RD_CLOZE=[['I ___ Rudraksh.','am',['am','is','go'],'👦'],['We ___ happy.','are',['are','am','a'],'😊'],['She ___ my Mom.','is',['is','am','to'],'👩'],['I can ___ a bird.','see',['see','the','is'],'🐦'],['They ___ to school.','go',['go','is','am'],'🏫'],['___ cat is big.','The',['The','Go','Am'],'🐱'],['I like ___ eat.','to',['to','is','he'],'🍎'],['___ is my dog.','He',['He','Is','On'],'🐶'],['Mom ___ Dad are here.','and',['and','is','look'],'👨‍👩‍👦'],['The cat is ___ the mat.','on',['on','go','she'],'🐱'],['Look ___ the sun!','at',['at','the','is'],'☀️'],['I am ___ the park.','in',['in','is','a'],'🌳'],['We ___ jump.','can',['can','is','the'],'🤸'],['___ is a red ball.','It',['It','Go','To'],'🔴']];
+var RD_CH=[
+ {lead:'I am',ok:['happy','a boy','at home','ready'],bad:['the sun','run fast','red ball']},
+ {lead:'Look at',ok:['the sun','my cat','that dog','the moon'],bad:['happy','a boy','can jump']},
+ {lead:'We can',ok:['run','jump high','see the sun','play'],bad:['the moon','at home','my cat']},
+ {lead:'A big',ok:['red ball','dog','tree','bus'],bad:['can run','I am','look at']}];
+var RD_SENT=[['The cat sat on a mat.','🐱',['🐶','🛏️']],['I can see a big sun.','☀️',['🌙','🌧️']],['We go to the park.','🌳',['🏫','🏠']],['My dog likes to run.','🐶',['🐱','🐟']],['Mom has a red hat.','🎩',['🧦','👟']],['A frog sits on a log.','🐸',['🐦','🐠']],['The bus is big.','🚌',['🚲','🛴']],['I see a bird.','🐦',['🐟','🐢']],['The ball is red.','🔴',['🔵','🟢']],['We eat ice cream.','🍦',['🍕','🥕']],['She has a pink bag.','👜',['👟','🎩']],['The fish can swim.','🐟',['🐦','🐕']],['The pig is in the mud.','🐷',['🐄','🐴']],['A duck can quack.','🦆',['🐸','🐑']],['The moon is up.','🌙',['☀️','⭐']],['Dad can cook.','👨‍🍳',['👨‍⚕️','👨‍🏫']],['I like my red cap.','🧢',['👓','🧤']],['He is in the van.','🚐',['🚁','🚂']],['They play in the sun.','🌞',['🌧️','❄️']],['The bee is on a flower.','🐝',['🦋','🐜']],['It is a hot day.','🥵',['🥶','😴']],['We can read a book.','📖',['⚽','🎹']]];
+var RD_STORY=[
+ {t:'Pip the Cat',e:'🐱',L:['Pip is a small cat.','Pip has a red ball.','Pip rolls the ball to me.','We play all day!'],qs:[{q:'What does Pip have?',a:'A red ball',o:['A red ball','A blue cup','A big bus'],l:1},{q:'Who is Pip?',a:'A cat',o:['A cat','A dog','A bird'],l:0}],say:'Pip is a small cat.'},
+ {t:'The Big Sun',e:'☀️',L:['The sun is up.','It is hot and bright.','We sit in the shade.','We drink cold water.'],qs:[{q:'Where do we sit?',a:'In the shade',o:['In the shade','On the bus','In the sea'],l:2},{q:'What do we drink?',a:'Cold water',o:['Cold water','Hot milk','Red juice'],l:3}],say:'The sun is up.'},
+ {t:'Duck on the Pond',e:'🦆',L:['A duck is on the pond.','Quack, quack, quack!','The duck can swim.','It has a wet wing.'],qs:[{q:'What can the duck do?',a:'Swim',o:['Swim','Drive','Sleep in bed'],l:2},{q:'Where is the duck?',a:'On the pond',o:['On the pond','In a box','On a bus'],l:0}],say:'A duck is on the pond.'},
+ {t:'Mom and the Hat',e:'🎩',L:['Mom has a red hat.','The wind comes. Whoosh!','Her hat goes up, up, up!','I run and get it.'],qs:[{q:'What colour is the hat?',a:'Red',o:['Red','Blue','Green'],l:0},{q:'Who gets the hat?',a:'I do',o:['I do','The dog','Dad'],l:3}],say:'Mom has a red hat.'},
+ {t:'A Trip to the Shop',e:'🛍️',L:['Dad and I go to the shop.','We get milk and a big cake.','I help Dad with the bag.','Then we go home.'],qs:[{q:'Who goes to the shop?',a:'Dad and I',o:['Dad and I','Mom and Om','The cat'],l:0},{q:'What do they get?',a:'Milk and cake',o:['Milk and cake','Shoes and socks','A bike'],l:1}],say:'Dad and I go to the shop.'},
+ {t:'Frog and Log',e:'🐸',L:['A frog sits on a log.','He can hop, hop, hop!','Splash! He is in the pond.','The frog is happy.'],qs:[{q:'What does the frog sit on?',a:'A log',o:['A log','A chair','A cloud'],l:0},{q:'How does the frog feel?',a:'Happy',o:['Happy','Sad','Sleepy'],l:3}],say:'A frog sits on a log.'},
+ {t:'Rain Day',e:'🌧️',L:['It is a wet day.','I put on my red boots.','I jump in the puddle. Splash!','Mom smiles at me.'],qs:[{q:'What does he put on?',a:'Red boots',o:['Red boots','A hat','Big socks'],l:1},{q:'What is the day like?',a:'Wet',o:['Wet','Hot','Snowy'],l:0}],say:'It is a wet day.'},
+ {t:'My Robot Byte',e:'🤖',L:['Byte is my robot pal.','He can beep and blink.','He helps me read and count.','I like Byte a lot!'],qs:[{q:'What can Byte do?',a:'Beep and blink',o:['Beep and blink','Swim and fly','Cook and sing'],l:1},{q:'Who is Byte?',a:'A robot',o:['A robot','A frog','A bus'],l:0}],say:'Byte is my robot pal.'}];
+
+/* ---------- helpers ---------- */
+function rdWords(t){return String(t).split(/\s+/).filter(Boolean).map(function(w){return '<span class="hw" data-s="'+esc(w.replace(/[^A-Za-z0-9\']/g,''))+'">'+esc(w)+'</span>';}).join(' ');}
+function rdOpt(w,e){return mkOpt(w,'<span class="rdo">'+(e?'<i>'+e+'</i>':'')+'<b>'+esc(w)+'</b></span>');}
+function rdSoundTiles(word){
+  var parts=[],i=0,dg=['sh','ch','th','wh','ck'];
+  while(i<word.length){var two=word.substr(i,2);if(dg.indexOf(two)>=0){parts.push(two);i+=2;}else{parts.push(word.charAt(i));i++;}}
+  return parts;
+}
+function pk(r,l){return r.fresh(l,1)[0];}
+var HLG=0;
+function hlRead(box,done){
+  if(!box)return;var ws=[].slice.call(box.querySelectorAll('.hw')),i=0,gen=++HLG,hasS=('speechSynthesis' in window);
+  function off(){ws.forEach(function(w){w.classList.remove('on');});}
+  function step(){
+    if(gen!==HLG)return;off();
+    if(i>=ws.length){if(done)done();return;}
+    var w=ws[i++],txt=w.getAttribute('data-s')||w.textContent,fired=false;
+    w.classList.add('on');
+    var nx=function(){if(fired)return;fired=true;if(gen===HLG)setTimeout(step,90);};
+    try{say(txt,true,{onend:nx,rate:.85});}catch(e){}
+    setTimeout(nx,hasS?3500:Math.max(650,txt.length*140));
+  }
+  step();
+}
+function hlStop(){HLG++;[].forEach.call(document.querySelectorAll('.hw.on'),function(w){w.classList.remove('on');});}
+function soundRead(box){   /* blend tiles: say each sound, then the word */
+  var ts=[].slice.call(box.querySelectorAll('.ph')),i=0,gen=++HLG,word=box.getAttribute('data-word'),hasS=('speechSynthesis' in window);
+  function step(){
+    if(gen!==HLG)return;ts.forEach(function(t){t.classList.remove('on');});
+    if(i>=ts.length){box.classList.add('whole');say(word,true,{rate:.8});setTimeout(function(){box.classList.remove('whole');},1600);return;}
+    var t=ts[i++],fired=false;t.classList.add('on');
+    var nx=function(){if(fired)return;fired=true;if(gen===HLG)setTimeout(step,160);};
+    try{say(PH[t.getAttribute('data-p')]||t.textContent,true,{onend:nx,rate:.7});}catch(e){}
+    setTimeout(nx,hasS?2500:700);
+  }
+  step();
+}
+document.addEventListener('click',function(e){
+  var b=e.target.closest&&e.target.closest('[data-hlsay]');
+  if(b){ac();var box=document.querySelector('#s-work .hlbox');if(box)hlRead(box);return;}
+  var s=e.target.closest&&e.target.closest('[data-soundsay]');
+  if(s){ac();var sb=document.querySelector('#s-work .soundbox');if(sb)soundRead(sb);return;}
+  var h=e.target.closest&&e.target.closest('.hlbox .hw');
+  if(h){ac();say(h.getAttribute('data-s')||h.textContent,true,{rate:.85});h.classList.add('on');setTimeout(function(){h.classList.remove('on');},700);return;}
+  var f=e.target.closest&&e.target.closest('[data-flashrep]');
+  if(f){var fw=document.querySelector('#s-work .flashw');if(fw){fw.style.animation='none';void fw.offsetWidth;fw.style.animation='';}}
+});
+function soundVisual(word,emoji){
+  var t=rdSoundTiles(word);
+  return '<div class="soundbox" data-word="'+word+'">'+(emoji?'<div class="bigemo">'+emoji+'</div>':'')+'<div class="phs">'+t.map(function(p){return '<span class="ph" data-p="'+p+'">'+p+'</span>';}).join('<i class="plus">+</i>')+'</div>'+
+    '<button type="button" class="btn sm" data-soundsay="1">🔊 Hear the sounds</button></div>';
+}
+
+/* ---------- stage 1: Sound Detective ---------- */
+function rdQ1(r){
+  var v=r.pick(['letter','digraph','blendpic','blendtype','digraph2']),q;
+  if(v==='letter'){
+    var L=pk(r,RD_LET),ds=r.fresh(RD_LET.filter(function(x){return x[0]!==L[0];}),2);
+    q={topic:'Reading: Letter sounds',kind:'choice',cols:3,prompt:'Which word starts with the sound <b>'+L[0]+'</b>?',say:'Which word starts with the sound '+(PH[L[0]]||L[0])+'? '+(PH[L[0]]||L[0])+'.',
+      visual:'<div class="bigemo"><span class="ltr">'+L[0]+'</span></div><button type="button" class="btn sm" data-say="'+(PH[L[0]]||L[0])+'. '+(PH[L[0]]||L[0])+'.">🔊 Hear the sound</button>',
+      options:r.shuffle([rdOpt(L[1],L[2])].concat(ds.map(function(x){return rdOpt(x[1],x[2]);}))),answer:L[1],hint:'Say the sound "'+(PH[L[0]]||L[0])+'" and listen to the start of each word.'};
+  }else if(v==='digraph'||v==='digraph2'){
+    var k=pk(r,Object.keys(RD_DIG)),w=pk(r,RD_DIG[k]),others=r.fresh(Object.keys(RD_DIG).filter(function(x){return x!==k;}),2).map(function(x){return pk(r,RD_DIG[x]);});
+    q={topic:'Reading: Digraphs',kind:'choice',cols:3,prompt:'Which word has the sound <b>'+k+'</b>?',say:'Which word has the sound '+k+'? '+(PH[k]||k)+'.',
+      visual:'<div class="bigemo"><span class="ltr dg2">'+k+'</span></div><button type="button" class="btn sm" data-say="'+(PH[k]||k)+'. '+(PH[k]||k)+'.">🔊 Hear the sound</button>',
+      options:r.shuffle([rdOpt(w[0],w[1])].concat(others.map(function(x){return rdOpt(x[0],x[1]);}))),answer:w[0],hint:'Two letters, one sound: "'+k+'". Look for '+k+' in the word.'};
+  }else if(v==='blendpic'){
+    var W=pk(r,RD_BLEND),ds2=r.fresh(RD_BLEND.filter(function(x){return x[0]!==W[0];}),2);
+    q={topic:'Reading: Blending',kind:'choice',cols:3,prompt:'Blend the sounds. Which picture is it?',say:'Blend the sounds. Which picture is it? Tap hear the sounds.',visual:soundVisual(W[0],''),
+      options:r.shuffle([mkOpt(W[0],'<span class="rdo"><i>'+W[1]+'</i></span>')].concat(ds2.map(function(x){return mkOpt(x[0],'<span class="rdo"><i>'+x[1]+'</i></span>');}))),answer:W[0],hint:'Push the sounds together slowly: '+rdSoundTiles(W[0]).join(' … ')+'.'};
+  }else{
+    var W2=pk(r,RD_BLEND);
+    q=T('Reading: Blending',W2[0].toUpperCase(),'Blend the sounds, then <b>type the word</b>','Blend the sounds, then type the word.',soundVisual(W2[0],W2[1]),'Say it slowly: '+rdSoundTiles(W2[0]).join(' - ')+'.',{mode:'guide'});
+  }
+  q.rd=1;return q;
+}
+/* ---------- stage 2: Flash-Catch sight words ---------- */
+function rdQ2(r){
+  var v=r.pick(['tap','hear','flash','cloze','type']),w=pk(r,RD_SIGHT),q;
+  function opts(word){var ds=r.fresh(RD_SIGHT.filter(function(x){return x.toLowerCase()!==word.toLowerCase();}),3);return r.shuffle([mkOpt(word,'<b class="swd">'+esc(word)+'</b>')].concat(ds.map(function(x){return mkOpt(x,'<b class="swd">'+esc(x)+'</b>');})));}
+  if(v==='tap')q={topic:'Reading: Sight words',kind:'choice',cols:2,prompt:'Tap the word <b>'+esc(w)+'</b>',say:'Tap the word '+w+'.',visual:'<button type="button" class="btn sm" data-say="'+w+'">🔊 Say it again</button>',options:opts(w),answer:w,hint:'Look at the first letter: "'+w.charAt(0)+'".'};
+  else if(v==='hear')q={topic:'Reading: Sight words',kind:'choice',cols:2,prompt:'Listen. <b>Tap the word</b> Byte says!',say:w+'.',visual:'<div class="bigemo">👂</div><button type="button" class="btn sm" data-say="'+w+'">🔊 Say it again</button>',options:opts(w),answer:w,hint:'Say the word in your head: "'+w+'".'};
+  else if(v==='flash')q={topic:'Reading: Sight words',kind:'choice',cols:2,prompt:'<b>Catch the word!</b> Which word flashed?',say:'Catch the word! Which word flashed?',visual:'<div class="flashbox"><div class="flashw">'+esc(w)+'</div></div><button type="button" class="btn sm" data-flashrep="1">👀 Flash again</button>',options:opts(w),answer:w,hint:'Tap Flash again to look once more.'};
+  else if(v==='cloze'){var c=pk(r,RD_CLOZE);q={topic:'Reading: Sight words',kind:'choice',cols:3,fill:1,prompt:'Find the missing word',say:c[0].replace('___','blank')+' Find the missing word.',visual:'<div class="bigemo">'+c[3]+'</div><div class="sent">'+blankHtml(c[0])+'</div>',options:r.shuffle(c[2].map(function(x){return mkOpt(x,'<b class="swd">'+esc(x)+'</b>');})),answer:c[1],hint:'Read the sentence. Which word makes it sound right?'};}
+  else q=T('Reading: Sight words',w.toUpperCase(),'Type the word <b>'+esc(w)+'</b>','Type the word '+w+'.','<div class="flashbox"><div class="swd big">'+esc(w)+'</div></div><button type="button" class="btn sm" data-say="'+w+'">🔊 Say it</button>','Say it: "'+w+'". Follow the glowing keys.',{mode:'guide'});
+  q.rd=2;return q;
+}
+/* ---------- stage 3: Train car chunks ---------- */
+function carsHtml(lead,mid){return '<div class="train"><span class="eng">🚂</span><span class="car lead">'+esc(lead)+'</span><span class="car">'+(mid?esc(mid):'?')+'</span></div>';}
+function rdQ3(r){
+  var C=pk(r,RD_CH),good=pk(r,C.ok),q;
+  if(r.chance(.5)){
+    var bads=r.fresh(C.bad,2);
+    q={topic:'Reading: Word chunks',kind:'choice',cols:3,prompt:'Which car comes next?',say:'Which car comes next? '+C.lead+', what?',visual:carsHtml(C.lead,'')+'<button type="button" class="btn sm" data-say="'+C.lead+'">🔊 Hear the first car</button>',
+      options:r.shuffle([good].concat(bads)).map(function(x){return mkOpt(x,'<b class="swd s">'+esc(x)+'</b>');}),answer:good,hint:'Read it together: "'+C.lead+' …". Which car makes sense?',after:'Great! <b>'+esc(C.lead+' '+good)+'.</b>'};
+  }else{
+    q={topic:'Reading: Word chunks',kind:'order',cls:'train',tiles:[C.lead,good],sol:[C.lead,good],slots:2,say:'Put the train cars in order to read a phrase.',prompt:'Put the <b>train cars</b> in order',
+      visual:'<div class="bigemo">🚂</div>',hint:'Which car goes first? It starts with a capital letter.',after:'You read: <b>'+esc(C.lead+' '+good)+'.</b>',sentence:C.lead+' '+good};
+  }
+  q.rd=3;return q;
+}
+/* ---------- stage 4: Sentence puzzle ---------- */
+function rdQ4(r){
+  var S1=pk(r,RD_SENT),words=S1[0].replace(/[.!?]$/,'').split(' '),q,v=r.pick(['order','meaning','order','say']);
+  if(v==='order'){
+    q={topic:'Reading: Sentence puzzle',kind:'order',tiles:words.slice(),sol:words.slice(),slots:words.length,prompt:'Put the words in order to make a sentence',say:'Put the words in order to make a sentence.',visual:'<div class="bigemo">'+S1[1]+'</div>',
+      hint:'Start with the word that has a capital letter. Look at the picture!',after:'You read: <b>'+esc(S1[0])+'</b>',sentence:S1[0]};
+  }else if(v==='meaning'){
+    q={topic:'Reading: Meaning match',kind:'choice',cols:3,prompt:'Read the sentence. Which picture matches?',say:'Read the sentence. Which picture matches? '+S1[0],visual:'<div class="hlbox sentbox">'+rdWords(S1[0])+'</div><button type="button" class="btn sm" data-hlsay="1">🔊 Read with me</button>',
+      options:r.shuffle([S1[1]].concat(S1[2])).map(function(x){return mkOpt(x,'<span class="rdo"><i>'+x+'</i></span>');}),answer:S1[1],hint:'Read slowly, one word at a time. Tap “Read with me”.',after:'Yes! <b>'+esc(S1[0])+'</b>'};
+  }else{
+    q={topic:'Reading: Read to Byte',kind:'sayit',mode:'phrase',phrase:S1[0],prompt:'🗣️ <b>Read this sentence</b> to Byte!',say:'Read this sentence to me. '+S1[0],visual:'<div class="bigemo">'+S1[1]+'</div>',hint:'Read it slowly, word by word. Tap a word to hear it.',after:'Lovely reading!'};
+  }
+  q.rd=4;return q;
+}
+/* ---------- stage 5: Story quest ---------- */
+function rdQ5(r){
+  var st=pk(r,RD_STORY);
+  if(r.chance(.3)){
+    return {rd:5,topic:'Reading: Read to Byte',kind:'sayit',mode:'phrase',phrase:st.say,prompt:'🗣️ Read the <b>first line</b> of "'+esc(st.t)+'" to Byte!',say:'Read the first line of '+st.t+' to me. '+st.say,visual:'<div class="bigemo">'+st.e+'</div>',hint:'Read slowly. Tap a word to hear it.',after:'Great reading!'};
+  }
+  var qq=pk(r,st.qs),vis='<div class="passage"><h4>'+st.e+' '+esc(st.t)+'</h4><div class="hlbox storybox">'+st.L.map(function(l,i){return '<div class="sl" data-l="'+i+'"><b class="ln">'+(i+1)+'</b> '+rdWords(l)+'</div>';}).join('')+'</div>'+
+    '<div class="rdsteps"><button type="button" class="btn sm" data-hlsay="1">1️⃣ Listen</button><span class="stp">→</span><b class="stp">2️⃣ Try the answer</b><span class="stp">→</span><b class="stp">3️⃣ Stuck? Tap 💡 Hint</b></div></div>';
+  return {rd:5,topic:'Reading: Story quest',kind:'choice',cols:3,prompt:qq.q,say:qq.q,visual:vis,options:r.shuffle(qq.o).map(function(x){return mkOpt(x,'<b class="swd s">'+esc(x)+'</b>');}),answer:qq.a,
+    hint:'Read line '+(qq.l+1)+' again. The answer is hiding there!',after:'Good reading! <b>'+esc(st.L[qq.l])+'</b>',hlLine:qq.l};
+}
+var RDMK=[null,rdQ1,rdQ2,rdQ3,rdQ4,rdQ5];
+
+/* ---------- order UI (tap-to-place, keyboard, Check/Enter) ---------- */
+function orderUI(q,host,api){
+  var n=q.slots,tiles=q.tiles.map(function(t,i){return {id:i,t:t};}),pool=[],placed=[],i;
+  var r=makeRng((Date.now()+n)>>>0,null),sh=r.shuffle(tiles);
+  if(n>1&&sh.every(function(x,k){return x.t===q.sol[k];}))sh.reverse();
+  var slotBox=el('<div class="osl hlbox '+(q.cls||'')+'" aria-label="Your answer"></div>'),tray=el('<div class="otray"></div>'),foot=el('<div class="dzfoot"></div>'),chk=el('<button type="button" class="btn ok" disabled>✔ Check</button>'),hear=el('<button type="button" class="btn ghost sm">🔊 Hear it</button>');
+  var slotEls=[],tileEls={};
+  for(i=0;i<n;i++)(function(i){
+    var s=el('<button type="button" class="oslot hw" data-s="" aria-label="Box '+(i+1)+'"><span class="nb">'+(i+1)+'</span><span class="ot"></span></button>');
+    s.addEventListener('click',function(){if(QS.done)return;if(placed[i]!==undefined){unplace(i);}});
+    slotBox.appendChild(s);slotEls.push(s);
+  })(i);
+  sh.forEach(function(x,k){
+    var b=el('<button type="button" class="otile"><span class="nb">'+(k+1)+'</span>'+esc(x.t)+'</button>');
+    b.addEventListener('click',function(){if(QS.done||b.disabled)return;put(x.id);});
+    tray.appendChild(b);tileEls[x.id]=b;
+  });
+  host.appendChild(slotBox);host.appendChild(tray);foot.appendChild(chk);foot.appendChild(hear);host.appendChild(foot);
+  host.appendChild(el('<div class="dzhint">👆 Tap a word to put it in the next box. Tap a box to take it back. Keys: 1–9 pick a word, Backspace undoes, Enter checks.</div>'));
+  hear.addEventListener('click',function(){ac();say(q.sentence||q.sol.join(' '),true,{rate:.85});});
+  function txt(id){return q.tiles[id];}
+  function paint(){
+    slotEls.forEach(function(s,k){var id=placed[k];s.querySelector('.ot').textContent=id===undefined?'':txt(id);s.classList.toggle('full',id!==undefined);s.setAttribute('data-s',id===undefined?'':txt(id).replace(/[^A-Za-z0-9\' ]/g,''));s.classList.remove('okc','bad');});
+    Object.keys(tileEls).forEach(function(k){var used=placed.indexOf(+k)>=0;tileEls[k].disabled=used;tileEls[k].classList.toggle('used',used);});
+    var cnt=0;for(var j=0;j<n;j++)if(placed[j]!==undefined)cnt++;
+    chk.disabled=cnt<n;if(cnt===n)chk.classList.add('pulse');else chk.classList.remove('pulse');
+  }
+  function put(id){for(var k=0;k<n;k++){if(placed[k]===undefined){placed[k]=id;SFX.pop();paint();return;}}}
+  function unplace(k){placed[k]=undefined;SFX.pop();paint();}
+  function unplaceLast(){for(var k=n-1;k>=0;k--){if(placed[k]!==undefined){unplace(k);return;}}}
+  function done(good){
+    slotEls.forEach(function(s){s.classList.add(good?'okc':'dim');});
+  }
+  chk.addEventListener('click',function(){
+    if(QS.done||chk.disabled)return;
+    var bads=[];for(var k=0;k<n;k++){if(txt(placed[k])!==q.sol[k])bads.push(k);}
+    if(!bads.length){done(true);api.right();setTimeout(function(){hlRead(slotBox);},500);return;}
+    bads.forEach(function(k){slotEls[k].classList.add('bad');});
+    setTimeout(function(){bads.forEach(function(k){placed[k]=undefined;});paint();},650);
+    api.wrong();
+  });
+  setKeys(function(e){
+    if(QS.done)return false;var d=parseInt(e.key,10);
+    if(d>=1&&d<=n){
+      var t=tray.children[d-1];if(t&&!t.disabled){var xid=sh[d-1].id;put(xid);return true;}return false;}
+    if(e.key==='Backspace'){unplaceLast();return true;}
+    return false;
+  });
+  CL.push(function(){hlStop();});
+  return {hint:function(){for(var k=0;k<n;k++){if(placed[k]===undefined||txt(placed[k])!==q.sol[k]){var want=q.sol[k];for(var id in tileEls){if(txt(+id)===want&&!tileEls[id].disabled){tileEls[id].classList.add('glow');setTimeout(function(e2){return function(){e2.classList.remove('glow');};}(tileEls[id]),1800);break;}}slotEls[k].classList.add('glow');(function(s){setTimeout(function(){s.classList.remove('glow');},1800);})(slotEls[k]);break;}}},
+    reveal:function(){var used={};for(var k=0;k<n;k++){for(var id=0;id<q.tiles.length;id++){if(!used[id]&&q.tiles[id]===q.sol[k]){used[id]=1;placed[k]=id;break;}}}paint();done(true);}};
+}
+RENDER.order=orderUI;
+
+/* ---------- adaptive stage + record ---------- */
+function rdState(){
+  if(!S.rd||typeof S.rd!=='object')S.rd={st:1,h:{}};
+  if(!S.rd.h)S.rd.h={};if(!(S.rd.st>=1&&S.rd.st<=5))S.rd.st=1;return S.rd;
+}
+function rdRecord(q,first){
+  try{
+    if(!q||!q.rd)return;var R=rdState(),a=R.h[q.rd]||(R.h[q.rd]=[]);a.push(first?1:0);if(a.length>12)a.shift();
+    if(q.rd===R.st&&R.st<5&&a.length>=8){var ok=a.slice(-10).reduce(function(x,y){return x+y;},0);
+      if(ok/Math.min(10,a.length)>=.8){R.st++;R.h[R.st]=[];R.up=todayStr();evLog('rdup',{st:R.st});}}
+  }catch(e){}
+}
+function rdPickStage(r){
+  var R=rdState(),cur=R.st,h=R.h[cur]||[],recent=h.slice(-6),acc=recent.length?recent.reduce(function(x,y){return x+y;},0)/recent.length:1;
+  if(cur===1)return 1;
+  var review=(recent.length>=4&&acc<.5)?.6:.3;      /* struggling → more review of the easier stage */
+  if(r.chance(review))return r.int(1,cur-1)||1;
+  return cur;
+}
+function qReadAdaptive(r){var st=rdPickStage(r);return RDMK[st](r);}
+function qReadChoice(r){   /* quiz needs a choice question */
+  var tries=0,q;do{q=qReadAdaptive(r);tries++;}while(q.kind!=='choice'&&tries<12);
+  if(q.kind!=='choice'){q=rdQ2(r);while(q.kind!=='choice')q=rdQ2(r);}
+  return q;
+}
+/* ---------- Lab / Reading Quest session ---------- */
+function readCard(){
+  var R=rdState(),d=lsToday();
+  return '<div class="card rdcard"><div class="row" style="align-items:center;flex-wrap:nowrap"><div class="vlbot" aria-hidden="true">📚</div><div style="flex:1;min-width:0"><h3 style="margin:0">Reading Quest</h3><p class="sub" style="margin:2px 0 0">Play your way from sounds to stories!</p></div></div>'+
+    '<div class="bkgrid">'+[1,2,3,4,5].map(function(s){var S2=RD_STAGES[s];return '<button class="btn bku lsb rds'+(R.st===s?' cur':'')+(R.st>s?' pass':'')+'" style="--c:'+S2.c+'" data-rd="'+s+'" type="button"><span>'+S2.e+'</span><b>'+S2.n+'</b><small>'+S2.d+'</small>'+(R.st===s?'<em>⭐ now</em>':(R.st>s?'<em>✅</em>':''))+'</button>';}).join('')+'</div></div>';
+}
+function startReading(stage,origin){
+  ac();origin=origin||(cur==='home'?'home':'lab');stage=Math.max(1,Math.min(5,+stage||rdState().st));
+  var r=makeRng(hashStr('read|'+stage+'|'+Date.now()),mkHist(true)),qs=[],seen={},tries=0;
+  while(qs.length<5&&tries++<40){var q=RDMK[stage](r),k=q.topic+'|'+(q.prompt||'')+'|'+(q.sentence||q.phrase||q.answer||'');if(seen[k])continue;seen[k]=1;qs.push(q);}
+  qs.forEach(function(q,i){q.id='rd'+stage+'_'+i;q.domain='english';});
+  var S2=RD_STAGES[stage];
+  openSession({kind:'mini',qs:qs,i:0,res:[],back:origin,origin:origin,onDone:function(){
+    var n=SES.qs.length,ok=SES.res.filter(function(x){return x&&x.ok;}).length,good=ok>=Math.ceil(n*.7),l=lsToday();l.read=(l.read||0)+1;evLog('read',{n:n,ok:ok,st:stage});
+    if(good){S.xp+=15;if(S.badges.indexOf('read')<0)S.badges.push('read');}
+    save();SFX.win();party(true);
+    var o=openModal('<div class="big">'+S2.e+'</div><h2 style="text-align:center">'+S2.n+' done!</h2><p style="text-align:center">You got <b>'+ok+' / '+n+'</b>'+(good?' and earned <b>+15 bonus XP</b>!':'. Every try makes you a better reader! 🌟')+'</p>'+(good?noteWin('Wonderful reading, '+PROFILE.first+'!'):'')+'<div class="row"><button class="btn ok" id="rdAgain" type="button">Play again</button><button class="btn ghost" id="rdBack" type="button">Back</button></div>');
+    $('#rdAgain',o).addEventListener('click',function(){closeModal();startReading(stage,origin);});$('#rdBack',o).addEventListener('click',function(){closeModal();go(origin);});
+  }});
+}
+BADGES.push(['read','📚','Super Reader']);
+document.addEventListener('click',function(e){var b=e.target.closest&&e.target.closest('[data-rd]');if(b)startReading(b.getAttribute('data-rd'));});
+
+/* story hint: glow the line that holds the answer */
+document.addEventListener('click',function(e){
+  var h=e.target.closest&&e.target.closest('#wHint');if(!h)return;
+  var q=SES&&SES.qs&&SES.qs[SES.i];if(!q||q.hlLine===undefined)return;
+  var ls=document.querySelectorAll('#s-work .storybox .sl');[].forEach.call(ls,function(l,i){l.classList.toggle('hintl',i===q.hlLine);});
+});
+/* Voice Lab: guided reading of Reading-Quest lines */
+VCATS.reading=['📖','Reading'];
+RD_STORY.slice(0,6).forEach(function(st){VFACTS.push(['reading',st.e,st.L.slice(0,2).join(' '),st.L[0]]);});
+RD_SENT.slice(6,12).forEach(function(s){VFACTS.push(['reading',s[1],s[0],s[0]]);});
+var xi=12;while(VFACTS.length%3){var xs=RD_SENT[xi++];VFACTS.push(['reading',xs[1],xs[0],xs[0]]);}   /* keep 3 per day rotating without overlap */
+/* Match the Pair + Word Find + Tech Spelling + Typing Arcade use reading words */
+PAIRCATS.push({n:'Sounds and words',f:function(r){return r.fresh(RD_LET,5).map(function(x){return [x[0].toUpperCase()+' '+x[0],x[2]+' '+x[1]];});}});
+PAIRCATS.push({n:'Sentences and pictures',f:function(r){return r.fresh(RD_SENT,5).map(function(s){return [s[1],s[0]];});}});
+
 /* ---------- 11. BOOT ---------- */
 applyKbMode();
 function handleHash(){
