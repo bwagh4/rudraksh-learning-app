@@ -695,6 +695,36 @@ button.bcell{cursor:pointer;font-family:inherit}
 .rdcard{background:linear-gradient(135deg,#fff0f6,#eaf3ff)}
 .rds{border:3px solid transparent}.rds.cur{border-color:var(--c);box-shadow:0 0 0 3px rgba(255,210,63,.6)}.rds.pass{background:#d9f7e6}.rds small{font-size:12px}
 @media (max-height:820px){.ltr{font-size:58px}.flashw{font-size:52px}.storybox{font-size:22px}.sentbox{font-size:26px}}
+/* ---- v9: word wheel ---- */
+.wwrap{max-width:1000px;margin:0 auto}
+.wtabs{display:flex;gap:8px;justify-content:center;flex-wrap:wrap;margin:2px 0 6px}
+.wtab{border:3px solid var(--c);background:#fff;color:var(--c);border-radius:99px;padding:6px 16px;font:inherit;font-weight:800;font-size:17px;cursor:pointer;transition:transform .12s,box-shadow .12s}
+.wtab.on{background:var(--c);color:#fff;box-shadow:0 3px 0 rgba(0,0,0,.2)}.wtab:disabled{opacity:.55;cursor:default}
+@media (hover:hover) and (pointer:fine){.wtab:not(:disabled):hover{transform:translateY(-2px);box-shadow:0 0 0 4px #ffc833}}
+.wmain{display:flex;gap:14px;align-items:center;justify-content:center;flex-wrap:wrap}
+.wsvgbox{flex:0 1 430px;width:min(430px,92vw)}
+.wsvg{width:100%;height:auto;touch-action:none;user-select:none;-webkit-user-select:none;cursor:grab;display:block}.wsvg.grab{cursor:grabbing}
+.wl{font-size:34px;font-weight:800;fill:#26214f;text-anchor:middle;dominant-baseline:central;pointer-events:none;font-family:inherit}.wl.we{font-size:27px}
+.seg path{transition:filter .15s}
+@media (hover:hover) and (pointer:fine){.seg:hover path{filter:brightness(.93) drop-shadow(0 0 4px rgba(255,200,51,.9))}.whub:hover circle{filter:brightness(1.12)}}
+.wwin{fill:none;stroke:#ffc833;stroke-width:5;pointer-events:none;filter:drop-shadow(0 0 4px rgba(255,200,51,.9))}
+.whub{cursor:pointer}.wsp{fill:#fff;font-size:20px;font-weight:800;text-anchor:middle;dominant-baseline:central;letter-spacing:1px;pointer-events:none;font-family:inherit}
+.warrow{fill:#ff5c8a;stroke:#fff;stroke-width:3;animation:warrow 1.2s ease-in-out infinite}
+@keyframes warrow{0%,100%{transform:translateX(0)}50%{transform:translateX(6px)}}
+.wpanel{flex:1 1 260px;min-width:240px;max-width:420px;text-align:center;background:#fff;border-radius:24px;padding:12px 14px;box-shadow:0 4px 0 rgba(0,0,0,.08)}
+.wword{font-size:68px;font-weight:800;line-height:1.1;letter-spacing:2px;transition:transform .2s}.wword .wo{color:#26214f}.wword .lit,.wword.lit{transform:scale(1.12)}.wword .wo.lit,.wword .wf.lit{display:inline-block;transform:scale(1.25);text-shadow:0 0 12px #ffd23f}
+.wemoji{font-size:64px;line-height:1.1}.wemoji.pop{animation:blkpop .35s}.wemoji.silly{animation:wobble .8s ease-in-out infinite}.wemoji.bounce{animation:micp .5s ease-in-out 3}
+@keyframes wobble{0%,100%{transform:rotate(-8deg)}50%{transform:rotate(8deg)}}
+.wbadge{display:inline-block;padding:4px 16px;border-radius:99px;font-weight:800;font-size:19px;margin:4px 0}.wbadge.real{background:#d9f7e6;color:#127a47}.wbadge.silly{background:#ece5ff;color:#6b3fd6}
+.wsub{color:#7a5aa8;font-weight:700;font-size:15px}.wcount{margin-top:6px;font-size:14px;color:#7a5aa8;font-weight:700}
+.wclue{background:#fff7d6;border:3px solid #ffc833;border-radius:18px;padding:8px 10px;margin-bottom:8px;font-size:18px;font-weight:700}.wclue .wch{display:block;font-size:14px;color:#c07a00}
+.wsent{margin-top:8px;background:#e9f6ff;border-radius:16px;padding:8px}.wsq{font-size:20px;margin-bottom:6px}
+.wfoot{flex-wrap:wrap;justify-content:center;gap:8px}.wfoot .btn{min-width:110px}
+.whcard{background:linear-gradient(135deg,#fff3d6,#f0e9ff)}
+.whmode{display:flex;gap:8px;margin:8px 0;flex-wrap:wrap}.whmode .btn{flex:1;min-width:150px;background:#fff;color:#26214f;border:3px solid #e1dcf7}.whmode .btn.on{background:#7c4dff;color:#fff;border-color:#7c4dff}
+.whv{background:var(--c)!important;color:#fff!important}.whv span{font-size:44px;font-weight:800;line-height:1}.whv small{color:#fff;opacity:.95}
+@media (max-height:900px) and (orientation:landscape){.wword{font-size:50px}.wemoji{font-size:44px}.wsvgbox{flex-basis:330px;width:min(330px,52vw)}.wclue{font-size:16px;padding:6px 8px}.wpanel{padding:8px 10px}}
+@media (orientation:portrait){.wsvgbox{width:min(520px,90vw);flex-basis:100%}.wpanel{max-width:520px}}
 </style>
 </head>
 <body>
@@ -1858,7 +1888,7 @@ function renderHome(){
   h+='<div class="wrap"><div class="hero"><div class="byte">🤖</div><div class="bubble">'+greet()+', <b>'+PROFILE.first+'</b>!<br>'+heroLine(day)+'</div></div>';
   h+='<div class="stats"><div class="stat">⭐ XP<b>'+S.xp+'</b></div><div class="stat">🔥 Streak<b>'+S.streak+' day'+(S.streak===1?'':'s')+'</b></div><div class="stat">Level<b style="font-size:21px">'+lv.name+'</b><div class="bar"><i style="width:'+lv.pct+'%"></i></div></div></div>';
   if(S.pending&&S.tokens[S.pending]){h+='<div class="card" style="background:#fff5d6"><b>🎁 Your reward is ready to finish!</b><div class="row"><button class="btn ok" id="hResume" type="button">▶ Continue video</button></div></div>';}
-  h+=wkNoticeHtml()+quizCard()+voiceCard()+readCard()+lifeCard()+bonusCards();
+  h+=wkNoticeHtml()+quizCard()+voiceCard()+readCard()+wheelCard()+lifeCard()+bonusCards();
   h+='<div class="card todayc"><h2>📝 Today\'s Worksheet</h2>';
   if(day&&day.done){
     var t=S.tokens[day.token],st=domStars(day);
@@ -1990,7 +2020,7 @@ let factI=0;
 function renderLab(){
   var f=FACTS[factI];
   $('#s-lab').innerHTML='<div class="wrap"><h1>🧪 Geek Lab</h1><div class="card fact" id="fact"><div class="e">'+f[0]+'</div><h2>'+f[1]+'</h2><p>'+f[2]+'</p><div class="row" style="justify-content:center"><button class="btn sm ghost" id="fPrev" type="button">◀</button><button class="btn sm ghost" data-say="'+esc(f[1]+'. '+f[2])+'" type="button">🔊 Read</button><button class="btn sm" id="fNext" type="button">Next fact ▶</button></div></div>'+
-    voiceCard()+quickQuizCard()+readCard()+bookLabCard()+lifeCard()+gamesBanner()+'<h3>🎮 Mini games (+XP)</h3><div class="games">'+newGameButtons()+'</div>'+
+    voiceCard()+quickQuizCard()+readCard()+wheelCard()+bookLabCard()+lifeCard()+gamesBanner()+'<h3>🎮 Mini games (+XP)</h3><div class="games">'+newGameButtons()+'</div>'+
     '<div class="card" style="margin-top:14px"><h3>🔍 How does scanning work?</h3><p class="sub" style="margin:0 0 8px">A QR code is a picture made of black and white squares.</p><button class="btn" id="lHow" type="button">Show me!</button></div></div>';
   $('#fPrev').addEventListener('click',function(){factI=(factI+FACTS.length-1)%FACTS.length;renderLab();});
   $('#fNext').addEventListener('click',function(){factI=(factI+1)%FACTS.length;renderLab();});
@@ -2656,7 +2686,7 @@ function renderParent(){
 }
 
 /* ---------- 12. v2 UPGRADE: syllabus, analytics, adaptive, backup, playground ---------- */
-const APP_VER='4.5.0',APP_BUILD='2026-11-22';
+const APP_VER='4.6.0',APP_BUILD='2026-11-24';
 function shuf(a){a=a.slice();for(var i=a.length-1;i>0;i--){var j=Math.floor(Math.random()*(i+1)),t=a[i];a[i]=a[j];a[j]=t;}return a;}
 function lastNDays(n){var a=[],t=Date.now(),i;for(i=n-1;i>=0;i--)a.push(ymd(new Date(t-i*864e5)));return a;}
 function pctOf(f,n){return n?Math.round(f/n*100):0;}
@@ -4709,7 +4739,7 @@ function bindV7(){
 /* ===== 4. Weekly growth report ===== */
 function wkWindow(off){var o=[],k;for(k=off;k<off+7;k++)o.push(ymd(new Date(Date.now()-k*864e5)));return o;}
 function wkStats(days){
-  var set={},s={days:days,act:0,n:0,f:0,ms:0,ws:0,qz:0,vl:0,flex:0,safe:0,phone:0,bk:0,rd:0,gp:0,gw:0,games:{},per:[]};
+  var set={},s={days:days,act:0,n:0,f:0,ms:0,ws:0,qz:0,vl:0,flex:0,safe:0,phone:0,bk:0,rd:0,wh:0,gp:0,gw:0,games:{},per:[]};
   days.forEach(function(d){set[d]=1;});
   days.forEach(function(d){
     var h=S.hist[d]||{},w=!!(h.ws||(S.days[d]&&S.days[d].done)),q=!!(h.qz||(S.qz[d]&&S.qz[d].done));
@@ -4717,7 +4747,7 @@ function wkStats(days){
   });
   (S.ev||[]).forEach(function(e){
     if(!set[e.d])return;
-    if(e.k==='vl'||e.k==='flex'||e.k==='safe'||e.k==='phone'||e.k==='bk')s[e.k]++;if(e.k==='read')s.rd++;
+    if(e.k==='vl'||e.k==='flex'||e.k==='safe'||e.k==='phone'||e.k==='bk')s[e.k]++;if(e.k==='read')s.rd++;if(e.k==='wheel')s.wh++;
     if(e.k==='gstart'){s.gp++;(s.games[e.id]||(s.games[e.id]={p:0,w:0})).p++;}
     if(e.k==='gwin'){s.gw++;(s.games[e.id]||(s.games[e.id]={p:0,w:0})).w++;}
   });
@@ -4774,7 +4804,7 @@ function weeklyHtml(){
   h+='<div class="wkstrip">'+w.per.slice().reverse().map(function(x){var dd=new Date(x.d+'T00:00');return '<div class="wkd'+(x.ws?' ws':x.n?' on':'')+'" title="'+x.d+'"><small>'+'SMTWTFS'.charAt(dd.getDay())+'</small><b>'+(x.ws?'✅':x.n?'•':'')+'</b></div>';}).join('')+'</div>';
   var rows=[['Questions answered',w.n,p.n,wkGrowth(w.n,p.n)],['First-try accuracy',w.acc===null?'–':w.acc+'%',p.acc===null?'–':p.acc+'%',wkPP(w.acc,p.acc)],['Seconds per question',w.spd===null?'–':w.spd,p.spd===null?'–':p.spd,wkGrowth(w.spd,p.spd,true)],
     ['Days practised',w.act+'/7',p.act+'/7',wkGrowth(w.act,p.act)],['Worksheets finished',w.ws,p.ws,wkGrowth(w.ws,p.ws)],['Daily quizzes',w.qz,p.qz,wkGrowth(w.qz,p.qz)],['Byte\'s Voice Lab',w.vl,p.vl,wkGrowth(w.vl,p.vl)],
-    ['🧠 Think Outside the Box',w.flex,p.flex,wkGrowth(w.flex,p.flex)],['🛡️ Smart & Safe',w.safe,p.safe,wkGrowth(w.safe,p.safe)],['📞 Phone number',w.phone,p.phone,wkGrowth(w.phone,p.phone)],['📘 Computing Book',w.bk,p.bk,wkGrowth(w.bk,p.bk)],['📚 Reading Quest',w.rd,p.rd,wkGrowth(w.rd,p.rd)],
+    ['🧠 Think Outside the Box',w.flex,p.flex,wkGrowth(w.flex,p.flex)],['🛡️ Smart & Safe',w.safe,p.safe,wkGrowth(w.safe,p.safe)],['📞 Phone number',w.phone,p.phone,wkGrowth(w.phone,p.phone)],['📘 Computing Book',w.bk,p.bk,wkGrowth(w.bk,p.bk)],['📚 Reading Quest',w.rd,p.rd,wkGrowth(w.rd,p.rd)],['🎡 Word Wheel (words)',w.wh,p.wh,wkGrowth(w.wh,p.wh)],
     ['🎮 Games played',w.gp,p.gp,wkGrowth(w.gp,p.gp)],['⭐ Games won',w.gw,p.gw,wkGrowth(w.gw,p.gw)],['Win rate',w.wr===null?'–':w.wr+'%',p.wr===null?'–':p.wr+'%',wkPP(w.wr,p.wr)]];
   h+='<table class="wkt"><thead><tr><th></th><th>This week</th><th>Before</th><th>Growth</th></tr></thead><tbody>'+rows.map(function(r){return '<tr><td>'+r[0]+'</td><td><b>'+r[1]+'</b></td><td>'+r[2]+'</td><td>'+r[3]+'</td></tr>';}).join('')+'</tbody></table></div>';
   /* games */
@@ -5089,6 +5119,293 @@ var xi=12;while(VFACTS.length%3){var xs=RD_SENT[xi++];VFACTS.push(['reading',xs[
 /* Match the Pair + Word Find + Tech Spelling + Typing Arcade use reading words */
 PAIRCATS.push({n:'Sounds and words',f:function(r){return r.fresh(RD_LET,5).map(function(x){return [x[0].toUpperCase()+' '+x[0],x[2]+' '+x[1]];});}});
 PAIRCATS.push({n:'Sentences and pictures',f:function(r){return r.fresh(RD_SENT,5).map(function(s){return [s[1],s[0]];});}});
+
+/* ================= v9: Word Wheel Spinner ================= */
+var WH_V={
+ a:{n:"Short 'a'",c:'#ff5c8a',t:'#ffe1ee',on:'b c d f g h j l m n p r s t v w y'.split(' '),en:['at','an','ap','ad','ag','ab','am']},
+ e:{n:"Short 'e'",c:'#3d8bff',t:'#dff1ff',on:'b d f g h j k l m n p r s t v w y'.split(' '),en:['en','ed','et','eg']},
+ i:{n:"Short 'i'",c:'#2fbf71',t:'#dff7e8',on:'b d f g h j k l n p r s t w z'.split(' '),en:['ig','in','ip','it','id']},
+ o:{n:"Short 'o'",c:'#ff9f43',t:'#ffeed8',on:'b c d f g h j l m n p r s t'.split(' '),en:['og','ot','op','ob','ox']},
+ u:{n:"Short 'u'",c:'#7c4dff',t:'#ece5ff',on:'b c d f g h j m n p r s t'.split(' '),en:['un','ug','up','ut','ub']}};
+/* real words: word -> [emoji, short sentence (optional)] ; anything else on the wheel is a make-believe "silly" word */
+var WH_W={
+ a:{bat:['🦇','A bat can fly!'],cat:['🐱','The cat sat!'],fat:['🐷',''],hat:['🎩','A red hat!'],mat:['🧘','Sit on the mat!'],pat:['👋',''],rat:['🐀','A rat ran!'],sat:['🪑','I sat on a mat!'],vat:['🛢️',''],
+  ban:['🚫',''],can:['🥫','I can see!'],fan:['🌬️','The fan is on!'],man:['👨','A man can run!'],pan:['🍳','A hot pan!'],ran:['🏃','I ran fast!'],tan:['🟤',''],van:['🚐','A big van!'],
+  cap:['🧢','A red cap!'],gap:['🕳️',''],lap:['🏊',''],map:['🗺️','Look at the map!'],nap:['😴','A nap in bed!'],rap:['🎤',''],sap:['🌳',''],tap:['🚰','Tap the tap!'],
+  bad:['👎',''],dad:['👨‍👦','My dad is glad!'],fad:['✨',''],had:['✋',''],lad:['👦',''],mad:['😠',''],pad:['📝','A pad and a pen!'],sad:['😢',''],wad:['✨',''],
+  bag:['👜','A bag for me!'],gag:['✨',''],hag:['✨',''],lag:['✨',''],nag:['✨',''],rag:['🧽',''],sag:['✨',''],tag:['🏷️','A red tag!'],wag:['🐕','The dog can wag!'],
+  cab:['🚕','A yellow cab!'],dab:['✨',''],jab:['✨',''],lab:['🧪',''],nab:['✨',''],tab:['📑',''],
+  dam:['🏞️',''],ham:['🍖','Ham and jam!'],jam:['🍓','Jam on a bun!'],ram:['🐏',''],yam:['🍠',''],gab:['✨',''],jag:['✨',''],yap:['🐕',''],wan:['✨','']},
+ e:{den:['🦁',''],hen:['🐔','A hen on a log!'],men:['👨‍👨‍👦',''],pen:['🖊️','A red pen!'],ten:['🔟','Ten red hens!'],yen:['💴',''],
+  bed:['🛏️','A bed for Ted!'],fed:['🍽️',''],led:['🚶',''],red:['🔴','A red bed!'],wed:['💍',''],
+  bet:['🎲',''],get:['🤲',''],jet:['✈️','A jet in the sky!'],let:['✨',''],met:['🤝',''],net:['🥅','A net for a fish!'],pet:['🐶','My pet is wet!'],set:['🎯',''],vet:['🩺','The vet has a pet!'],wet:['💧','The pet is wet!'],yet:['✨',''],
+  beg:['🙏',''],keg:['🛢️',''],leg:['🦵','One leg, two legs!'],peg:['📌','']},
+ i:{big:['🐘','A big pig!'],dig:['⛏️','Dig, dig, dig!'],fig:['🍈','A fig on a pig!'],gig:['🎸',''],jig:['💃',''],pig:['🐷','The pig is big!'],rig:['✨',''],wig:['💇','A big wig!'],
+  bin:['🗑️','Put it in the bin!'],din:['🔊',''],fin:['🦈','A fin on a fish!'],gin:['✨',''],kin:['👪',''],pin:['📌','A pin in a bin!'],sin:['✨',''],tin:['🥫','A tin can!'],win:['🏆','I can win!'],
+  dip:['🥣','A dip and a chip!'],hip:['✨',''],lip:['👄',''],nip:['✨',''],pip:['🍎',''],rip:['✨',''],sip:['🥤','A sip of milk!'],tip:['💡',''],zip:['🤐','Zip it up!'],
+  bit:['🍪',''],fit:['💪',''],hit:['🏏',''],kit:['🧰','A kit for me!'],lit:['🕯️',''],pit:['🕳️',''],sit:['🪑','Sit in the sun!'],wit:['✨',''],nit:['✨',''],
+  bid:['✨',''],did:['✅',''],hid:['🙈',''],kid:['🧒','A kid and a pig!'],lid:['🍲','A lid on a pot!'],rid:['✨','']},
+ o:{bop:['✨',''],cop:['👮',''],hop:['🐸','Hop, hop, hop!'],mop:['🧹','A mop for the mess!'],pop:['🍿','Pop, pop, pop!'],top:['🔝','On top of the hill!'],
+  cot:['🛏️',''],dot:['⚫','A dot on a dog!'],got:['🎁',''],hot:['🔥','The sun is hot!'],jot:['✨',''],lot:['✨',''],not:['🚫',''],pot:['🍲','A hot pot!'],rot:['✨',''],tot:['👶',''],
+  bog:['✨',''],cog:['⚙️',''],dog:['🐶','The dog can jog!'],fog:['🌫️','A fog in the sky!'],hog:['🐖',''],jog:['🏃','Jog with a dog!'],log:['🪵','A log in the fog!'],
+  cob:['🌽',''],job:['💼','A job to do!'],mob:['✨',''],rob:['✨',''],sob:['😭',''],lob:['✨',''],lop:['✨',''],gob:['✨',''],
+  box:['📦','A box for a fox!'],fox:['🦊','A fox in a box!'],pox:['✨',''],lox:['✨','']}, 
+ u:{bun:['🍔','A bun with jam!'],fun:['🎉','Fun in the sun!'],gun:['✨',''],nun:['✨',''],pun:['✨',''],run:['🏃','Run in the sun!'],sun:['☀️','A hot sun!'],
+  bug:['🐞','A bug on a rug!'],dug:['⛏️',''],hug:['🤗','A big hug!'],jug:['🥛','A jug of milk!'],mug:['☕','A mug of milk!'],rug:['🟫','A rug on the bed!'],tug:['✨',''],dub:['✨',''],
+  cup:['🥤','A cup of milk!'],pup:['🐶','A pup in a cup!'],sup:['✨',''],
+  but:['✨',''],cut:['✂️','Cut it up!'],gut:['✨',''],hut:['🛖','A hut in the sun!'],jut:['✨',''],nut:['🥜','A nut in a cup!'],rut:['✨',''],
+  cub:['🐻','A bear cub!'],hub:['✨',''],pub:['✨',''],rub:['🧼',''],sub:['🥪',''],tub:['🛁','A tub for a bath!']}};
+var WH_CLUE={cat:'says meow',bat:'flies at night',hat:'goes on your head',rat:'has a long tail and squeaks',can:'is a tin you open',pan:'you cook food in',van:'carries things on the road',cap:'you wear on your head',map:'shows you the way',nap:'is a little sleep',bag:'carries your books',cab:'is a yellow taxi',jam:'is sweet on bread',ham:'is yummy meat in a sandwich',
+ bed:'you sleep in',hen:'lays eggs',jet:'flies fast in the sky',pen:'you write with',leg:'you walk on',net:'catches fish',pet:'is a dog or a cat at home',vet:'is a doctor for animals',wet:'is the opposite of dry',red:'is the colour of a tomato',
+ pig:'says oink',wig:'is fake hair',bin:'holds rubbish',pin:'is sharp and small',fin:'a fish swims with',lip:'is on your mouth',zip:'closes a bag',kit:'is a box of tools',sit:'you do on a chair',kid:'is a child',
+ hop:'a frog does',mop:'cleans the floor',pop:'is a popcorn sound',top:'is the opposite of bottom',hot:'is the opposite of cold',pot:'you cook soup in',dog:'says woof',log:'is a piece of a tree',fog:'is a cloud close to the ground',box:'you put toys in',fox:'is a clever orange animal',
+ sun:'shines in the sky',bun:'is bread for a burger',fun:'is when you play and laugh',run:'is what you do very fast',bug:'is a tiny crawling insect',hug:'is a squeeze of love',jug:'holds milk or juice',mug:'you drink hot milk from',rug:'is a soft carpet',cup:'you drink water from',pup:'is a baby dog',hut:'is a tiny house',nut:'a squirrel eats',cub:'is a baby bear',tub:'you take a bath in'};
+var WH_CX=240,WH_CY=210,WH_RO=200,WH_RS=132,WH_RE=128,WH_RH=56;
+function whPolar(r,deg){var a=deg*Math.PI/180;return (WH_CX+r*Math.cos(a)).toFixed(1)+','+(WH_CY+r*Math.sin(a)).toFixed(1);}
+function whWedge(r1,r2,h){return 'M'+whPolar(r1,180-h)+' A'+r1+' '+r1+' 0 0 1 '+whPolar(r1,180+h)+' L'+whPolar(r2,180+h)+' A'+r2+' '+r2+' 0 0 0 '+whPolar(r2,180-h)+' Z';}
+function whSt(){if(!S.wheel||typeof S.wheel!=='object')S.wheel={};var w=S.wheel;if(!w.found||typeof w.found!=='object')w.found={};if(!w.mode)w.mode='free';if(!w.said)w.said={};return w;}
+function whLev(a,b){var m=a.length,n=b.length,d=[],i,j;for(i=0;i<=m;i++){d[i]=[i];}for(j=1;j<=n;j++)d[0][j]=j;for(i=1;i<=m;i++)for(j=1;j<=n;j++)d[i][j]=Math.min(d[i-1][j]+1,d[i][j-1]+1,d[i-1][j-1]+(a.charAt(i-1)===b.charAt(j-1)?0:1));return d[m][n];}
+function whHeard(word,alts,silly){
+  var ok=false;alts.forEach(function(a){
+    var t=String(a).toLowerCase().replace(/[^a-z ]/g,' ').split(/\s+/).filter(Boolean),j=t.join('');
+    if(t.indexOf(word)>=0||j.indexOf(word)>=0)ok=true;
+    t.forEach(function(x){if(x.length>=2&&whLev(x,word)<=(silly||word.length>=4?2:1)&&x.charAt(x.length-1)===word.charAt(word.length-1))ok=true;});
+    if(j.length>=2&&j.slice(-2)===word.slice(-2)&&j.charAt(0)===word.charAt(0)&&j.length<=word.length+2)ok=true;
+  });return ok;
+}
+function wheelUI(q,host,api){
+  var vow=q.vowel,hunt=q.mode==='hunt',T=null,ONS=[],ENDS=[],DICT={},rot={on:0,en:0},anim={on:null,en:null},ctl=null,lastWord='',lastTick=-1,tgt=0,huntDone=false,busy=false,tm=null;
+  var sess={words:{},real:0,silly:0,spoken:0,hunt:0},can=!!srClass()&&S.setup.vq!==false;
+  function load(v){vow=v;T=WH_V[v];ONS=T.on;ENDS=T.en;DICT=WH_W[v];rot={on:0,en:0};}
+  load(vow);
+  var wrap=el('<div class="wwrap"></div>');
+  var tabs=el('<div class="wtabs" role="tablist"></div>');
+  'aeiou'.split('').forEach(function(v){var b=el('<button type="button" class="wtab" role="tab" data-v="'+v+'" style="--c:'+WH_V[v].c+'">'+WH_V[v].n+'</button>');if(hunt)b.disabled=true;b.addEventListener('click',function(){if(QS.done||hunt||v===vow)return;ac();SFX.pop();load(v);buildSvg();setTabs();settle(false);});tabs.appendChild(b);});
+  var main=el('<div class="wmain"></div>'),svgBox=el('<div class="wsvgbox"></div>'),panel=el('<div class="wpanel" aria-live="polite"></div>');
+  main.appendChild(svgBox);main.appendChild(panel);wrap.appendChild(tabs);wrap.appendChild(main);
+  var foot=el('<div class="dzfoot wfoot"></div>');
+  var bSpin=el('<button type="button" class="btn big" id="wSpin">🎡 Spin Wheel!<kbd>Space</kbd></button>'),bHear=el('<button type="button" class="btn" id="wHear">🔊 Hear It</button>'),
+      bSay=el('<button type="button" class="btn" id="wSay">'+(can?'🎤 Say It<kbd>V</kbd>':'✅ I said it!')+'</button>'),bSent=el('<button type="button" class="btn ghost" id="wSent">💬 Sentence</button>'),
+      bFin=el('<button type="button" class="btn ok" id="wFin">'+(hunt?'✔ That\'s it!<kbd>Enter</kbd>':'🏁 Finish')+'</button>');
+  foot.appendChild(bSpin);foot.appendChild(bHear);foot.appendChild(bSay);foot.appendChild(bSent);foot.appendChild(bFin);
+  wrap.appendChild(foot);
+  wrap.appendChild(el('<div class="dzhint">👆 Drag the rings, tap a letter, scroll the mouse wheel, or press ◀ ▶ (letters) ▲ ▼ (endings). Space = spin'+(hunt?', Enter = check':'')+'.</div>'));
+  host.appendChild(wrap);
+  function setTabs(){[].forEach.call(tabs.children,function(b){b.classList.toggle('on',b.getAttribute('data-v')===vow);});}
+  /* ---- svg wheel ---- */
+  var svg,gOn,gEn;
+  function buildSvg(){
+    var nO=ONS.length,nE=ENDS.length,sO=360/nO,sE=360/nE,h='',i;
+    h+='<svg class="wsvg" viewBox="0 0 450 420" role="img" aria-label="Word wheel: '+esc(T.n)+'">';
+    h+='<circle cx="'+WH_CX+'" cy="'+WH_CY+'" r="'+(WH_RO+6)+'" fill="'+T.c+'" opacity=".18"/>';
+    h+='<g id="gOn">';for(i=0;i<nO;i++)h+='<g class="seg" data-i="'+i+'" transform="rotate('+(i*sO).toFixed(2)+' '+WH_CX+' '+WH_CY+')"><path d="'+whWedge(WH_RO,WH_RS,sO/2)+'" fill="'+(i%2?'#fff':T.t)+'" stroke="'+T.c+'" stroke-width="1.5"/><text x="'+whPolar((WH_RO+WH_RS)/2,180).split(',')[0]+'" y="'+WH_CY+'" class="wl" data-r="on" data-i="'+i+'">'+ONS[i]+'</text></g>';h+='</g>';
+    h+='<g id="gEn">';for(i=0;i<nE;i++)h+='<g class="seg" data-i="'+i+'" transform="rotate('+(i*sE).toFixed(2)+' '+WH_CX+' '+WH_CY+')"><path d="'+whWedge(WH_RE,WH_RH+4,sE/2)+'" fill="'+(i%2?T.t:'#fff')+'" stroke="'+T.c+'" stroke-width="1.5"/><text x="'+whPolar((WH_RE+WH_RH+4)/2,180).split(',')[0]+'" y="'+WH_CY+'" class="wl we" data-r="en" data-i="'+i+'" fill="'+T.c+'">'+ENDS[i]+'</text></g>';h+='</g>';
+    h+='<path d="'+whWedge(WH_RO,WH_RS,sO/2)+'" class="wwin"/><path d="'+whWedge(WH_RE,WH_RH+4,sE/2)+'" class="wwin"/>';
+    h+='<g id="wHub" class="whub" tabindex="-1"><circle cx="'+WH_CX+'" cy="'+WH_CY+'" r="'+WH_RH+'" fill="'+T.c+'"/><text x="'+WH_CX+'" y="'+(WH_CY+2)+'" class="wsp">SPIN</text></g>';
+    h+='<polygon class="warrow" points="6,'+(WH_CY-20)+' 6,'+(WH_CY+20)+' 38,'+WH_CY+'"/>';
+    h+='</svg>';
+    svgBox.innerHTML=h;svg=svgBox.firstChild;gOn=svg.querySelector('#gOn');gEn=svg.querySelector('#gEn');
+    paint();bindSvg();
+  }
+  function seg(ring){return 360/(ring==='on'?ONS.length:ENDS.length);}
+  function cnt(ring){return ring==='on'?ONS.length:ENDS.length;}
+  function idx(ring){var n=cnt(ring),i=Math.round(-rot[ring]/seg(ring))%n;return (i+n)%n;}
+  function paint(){
+    gOn.setAttribute('transform','rotate('+rot.on.toFixed(2)+' '+WH_CX+' '+WH_CY+')');gEn.setAttribute('transform','rotate('+rot.en.toFixed(2)+' '+WH_CX+' '+WH_CY+')');
+    [].forEach.call(svg.querySelectorAll('.wl'),function(t){var r=t.getAttribute('data-r'),i=+t.getAttribute('data-i'),net=i*seg(r)+rot[r];t.setAttribute('transform','rotate('+(-net).toFixed(1)+' '+t.getAttribute('x')+' '+t.getAttribute('y')+')');});
+    var a=Math.round((-rot.on)/seg('on')),b=Math.round((-rot.en)/seg('en'));
+    if(a+'|'+b!==lastTick){if(lastTick!==-1&&!QS.done)voice(880+((a+b)%5)*60,0,.035,{v:.04});lastTick=a+'|'+b;}
+  }
+  function animTo(ring,target,dur,done){
+    if(anim[ring])cancelAnimationFrame(anim[ring]);
+    var from=rot[ring],t0=null;dur=dur||320;
+    function f(ts){if(t0===null)t0=ts;var p=Math.min(1,(ts-t0)/dur),e=1-Math.pow(1-p,3);rot[ring]=from+(target-from)*e;paint();if(p<1)anim[ring]=requestAnimationFrame(f);else{anim[ring]=null;rot[ring]=target;paint();if(done)done();}}
+    anim[ring]=requestAnimationFrame(f);
+  }
+  function nearest(ring,i){var s=seg(ring),t=-i*s,cur=rot[ring];return t+Math.round((cur-t)/360)*360;}   /* equivalent angle closest to now */
+  function goIdx(ring,i,dur,done){var n=cnt(ring);i=((i%n)+n)%n;animTo(ring,nearest(ring,i),dur,done);}
+  function nudge(ring,d){if(QS.done||busy)return;var s=seg(ring),cur=Math.round(-rot[ring]/s);animTo(ring,-(cur+d)*s,260,function(){settle(true);});}
+  function spin(){
+    if(QS.done||busy)return;ac();busy=true;bSpin.disabled=true;SFX.pop();
+    var io=Math.floor(Math.random()*ONS.length),ie=Math.floor(Math.random()*ENDS.length),pend=2;
+    if(io===idx('on')&&ONS.length>1)io=(io+3)%ONS.length;
+    var fin=function(){if(--pend===0){busy=false;bSpin.disabled=false;settle(true);}};
+    var so=-io*seg('on'),se=-ie*seg('en');
+    var to=so-360*(2+Math.floor(Math.random()*2))+Math.round((rot.on-so)/360)*360,te=se+360*(2+Math.floor(Math.random()*2))+Math.round((rot.en-se)/360)*360;
+    animTo('on',to,1700,fin);animTo('en',te,1300,fin);
+  }
+  /* ---- panel ---- */
+  function cur(){var o=ONS[idx('on')],e=ENDS[idx('en')];return {o:o,e:e,w:o+e,real:DICT[o+e]||null};}
+  function showPanel(c){
+    var h='';
+    if(hunt&&!huntDone)h+='<div class="wclue"><b class="wch">🎯 Word '+(tgt+1)+' of '+q.targets.length+'</b><div>Make a word ending in <b>-'+q.targets[tgt].en+'</b> that '+esc(WH_CLUE[q.targets[tgt].w])+'!</div><button type="button" class="btn sm ghost" id="wClue">🔊 Hear the clue</button></div>';
+    h+='<div class="wword"><span class="wo">'+esc(c.o)+'</span><span class="wf" style="color:'+T.c+'">'+esc(c.e)+'</span></div>';
+    if(c.real){h+='<div class="wemoji pop">'+(c.real[0]||'✨')+'</div><div class="wbadge real">✅ Real word!</div>';}
+    else h+='<div class="wemoji silly">🤪</div><div class="wbadge silly">Silly Word!</div><div class="wsub">A make-believe word. Say it and giggle!</div>';
+    h+='<div class="wcount">Words found: <b>'+sess.real+'</b> real · <b>'+sess.silly+'</b> silly'+(hunt?'':' · 🎤 '+sess.spoken)+'</div>';
+    panel.innerHTML=h;
+    var wc=panel.querySelector('#wClue');if(wc)wc.addEventListener('click',function(){ac();say('Make a word ending in '+q.targets[tgt].en+' that '+WH_CLUE[q.targets[tgt].w],true);});
+    bSent.disabled=!(c.real&&c.real[1]);bSent.style.opacity=bSent.disabled?.45:1;
+    if(!hunt)bFin.disabled=Object.keys(sess.words).length<3;
+    if(!hunt)bFin.innerHTML='🏁 Finish'+(bFin.disabled?' ('+Object.keys(sess.words).length+'/3)':'');
+  }
+  function settle(speak){
+    var c=cur();showPanel(c);
+    if(c.w!==lastWord){lastWord=c.w;
+      var st=whSt();
+      if(!sess.words[c.w]){sess.words[c.w]=c.real?1:2;if(c.real){sess.real++;if(!st.found[c.w]){st.found[c.w]=1;S.xp+=1;}}else sess.silly++;evLog('wheel',{w:c.w,r:c.real?1:0});save();showPanel(c);}
+      if(c.real){SFX.pop();}else{voice(330,0,.12,{v:.06});voice(262,.12,.12,{v:.06});}
+    }
+    if(speak){clearTimeout(tm);tm=setTimeout(function(){say(c.w,true,{rate:.8});},250);}
+    if(hunt&&!huntDone)bFin.disabled=false;
+  }
+  /* ---- hear / say / sentence ---- */
+  function hear(){
+    ac();var c=cur(),box=panel.querySelector('.wword'),o=box&&box.querySelector('.wo'),f=box&&box.querySelector('.wf');
+    var seq=[[PH[c.o]||c.o,o],[c.e,f],[c.w,box]];var gen=++HLG;
+    (function step(i){if(gen!==HLG||QS.done)return;if(i>=seq.length){return;}
+      var it=seq[i];if(it[1]){it[1].classList.add('lit');}
+      var fired=false,nx=function(){if(fired)return;fired=true;if(it[1])it[1].classList.remove('lit');if(gen===HLG)setTimeout(function(){step(i+1);},120);};
+      try{say(it[0],true,{onend:nx,rate:i===2?.8:.7});}catch(e){}
+      setTimeout(nx,('speechSynthesis' in window)?2600:800);})(0);
+  }
+  function listenFor(btn,test,onOk,okMsg,tryMsg){
+    if(QS.done)return;
+    if(!can){onOk();return;}
+    if(ctl){try{ctl.stop();}catch(e){}return;}
+    stopSpeak();var old=btn.innerHTML;btn.classList.add('rec');btn.innerHTML='🎙️ Listening…';
+    var cb=function(alts,err){
+      ctl=null;btn.classList.remove('rec');btn.innerHTML=old;if(QS.done)return;
+      if(err==='not-allowed'||err==='service-not-allowed'||err==='unsupported'||err==='network'){fb('info','🎙️ I can\'t listen right now. Say it out loud — you are doing great!');can=false;btn.innerHTML=btn===bSay?'✅ I said it!':old;return;}
+      if(!alts.length){fb('info','I did not hear you. Tap and try again!');return;}
+      if(test(alts)){fb('ok','🗣️ I heard “'+esc(alts[0])+'” — '+okMsg);onOk();}
+      else fb('info','I heard “'+esc(alts[0])+'”. '+tryMsg);
+    };
+    cb.interim=function(t){fb('info','🎙️ I hear: “'+esc(t)+'”');};
+    ctl=listenOnce(cb);if(!ctl){btn.classList.remove('rec');btn.innerHTML=old;}
+  }
+  function say1(){
+    var c=cur();ac();
+    listenFor(bSay,function(a){return whHeard(c.w,a,!c.real);},function(){
+      var st=whSt();sess.spoken++;var k=c.w;
+      if(!sess.said||!sess.said[k]){sess.said=sess.said||{};sess.said[k]=1;S.xp+=2;evLog('wheelsay',{w:k});}
+      st.said[k]=(st.said[k]||0)+1;save();SFX.win();party(false);
+      var praise=c.real?['Wonderful reading!','You said it clearly!','Super speaking!']:['Ha ha! What a silly word!','That was funny and clear!','Silly and super!'];
+      say(praise[sess.spoken%3],true);showPanel(c);
+    },c.real?'great speaking!':'what a silly word!','Try again, nice and slow: '+c.o+' … '+c.e+'.');
+  }
+  function sentence(){
+    var c=cur();if(!c.real||!c.real[1])return;var s=c.real[1],box=panel.querySelector('.wsent');
+    if(box){box.remove();return;}
+    box=el('<div class="wsent"><div class="wsq">Say: <b>“'+esc(s)+'”</b></div><div class="row" style="justify-content:center"><button type="button" class="btn sm" id="wsH">🔊 Hear</button><button type="button" class="btn sm" id="wsM">'+(can?'🎤 Say it':'✅ I said it')+'</button></div></div>');
+    panel.appendChild(box);ac();say(s,true,{rate:.85});
+    box.querySelector('#wsH').addEventListener('click',function(){ac();say(s,true,{rate:.85});});
+    var m=box.querySelector('#wsM');
+    m.addEventListener('click',function(){listenFor(m,function(a){return a.some(function(x){return matchSentence(s,x).pass;});},function(){S.xp+=2;evLog('wheelsent',{w:c.w});save();SFX.win();party(false);say('Brilliant sentence!',true);m.innerHTML='⭐ Great!';},'brilliant sentence!','Try again, a little slower!');});
+  }
+  /* ---- hunt check ---- */
+  function check(){
+    if(!hunt||QS.done||huntDone||busy)return;var c=cur(),t=q.targets[tgt];
+    if(c.w===t.w){
+      sess.hunt++;huntDone=true;bFin.disabled=true;SFX.win();party(false);S.xp+=2;save();
+      fb('ok','🎉 Yes! <b>'+esc(t.w)+'</b> '+(c.real?c.real[0]:'')+'!');say('Yes! '+t.w+'!',true);
+      panel.querySelector('.wemoji').classList.add('bounce');
+      setTimeout(function(){
+        if(QS.done)return;tgt++;huntDone=false;
+        if(tgt>=q.targets.length){q.finished=true;api.right();return;}
+        fb('info','');var f=$('#fb');if(f)f.className='fb';
+        showPanel(cur());say('Next! Make a word ending in '+q.targets[tgt].en+' that '+WH_CLUE[q.targets[tgt].w],true);
+      },1700);
+    }else{
+      var okEnd=c.e===t.en;
+      fb('info',c.real||!c.real?(okEnd?'Good — the ending <b>-'+esc(t.en)+'</b> is right! Now spin the letters to find the word.':'You made <b>'+esc(c.w)+'</b>'+(c.real?'. That is a real word, but not the one Byte wants!':' — a silly word! 🤪')+' Try the ending <b>-'+esc(t.en)+'</b>.'):'');
+    }
+  }
+  bSpin.addEventListener('click',spin);bHear.addEventListener('click',hear);bSay.addEventListener('click',say1);bSent.addEventListener('click',sentence);
+  bFin.addEventListener('click',function(){if(hunt)check();else if(!bFin.disabled&&!QS.done){q.finished=true;api.right();}});
+  /* ---- pointer / wheel / click ---- */
+  function bindSvg(){
+    var drag=null;
+    function pt(e){var r=svg.getBoundingClientRect(),k=450/r.width;return {x:(e.clientX-r.left)*k-WH_CX,y:(e.clientY-r.top)*k-WH_CY};}
+    function ringAt(p){var d=Math.hypot(p.x,p.y);return d>WH_RS?(d<WH_RO+8?'on':null):(d>WH_RH+2&&d<WH_RE+4?'en':(d<=WH_RH?'hub':null));}
+    function ang(p){return Math.atan2(p.y,p.x)*180/Math.PI;}
+    svg.addEventListener('pointerdown',function(e){
+      if(QS.done||busy||(e.button>0))return;var p=pt(e),ring=ringAt(p);if(!ring)return;ac();
+      if(anim.on){cancelAnimationFrame(anim.on);anim.on=null;}if(anim.en){cancelAnimationFrame(anim.en);anim.en=null;}
+      drag={ring:ring,a:ang(p),sx:e.clientX,sy:e.clientY,moved:false,p:p};try{svg.setPointerCapture(e.pointerId);}catch(x){}
+      svg.classList.add('grab');if(e.pointerType!=='mouse')e.preventDefault();
+    });
+    svg.addEventListener('pointermove',function(e){
+      if(!drag||drag.ring==='hub')return;if(!drag.moved&&Math.hypot(e.clientX-drag.sx,e.clientY-drag.sy)<7)return;drag.moved=true;
+      var p=pt(e),a=ang(p),d=a-drag.a;while(d>180)d-=360;while(d<-180)d+=360;rot[drag.ring]+=d;drag.a=a;paint();
+    });
+    function up(e){
+      if(!drag)return;var d=drag;drag=null;svg.classList.remove('grab');
+      if(d.ring==='hub'){spin();return;}
+      if(d.moved){var s=seg(d.ring),i=Math.round(-rot[d.ring]/s);animTo(d.ring,-i*s,220,function(){settle(true);});return;}
+      var a=ang(d.p)-180;while(a>180)a-=360;while(a<-180)a+=360;
+      var n=cnt(d.ring),i=Math.round((a-rot[d.ring])/seg(d.ring));SFX.pop();goIdx(d.ring,i,380,function(){settle(true);});
+    }
+    svg.addEventListener('pointerup',up);svg.addEventListener('pointercancel',function(){if(drag){drag=null;svg.classList.remove('grab');var r=['on','en'];r.forEach(function(k){var s=seg(k);animTo(k,-Math.round(-rot[k]/s)*s,200,function(){settle(false);});});}});
+    var wt=0;svg.addEventListener('wheel',function(e){
+      if(QS.done||busy)return;e.preventDefault();var now=Date.now();if(now-wt<140)return;wt=now;
+      var ring=ringAt(pt(e));if(ring!=='on'&&ring!=='en')ring='on';nudge(ring,e.deltaY>0?1:-1);
+    },{passive:false});
+  }
+  /* ---- keys ---- */
+  setKeys(function(e){
+    if(QS.done)return false;var k=e.key,ae=document.activeElement;
+    if((k==='Enter'||k===' ')&&ae&&ae.tagName==='BUTTON'&&ae.closest('#qui')){ae.click();return true;}
+    if(k==='ArrowRight'){nudge('on',1);return true;}if(k==='ArrowLeft'){nudge('on',-1);return true;}
+    if(k==='ArrowDown'){nudge('en',1);return true;}if(k==='ArrowUp'){nudge('en',-1);return true;}
+    if(k===' '){spin();return true;}
+    if(k==='Enter'){if(hunt)check();else spin();return true;}
+    if(k==='v'||k==='V'){bSay.click();return true;}
+    return false;
+  });
+  CL.push(function(){clearTimeout(tm);try{if(ctl)ctl.abort();}catch(e){}hlStop();[anim.on,anim.en].forEach(function(a){if(a)cancelAnimationFrame(a);});QS.wheel=sess;});
+  setTabs();buildSvg();
+  if(hunt){fb('info','🎯 Byte has a word hunt for you! Spin and build the word.');setTimeout(function(){if(!QS.done)say('Word hunt! Make a word ending in '+q.targets[0].en+' that '+WH_CLUE[q.targets[0].w],true);},500);}
+  else setTimeout(function(){if(!QS.done)say('Spin the wheel and read the words!',true);},400);
+  settle(false);
+  QS.wheel=sess;q.sess=sess;
+  return {hint:function(){
+      if(hunt){var t=q.targets[tgt];if(idx('en')!==ENDS.indexOf(t.en)){goIdx('en',ENDS.indexOf(t.en),500,function(){settle(false);});fb('info','💡 Look at the ending <b>-'+esc(t.en)+'</b>.');}
+        else{goIdx('on',ONS.indexOf(t.w.slice(0,t.w.length-t.en.length)),600,function(){settle(false);});fb('info','💡 The first letter is <b>'+esc(t.w.charAt(0))+'</b>!');}}
+      else{fb('info','💡 Tap a letter on the big ring, or press Space to spin!');}
+    },
+    reveal:function(){if(hunt){var t=q.targets[tgt];goIdx('en',ENDS.indexOf(t.en),300);goIdx('on',ONS.indexOf(t.w.slice(0,t.w.length-t.en.length)),300,function(){settle(false);});}}};
+}
+RENDER.wheel=wheelUI;
+/* ---------- start + card ---------- */
+function wheelCard(){
+  var st=whSt(),tot=0,have=Object.keys(st.found).length,tAll=0;'aeiou'.split('').forEach(function(v){tAll+=Object.keys(WH_W[v]).filter(function(w){return WH_W[v][w][0]!=='✨';}).length;});
+  return '<div class="card whcard"><div class="row" style="align-items:center;flex-wrap:nowrap"><div class="vlbot" aria-hidden="true">🎡</div><div style="flex:1;min-width:0"><h3 style="margin:0">Word Wheel Spinner</h3><p class="sub" style="margin:2px 0 0">Spin letters + word families. Real word or silly word? You found <b>'+have+'</b> real words!</p></div></div>'+
+   '<div class="whmode" role="group" aria-label="Game mode"><button type="button" class="btn sm'+(st.mode==='free'?' on':'')+'" data-whm="free">🎡 Free Spin &amp; Speak</button><button type="button" class="btn sm'+(st.mode==='hunt'?' on':'')+'" data-whm="hunt">🎯 Word Hunt</button></div>'+
+   '<div class="bkgrid">'+'aeiou'.split('').map(function(v){var t=WH_V[v];return '<button class="btn bku lsb whv" style="--c:'+t.c+'" data-wh="'+v+'" type="button"><span>'+v+'</span><b>'+t.n+'</b><small>'+t.en.map(function(x){return '-'+x;}).join(' ')+'</small></button>';}).join('')+'</div></div>';
+}
+function startWheel(vowel,mode,origin){
+  ac();origin=origin||(cur==='home'?'home':'lab');var st=whSt();vowel=WH_V[vowel]?vowel:'a';mode=mode||st.mode;st.mode=mode;
+  var r=makeRng(hashStr('wheel|'+vowel+'|'+Date.now()),mkHist(true)),targets=[];
+  if(mode==='hunt'){
+    var pool=Object.keys(WH_CLUE).filter(function(w){var en=WH_V[vowel].en.filter(function(e){return w.length>e.length&&w.slice(-e.length)===e&&w.charAt(w.length-e.length-1)!==undefined&&WH_V[vowel].on.indexOf(w.slice(0,w.length-e.length))>=0&&WH_W[vowel][w];});return en.length;});
+    targets=r.fresh(pool,5).map(function(w){var e=WH_V[vowel].en.filter(function(x){return w.slice(-x.length)===x&&WH_V[vowel].on.indexOf(w.slice(0,w.length-x.length))>=0;})[0];return {w:w,en:e};});
+  }
+  var q={id:'wh_'+vowel,kind:'wheel',vowel:vowel,mode:mode,targets:targets,topic:'Reading: Word wheel',domain:'english',prompt:'🎡 Word Wheel — '+WH_V[vowel].n,say:''};
+  openSession({kind:'mini',qs:[q],i:0,res:[],back:origin,origin:origin,onDone:function(){
+    var sess=q.sess||{words:{},real:0,silly:0,spoken:0,hunt:0},bonus=Math.min(25,sess.real+sess.spoken*2+(mode==='hunt'?sess.hunt*3:0)),tot=Object.keys(whSt().found).length;
+    S.xp+=bonus;var l=lsToday();l.wheel=(l.wheel||0)+1;evLog('wheelgame',{v:vowel,m:mode,n:sess.real});
+    if(tot>=10&&S.badges.indexOf('wheel')<0)S.badges.push('wheel');if(tot>=40&&S.badges.indexOf('wheel2')<0)S.badges.push('wheel2');
+    save();SFX.win();party(true);
+    var o=openModal('<div class="big">🎡</div><h2 style="text-align:center">Great spinning!</h2><p style="text-align:center">'+(mode==='hunt'?'Word hunt: <b>'+sess.hunt+' / '+targets.length+'</b> found!<br>':'')+'Real words: <b>'+sess.real+'</b> · Silly words: <b>'+sess.silly+'</b> · Said aloud: <b>'+sess.spoken+'</b><br>You earned <b>+'+bonus+' XP</b>! Total real words found: <b>'+tot+'</b></p>'+noteWin('Super word wheel, '+PROFILE.first+'!')+'<div class="row"><button class="btn ok" id="whAgain" type="button">Play again</button><button class="btn ghost" id="whBack" type="button">Back</button></div>');
+    $('#whAgain',o).addEventListener('click',function(){closeModal();startWheel(vowel,mode,origin);});$('#whBack',o).addEventListener('click',function(){closeModal();go(origin);});
+  }});
+}
+BADGES.push(['wheel','🎡','Word Wheel Whiz'],['wheel2','🏆','Word Wheel Master']);
+document.addEventListener('click',function(e){
+  var m=e.target.closest&&e.target.closest('[data-whm]');if(m){var st=whSt();st.mode=m.getAttribute('data-whm');save();[].forEach.call(document.querySelectorAll('[data-whm]'),function(b){b.classList.toggle('on',b===m||b.getAttribute('data-whm')===st.mode&&b.parentNode===m.parentNode&&b===m);});[].forEach.call(m.parentNode.children,function(b){b.classList.toggle('on',b===m);});return;}
+  var b=e.target.closest&&e.target.closest('[data-wh]');if(b)startWheel(b.getAttribute('data-wh'));
+});
 
 /* ---------- 11. BOOT ---------- */
 applyKbMode();
