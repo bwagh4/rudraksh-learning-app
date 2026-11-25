@@ -1,6 +1,6 @@
 /* IT Geek Academy service worker: offline-first. Bump VERSION when index.html changes. */
-const VERSION='geek-v4-8';
-const CORE=['./','./index.html','./manifest.webmanifest','./icon-180.png','./icon-192.png','./icon-512.png'];
+const VERSION='geek-v4-10';
+const CORE=['./','./index.html','./manifest.webmanifest','./icon-180.png','./icon-192.png','./icon-512.png'].concat(['reader','scientist','traveller','pilot','astronaut','doctor','cricketer','chef'].map(n=>'./assets/rudraksh/'+n+'.webp'));
 const EXT='geek-ext-v1';
 self.addEventListener('install',e=>{
   e.waitUntil(caches.open(VERSION).then(c=>Promise.all(CORE.map(u=>c.add(u).catch(()=>null)))).then(()=>self.skipWaiting()));

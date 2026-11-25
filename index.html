@@ -725,6 +725,43 @@ button.bcell{cursor:pointer;font-family:inherit}
 .whv{background:var(--c)!important;color:#fff!important}.whv span{font-size:44px;font-weight:800;line-height:1}.whv small{color:#fff;opacity:.95}
 @media (max-height:900px) and (orientation:landscape){.wword{font-size:50px}.wemoji{font-size:44px}.wsvgbox{flex-basis:330px;width:min(330px,52vw)}.wclue{font-size:16px;padding:6px 8px}.wpanel{padding:8px 10px}}
 @media (orientation:portrait){.wsvgbox{width:min(520px,90vw);flex-basis:100%}.wpanel{max-width:520px}}
+/* ---- v10: personas & welcome ---- */
+.pimg{display:block;height:auto;max-width:100%;object-fit:contain;-webkit-user-drag:none;user-select:none;pointer-events:none}.pemo{font-size:56px;line-height:1}
+.welcard{display:flex;flex-direction:column;align-items:center;gap:10px;margin:6px auto;max-width:640px}
+.welpic{position:relative;width:min(260px,52vw);display:flex;justify-content:center;align-items:flex-end;padding:12px 10px 0;border-radius:36px;background:radial-gradient(circle at 50% 70%,var(--b),#fff 80%);border:5px solid var(--c);box-shadow:0 6px 0 rgba(0,0,0,.12);animation:welfloat 3.2s ease-in-out infinite}
+.welimg{height:min(300px,34vh)}.welbadge{position:absolute;right:-14px;top:-14px;font-size:38px;background:#fff;border-radius:50%;width:62px;height:62px;display:flex;align-items:center;justify-content:center;box-shadow:0 3px 0 rgba(0,0,0,.15)}
+@keyframes welfloat{0%,100%{transform:translateY(0) rotate(-1deg)}50%{transform:translateY(-8px) rotate(1deg)}}
+.weltag{display:inline-block;background:#fff;border-radius:99px;padding:4px 16px;font-weight:800;color:#6b3fd6;font-size:17px;box-shadow:0 2px 0 rgba(0,0,0,.1)}.welline{font-size:26px;font-weight:700;color:#26214f;margin-top:8px;line-height:1.25}.weltxt{text-align:center}
+.smallbyte{font-size:44px!important;margin:0!important}
+@media (max-height:760px){.welimg{height:min(220px,30vh)}.welline{font-size:22px}}
+.herop{flex:0 0 auto;position:relative;width:104px;border:4px solid var(--c);border-radius:26px;background:radial-gradient(circle at 50% 70%,var(--b),#fff 85%);padding:6px 4px 0;cursor:pointer;font:inherit;display:flex;flex-direction:column;align-items:center;margin-right:10px;transition:transform .15s,box-shadow .15s}
+.heroimg{height:104px}.suitlbl{font-size:11px;font-weight:800;color:var(--c);background:#fff;border-radius:99px;padding:1px 8px;margin:2px 0 4px}
+@media (hover:hover) and (pointer:fine){.herop:hover{transform:translateY(-3px) rotate(-2deg);box-shadow:0 0 0 4px #ffc833}}
+.suitgrid{display:grid;grid-template-columns:repeat(auto-fit,minmax(130px,1fr));gap:10px;margin:10px 0}
+.suitc{display:flex;flex-direction:column;align-items:center;gap:4px;padding:10px 6px;border-radius:20px;border:4px solid transparent;background:radial-gradient(circle at 50% 65%,var(--b),#fff 90%);font:inherit;color:#26214f;cursor:pointer;transition:transform .12s,box-shadow .12s}
+.suitc.on{border-color:var(--c);box-shadow:0 0 0 4px rgba(255,200,51,.7)}.suitimg{height:120px}.autoe{font-size:70px;line-height:1.5}.suitc small{font-size:12px;color:#7a5aa8;font-weight:700}
+@media (hover:hover) and (pointer:fine){.suitc:hover{transform:translateY(-4px);border-color:var(--c)}}
+.suitsheet{max-width:760px}
+.qavatar{position:absolute;right:10px;top:-34px;width:62px;height:62px;border-radius:50%;border:4px solid var(--c);background:radial-gradient(circle at 50% 70%,var(--b),#fff);overflow:hidden;display:flex;justify-content:center;align-items:flex-start;z-index:2;box-shadow:0 3px 0 rgba(0,0,0,.15)}
+.qavatar .qav{width:150%;max-width:none;margin-top:2px}
+#s-work .qcard{position:relative}
+.gavatar{position:absolute;right:76px;top:10px;width:54px;height:54px;border-radius:50%;border:4px solid var(--c);background:radial-gradient(circle at 50% 70%,var(--b),#fff);overflow:hidden;z-index:5;display:flex;justify-content:center}.gavatar .qav{width:150%;max-width:none;margin-top:2px}
+#s-game{position:relative}
+.labhero{display:flex;align-items:flex-end;gap:12px;background:radial-gradient(circle at 12% 60%,var(--b),#fff 70%);border:3px solid var(--c);border-radius:24px;padding:6px 14px 0;margin-bottom:10px;overflow:hidden}.labimg{height:96px;margin-bottom:-4px}
+.doneav{display:flex;justify-content:center;margin-bottom:-6px}.doneimg{height:130px;animation:welfloat 3s ease-in-out infinite}
+.celav{display:flex;justify-content:center}.celimg{height:120px;animation:blkpop .5s}
+.wkhead{display:flex;align-items:flex-end;gap:6px;background:linear-gradient(135deg,var(--b),#fff);border:3px solid var(--c);overflow:hidden;padding-bottom:0}.wkimg{height:110px}.wkimg2{height:84px}.wkhead>div{align-self:center;margin-left:8px}
+@media print{.wkhead{break-inside:avoid}}
+/* ---- v10b: English adventures ---- */
+.cecard{background:linear-gradient(135deg,#e8f4ff,#fff0f6)}
+.dtab{border-collapse:collapse;margin:6px auto;font-size:18px}.dtab th{background:#e9e1ff;padding:4px 14px;border-radius:8px}.dtab td{padding:6px 14px;text-align:center;font-weight:700;border-bottom:3px dotted #cfc8f0}
+.pcwrap{display:flex;gap:14px;flex-wrap:wrap;justify-content:center}.pcform{flex:1 1 360px;min-width:300px}.pcrow{margin-bottom:8px}.pcl{font-weight:800;color:#6b3fd6;margin-bottom:2px}.pcchips{display:flex;flex-wrap:wrap;gap:6px}.pcchips .mchip{min-height:44px;font-size:16px;padding:6px 12px}
+.pcard{flex:1 1 300px;min-width:260px;max-width:420px;position:relative;background:#fffdf4;border:3px dashed #d9a441;border-radius:14px;padding:14px 14px 10px;min-height:230px;transition:transform .9s ease-in,opacity .9s}
+.pcard.fly{transform:translate(300px,-260px) rotate(18deg) scale(.3);opacity:0}
+.pcstamp{position:absolute;right:10px;top:8px;text-align:center;border:2px solid #d9a441;border-radius:6px;padding:2px 8px;font-size:30px;line-height:1.1;background:#fff}.pcstamp small{font-size:10px;color:#a8741a}
+.pcmsg{margin-top:36px;font-size:21px;font-weight:600;line-height:1.5}.pcline{margin:2px 0}.pcaddr{margin-top:10px;text-align:right;font-size:14px;color:#7a5aa8;font-weight:700;border-top:2px solid #eadfc0;padding-top:6px}
+.qavatar{right:78px;top:-30px;width:56px;height:56px}
+.herop .suitlbl{white-space:nowrap;font-size:10px}
 </style>
 </head>
 <body>
@@ -1888,7 +1925,7 @@ function renderHome(){
   h+='<div class="wrap"><div class="hero"><div class="byte">🤖</div><div class="bubble">'+greet()+', <b>'+PROFILE.first+'</b>!<br>'+heroLine(day)+'</div></div>';
   h+='<div class="stats"><div class="stat">⭐ XP<b>'+S.xp+'</b></div><div class="stat">🔥 Streak<b>'+S.streak+' day'+(S.streak===1?'':'s')+'</b></div><div class="stat">Level<b style="font-size:21px">'+lv.name+'</b><div class="bar"><i style="width:'+lv.pct+'%"></i></div></div></div>';
   if(S.pending&&S.tokens[S.pending]){h+='<div class="card" style="background:#fff5d6"><b>🎁 Your reward is ready to finish!</b><div class="row"><button class="btn ok" id="hResume" type="button">▶ Continue video</button></div></div>';}
-  h+=wkNoticeHtml()+quizCard()+voiceCard()+readCard()+wheelCard()+lifeCard()+bonusCards();
+  h+=wkNoticeHtml()+quizCard()+voiceCard()+readCard()+ceCard()+wheelCard()+lifeCard()+bonusCards();
   h+='<div class="card todayc"><h2>📝 Today\'s Worksheet</h2>';
   if(day&&day.done){
     var t=S.tokens[day.token],st=domStars(day);
@@ -2020,7 +2057,7 @@ let factI=0;
 function renderLab(){
   var f=FACTS[factI];
   $('#s-lab').innerHTML='<div class="wrap"><h1>🧪 Geek Lab</h1><div class="card fact" id="fact"><div class="e">'+f[0]+'</div><h2>'+f[1]+'</h2><p>'+f[2]+'</p><div class="row" style="justify-content:center"><button class="btn sm ghost" id="fPrev" type="button">◀</button><button class="btn sm ghost" data-say="'+esc(f[1]+'. '+f[2])+'" type="button">🔊 Read</button><button class="btn sm" id="fNext" type="button">Next fact ▶</button></div></div>'+
-    voiceCard()+quickQuizCard()+readCard()+wheelCard()+bookLabCard()+lifeCard()+gamesBanner()+'<h3>🎮 Mini games (+XP)</h3><div class="games">'+newGameButtons()+'</div>'+
+    voiceCard()+quickQuizCard()+readCard()+ceCard()+wheelCard()+bookLabCard()+lifeCard()+gamesBanner()+'<h3>🎮 Mini games (+XP)</h3><div class="games">'+newGameButtons()+'</div>'+
     '<div class="card" style="margin-top:14px"><h3>🔍 How does scanning work?</h3><p class="sub" style="margin:0 0 8px">A QR code is a picture made of black and white squares.</p><button class="btn" id="lHow" type="button">Show me!</button></div></div>';
   $('#fPrev').addEventListener('click',function(){factI=(factI+FACTS.length-1)%FACTS.length;renderLab();});
   $('#fNext').addEventListener('click',function(){factI=(factI+1)%FACTS.length;renderLab();});
@@ -2686,7 +2723,7 @@ function renderParent(){
 }
 
 /* ---------- 12. v2 UPGRADE: syllabus, analytics, adaptive, backup, playground ---------- */
-const APP_VER='4.6.0',APP_BUILD='2026-11-24';
+const APP_VER='4.7.0',APP_BUILD='2026-11-24';
 function shuf(a){a=a.slice();for(var i=a.length-1;i>0;i--){var j=Math.floor(Math.random()*(i+1)),t=a[i];a[i]=a[j];a[j]=t;}return a;}
 function lastNDays(n){var a=[],t=Date.now(),i;for(i=n-1;i>=0;i--)a.push(ymd(new Date(t-i*864e5)));return a;}
 function pctOf(f,n){return n?Math.round(f/n*100):0;}
@@ -4739,7 +4776,7 @@ function bindV7(){
 /* ===== 4. Weekly growth report ===== */
 function wkWindow(off){var o=[],k;for(k=off;k<off+7;k++)o.push(ymd(new Date(Date.now()-k*864e5)));return o;}
 function wkStats(days){
-  var set={},s={days:days,act:0,n:0,f:0,ms:0,ws:0,qz:0,vl:0,flex:0,safe:0,phone:0,bk:0,rd:0,wh:0,gp:0,gw:0,games:{},per:[]};
+  var set={},s={days:days,act:0,n:0,f:0,ms:0,ws:0,qz:0,vl:0,flex:0,safe:0,phone:0,bk:0,rd:0,wh:0,ce:0,gp:0,gw:0,games:{},per:[]};
   days.forEach(function(d){set[d]=1;});
   days.forEach(function(d){
     var h=S.hist[d]||{},w=!!(h.ws||(S.days[d]&&S.days[d].done)),q=!!(h.qz||(S.qz[d]&&S.qz[d].done));
@@ -4747,7 +4784,7 @@ function wkStats(days){
   });
   (S.ev||[]).forEach(function(e){
     if(!set[e.d])return;
-    if(e.k==='vl'||e.k==='flex'||e.k==='safe'||e.k==='phone'||e.k==='bk')s[e.k]++;if(e.k==='read')s.rd++;if(e.k==='wheel')s.wh++;
+    if(e.k==='vl'||e.k==='flex'||e.k==='safe'||e.k==='phone'||e.k==='bk')s[e.k]++;if(e.k==='read')s.rd++;if(e.k==='wheel')s.wh++;if(e.k==='ce')s.ce++;
     if(e.k==='gstart'){s.gp++;(s.games[e.id]||(s.games[e.id]={p:0,w:0})).p++;}
     if(e.k==='gwin'){s.gw++;(s.games[e.id]||(s.games[e.id]={p:0,w:0})).w++;}
   });
@@ -4804,7 +4841,7 @@ function weeklyHtml(){
   h+='<div class="wkstrip">'+w.per.slice().reverse().map(function(x){var dd=new Date(x.d+'T00:00');return '<div class="wkd'+(x.ws?' ws':x.n?' on':'')+'" title="'+x.d+'"><small>'+'SMTWTFS'.charAt(dd.getDay())+'</small><b>'+(x.ws?'✅':x.n?'•':'')+'</b></div>';}).join('')+'</div>';
   var rows=[['Questions answered',w.n,p.n,wkGrowth(w.n,p.n)],['First-try accuracy',w.acc===null?'–':w.acc+'%',p.acc===null?'–':p.acc+'%',wkPP(w.acc,p.acc)],['Seconds per question',w.spd===null?'–':w.spd,p.spd===null?'–':p.spd,wkGrowth(w.spd,p.spd,true)],
     ['Days practised',w.act+'/7',p.act+'/7',wkGrowth(w.act,p.act)],['Worksheets finished',w.ws,p.ws,wkGrowth(w.ws,p.ws)],['Daily quizzes',w.qz,p.qz,wkGrowth(w.qz,p.qz)],['Byte\'s Voice Lab',w.vl,p.vl,wkGrowth(w.vl,p.vl)],
-    ['🧠 Think Outside the Box',w.flex,p.flex,wkGrowth(w.flex,p.flex)],['🛡️ Smart & Safe',w.safe,p.safe,wkGrowth(w.safe,p.safe)],['📞 Phone number',w.phone,p.phone,wkGrowth(w.phone,p.phone)],['📘 Computing Book',w.bk,p.bk,wkGrowth(w.bk,p.bk)],['📚 Reading Quest',w.rd,p.rd,wkGrowth(w.rd,p.rd)],['🎡 Word Wheel (words)',w.wh,p.wh,wkGrowth(w.wh,p.wh)],
+    ['🧠 Think Outside the Box',w.flex,p.flex,wkGrowth(w.flex,p.flex)],['🛡️ Smart & Safe',w.safe,p.safe,wkGrowth(w.safe,p.safe)],['📞 Phone number',w.phone,p.phone,wkGrowth(w.phone,p.phone)],['📘 Computing Book',w.bk,p.bk,wkGrowth(w.bk,p.bk)],['📚 Reading Quest',w.rd,p.rd,wkGrowth(w.rd,p.rd)],['🎡 Word Wheel (words)',w.wh,p.wh,wkGrowth(w.wh,p.wh)],['🎓 English Adventures',w.ce,p.ce,wkGrowth(w.ce,p.ce)],
     ['🎮 Games played',w.gp,p.gp,wkGrowth(w.gp,p.gp)],['⭐ Games won',w.gw,p.gw,wkGrowth(w.gw,p.gw)],['Win rate',w.wr===null?'–':w.wr+'%',p.wr===null?'–':p.wr+'%',wkPP(w.wr,p.wr)]];
   h+='<table class="wkt"><thead><tr><th></th><th>This week</th><th>Before</th><th>Growth</th></tr></thead><tbody>'+rows.map(function(r){return '<tr><td>'+r[0]+'</td><td><b>'+r[1]+'</b></td><td>'+r[2]+'</td><td>'+r[3]+'</td></tr>';}).join('')+'</tbody></table></div>';
   /* games */
@@ -4857,7 +4894,7 @@ var PH={s:'sss',a:'ah',t:'tuh',p:'puh',i:'ih',n:'nnn',m:'mmm',d:'duh',o:'oh',g:'
 var RD_LET=[['s','sun','☀️'],['a','apple','🍎'],['t','tiger','🐯'],['p','pig','🐷'],['i','ink','🖋️'],['n','nest','🪺'],['m','moon','🌙'],['d','dog','🐶'],['o','orange','🍊'],['g','goat','🐐'],['c','cat','🐱'],['e','egg','🥚'],['u','umbrella','☂️'],['r','rabbit','🐰'],['h','hat','🎩'],['b','ball','⚽'],['f','fish','🐟'],['l','lion','🦁']];
 var RD_DIG={sh:[['ship','🚢'],['shop','🛍️'],['sheep','🐑'],['shell','🐚']],ch:[['chip','🍟'],['cheese','🧀'],['chick','🐥'],['chair','🪑']],th:[['thumb','👍'],['three','3️⃣'],['bath','🛁'],['moth','🦋']],wh:[['whale','🐳'],['wheel','🛞'],['whisk','🥄'],['white','⬜']],ck:[['duck','🦆'],['clock','🕐'],['sock','🧦'],['rock','🪨']]};
 var RD_BLEND=[['sun','☀️'],['hat','🎩'],['pig','🐷'],['cup','☕'],['bed','🛏️'],['dog','🐶'],['bus','🚌'],['cat','🐱'],['pen','🖊️'],['net','🥅'],['web','🕸️'],['jam','🍓'],['box','📦'],['fox','🦊'],['bug','🐞'],['sit','🪑'],['ship','🚢'],['chip','🍟'],['fish','🐟'],['duck','🦆'],['clock','🕐'],['thumb','👍'],['whale','🐳'],['shop','🛍️']];
-var RD_SIGHT=['the','is','am','are','we','they','he','she','I','go','to','my','see','look','can','a','and','in','on','it'];
+var RD_SIGHT=['the','is','am','are','we','they','he','she','I','go','to','my','see','look','can','a','and','in','on','it','went','walked','was'];
 var RD_CLOZE=[['I ___ Rudraksh.','am',['am','is','go'],'👦'],['We ___ happy.','are',['are','am','a'],'😊'],['She ___ my Mom.','is',['is','am','to'],'👩'],['I can ___ a bird.','see',['see','the','is'],'🐦'],['They ___ to school.','go',['go','is','am'],'🏫'],['___ cat is big.','The',['The','Go','Am'],'🐱'],['I like ___ eat.','to',['to','is','he'],'🍎'],['___ is my dog.','He',['He','Is','On'],'🐶'],['Mom ___ Dad are here.','and',['and','is','look'],'👨‍👩‍👦'],['The cat is ___ the mat.','on',['on','go','she'],'🐱'],['Look ___ the sun!','at',['at','the','is'],'☀️'],['I am ___ the park.','in',['in','is','a'],'🌳'],['We ___ jump.','can',['can','is','the'],'🤸'],['___ is a red ball.','It',['It','Go','To'],'🔴']];
 var RD_CH=[
  {lead:'I am',ok:['happy','a boy','at home','ready'],bad:['the sun','run fast','red ball']},
@@ -5406,6 +5443,284 @@ document.addEventListener('click',function(e){
   var m=e.target.closest&&e.target.closest('[data-whm]');if(m){var st=whSt();st.mode=m.getAttribute('data-whm');save();[].forEach.call(document.querySelectorAll('[data-whm]'),function(b){b.classList.toggle('on',b===m||b.getAttribute('data-whm')===st.mode&&b.parentNode===m.parentNode&&b===m);});[].forEach.call(m.parentNode.children,function(b){b.classList.toggle('on',b===m);});return;}
   var b=e.target.closest&&e.target.closest('[data-wh]');if(b)startWheel(b.getAttribute('data-wh'));
 });
+
+/* ================= v10a: Rudraksh personas + 8 welcome variants ================= */
+var PERSONAS={
+ reader:{n:'Book Explorer',e:'📖',c:'#3d8bff',bg:'#dff1ff',say:'Turn the page!'},
+ scientist:{n:'Young Scientist',e:'🔬',c:'#2fbf71',bg:'#dff7e8',say:'Goggles on!'},
+ traveller:{n:'World Traveller',e:'🧭',c:'#ff9f43',bg:'#ffeed8',say:'Map ready!'},
+ pilot:{n:'Captain Pilot',e:'✈️',c:'#6b7a3a',bg:'#eef2d8',say:'Cleared for takeoff!'},
+ astronaut:{n:'Astronaut',e:'🚀',c:'#7c4dff',bg:'#ece5ff',say:'3, 2, 1, blast off!'},
+ doctor:{n:'Doctor',e:'🩺',c:'#12a8b8',bg:'#dcf6f9',say:'Care and heal!'},
+ cricketer:{n:'Cricketer',e:'🏏',c:'#1b5fb8',bg:'#dbe8ff',say:'Play bold!'},
+ chef:{n:'Little Chef',e:'🧑‍🍳',c:'#e63946',bg:'#ffe3e5',say:'Cook with love!'}};
+var PAUTO={english:'reader',book:'scientist',cs:'scientist',math:'astronaut',forms:'traveller',custom:'chef'};
+function pSt(){if(!S.pers||typeof S.pers!=='object')S.pers={pick:'auto'};if(!S.pers.pick)S.pers.pick='auto';return S.pers;}
+function pKey(dom){var p=pSt().pick;if(p&&p!=='auto'&&PERSONAS[p])return p;return PAUTO[dom]||'reader';}
+function pImg(key,cls){
+  var P=PERSONAS[key]||PERSONAS.reader;
+  return '<img class="pimg '+(cls||'')+'" src="assets/rudraksh/'+(PERSONAS[key]?key:'reader')+'.webp" alt="" decoding="async" draggable="false" onerror="var s=document.createElement(\'span\');s.className=\'pemo\';s.textContent=\''+P.e+'\';this.replaceWith(s)">';
+}
+/* ---- 8 welcome variants (never the same one twice in a row) ---- */
+var WELCOME=[
+ {id:'book',p:'reader',e:'📚',t:'Book Explorer Quest',l:function(n){return 'Turn the page, '+n+'! New stories, secret word clues, and adventures are waiting!';},g:'linear-gradient(160deg,#dff1ff,#fff3d6)'},
+ {id:'lab',p:'scientist',e:'🧪',t:'Young Scientist Lab',l:function(n){return 'Goggles on, Scientist '+n+'! Let\'s test sounds, patterns, and brain-stretching experiments!';},g:'linear-gradient(160deg,#dff7e8,#e8f4ff)'},
+ {id:'trav',p:'traveller',e:'🗺️',t:'World Traveller Expedition',l:function(n){return 'Map ready, Explorer '+n+'! Where will our English and Tech journey take us today?';},g:'linear-gradient(160deg,#ffeed8,#dff1ff)'},
+ {id:'pilot',p:'pilot',e:'✈️',t:'Captain Flight Deck',l:function(n){return 'Cleared for takeoff, Captain '+n+'! Ready to fly through words, code, and missions?';},g:'linear-gradient(160deg,#cfe4ff,#eef2d8)'},
+ {id:'morn',p:'cricketer',e:'🌅',t:'Morning Champion Boost',l:function(n){return greet()+', Superstar! Fresh brainpower unlocked — let\'s play and earn XP!';},g:'linear-gradient(160deg,#fff0b8,#ffd6ea)'},
+ {id:'stk',p:'astronaut',e:'🎟️',t:'Sticker & Badge Treasure Hunt',l:function(n){return 'Every word you read and puzzle you solve unlocks new stickers for your album!';},g:'linear-gradient(160deg,#ece5ff,#ffe1ee)'},
+ {id:'cozy',p:'chef',e:'🛋️',t:'Cozy Story & Voice Playtime',l:function(n){return 'No rush, no pressure — just fun games, talking with Byte, and playful puzzles!';},g:'linear-gradient(160deg,#ffe3e5,#fff3d6)'},
+ {id:'pune',p:'doctor',e:'🏡',t:'Pune Home-Base Adventure',l:function(n){return 'From home in Pune to big world adventures — let\'s read, build, and discover!';},g:'linear-gradient(160deg,#dcf6f9,#fff0b8)'}];
+function welcomePick(){
+  var st=pSt(),last=st.wel||'',ch=WELCOME.filter(function(w){return w.id!==last;}),w=ch[Math.floor(Math.random()*ch.length)];
+  st.wel=w.id;try{save();}catch(e){}return w;
+}
+var WELNOW=null;
+(function(){
+  var rs=renderSplash;
+  renderSplash=function(){
+    rs.apply(this,arguments);
+    var sp=document.querySelector('#s-splash .splash');if(!sp)return;
+    WELNOW=welcomePick();var w=WELNOW,P=PERSONAS[w.p];
+    sp.style.background=w.g;
+    var sub=sp.querySelector('.sub'),by=sp.querySelector('.byte');
+    var card=document.createElement('div');card.className='welcard';card.setAttribute('data-wel',w.id);
+    card.innerHTML='<div class="welpic" style="--c:'+P.c+';--b:'+P.bg+'">'+pImg(w.p,'welimg')+'<span class="welbadge">'+w.e+'</span></div><div class="weltxt"><div class="weltag">'+w.e+' '+esc(w.t)+'</div><div class="welline">'+esc(w.l(PROFILE.first))+'</div></div>';
+    if(by)by.style.display='none';var floaty=sp.querySelectorAll('.floaty');
+    if(sub)sub.replaceWith(card);else sp.insertBefore(card,sp.querySelector('#goBtn'));
+  };
+  var rh=renderHome;
+  renderHome=function(){
+    rh.apply(this,arguments);
+    var hero=document.querySelector('#s-home .hero');if(!hero||hero.querySelector('.pimg'))return;
+    var k=pKey('english'),P=PERSONAS[k];
+    var box=document.createElement('button');box.type='button';box.className='herop';box.id='suitBtn';box.style.setProperty('--c',P.c);box.style.setProperty('--b',P.bg);box.setAttribute('aria-label','Choose your explorer suit');
+    box.innerHTML=pImg(k,'heroimg')+'<span class="suitlbl">👕 Change suit</span>';
+    hero.insertBefore(box,hero.firstChild);
+    box.addEventListener('click',suitModal);
+  };
+})();
+function suitModal(){
+  var st=pSt(),cur0=st.pick;
+  var h='<h2 style="text-align:center;margin:.1em 0">👕 Choose your Explorer Suit</h2><p class="sub" style="text-align:center">Pick who you want to be today — or let Byte choose for each activity!</p><div class="suitgrid">';
+  h+='<button type="button" class="suitc'+(cur0==='auto'?' on':'')+'" data-suit="auto" style="--c:#7c4dff;--b:#ece5ff"><span class="autoe">🎲</span><b>Auto</b><small>changes by activity</small></button>';
+  Object.keys(PERSONAS).forEach(function(k){var P=PERSONAS[k];h+='<button type="button" class="suitc'+(cur0===k?' on':'')+'" data-suit="'+k+'" style="--c:'+P.c+';--b:'+P.bg+'">'+pImg(k,'suitimg')+'<b>'+P.n+'</b></button>';});
+  h+='</div><div class="row" style="justify-content:center"><button type="button" class="btn ghost" id="suitX">Close</button></div>';
+  var o=openModal(h,'suitsheet');
+  o.addEventListener('click',function(e){
+    var b=e.target.closest('[data-suit]');
+    if(b){var k=b.getAttribute('data-suit');pSt().pick=k;save();SFX.win();if(k!=='auto')say(PERSONAS[k].say+' '+PERSONAS[k].n+' '+PROFILE.first+'!',true);
+      closeModal();if(cur==='home')renderHome();return;}
+    if(e.target.id==='suitX')closeModal();
+  });
+}
+/* ---- avatars in sessions, games, done, lab, celebrations, weekly report ---- */
+function addAvatar(sel,dom,cls){
+  var host=document.querySelector(sel);if(!host||host.querySelector(':scope > .qavatar'))return;
+  var k=pKey(dom),P=PERSONAS[k],d=document.createElement('div');d.className='qavatar '+(cls||'');d.style.setProperty('--c',P.c);d.style.setProperty('--b',P.bg);d.title=P.n;d.innerHTML=pImg(k,'qav');host.insertBefore(d,host.firstChild);
+}
+(function(){
+  var rq=renderQ;
+  renderQ=function(){rq.apply(this,arguments);var q=SES&&SES.qs&&SES.qs[SES.i];var c=document.querySelector('#s-work .qcard');if(c){var old=c.querySelector(':scope > .qavatar');if(old)old.remove();addAvatar('#s-work .qcard',q&&q.domain);}};
+  var rl=renderLab;renderLab=function(){rl.apply(this,arguments);var w=document.querySelector('#s-lab .wrap');if(w&&!w.querySelector('.labhero')){var k=pKey('cs'),P=PERSONAS[k],d=document.createElement('div');d.className='labhero';d.style.setProperty('--c',P.c);d.style.setProperty('--b',P.bg);d.innerHTML=pImg(k,'labimg')+'<div><b>'+P.e+' '+esc(P.n)+' '+esc(PROFILE.first)+'</b><br><small>'+esc(P.say)+' Pick a game!</small></div>';w.insertBefore(d,w.firstChild);}};
+  var rd=renderDone;renderDone=function(){rd.apply(this,arguments);var w=document.querySelector('#s-done .wrap');if(w&&!w.querySelector('.doneav')){var k=pKey('english'),d=document.createElement('div');d.className='doneav';d.innerHTML=pImg(k,'doneimg');w.insertBefore(d,w.firstChild);}};
+  var g=go;go=function(n){g.apply(this,arguments);if(n==='game')setTimeout(function(){var h=document.querySelector('#s-game');if(h&&!h.querySelector(':scope > .gavatar')){var k=pKey('cs'),P=PERSONAS[k],d=document.createElement('div');d.className='gavatar';d.style.setProperty('--c',P.c);d.style.setProperty('--b',P.bg);d.title=P.n;d.innerHTML=pImg(k,'qav');h.insertBefore(d,h.firstChild);}},40);};
+  var om=openModal;openModal=function(html,cls){var o=om.apply(this,arguments);try{var big=o.querySelector('.sheet .big');if(big&&!o.querySelector('.celav')){var k=pKey('english'),P=PERSONAS[k],d=document.createElement('div');d.className='celav';d.style.setProperty('--c',P.c);d.style.setProperty('--b',P.bg);d.innerHTML=pImg(k,'celimg');big.parentNode.insertBefore(d,big);}}catch(e){}return o;};
+  var wh=weeklyHtml;weeklyHtml=function(){var h=wh.apply(this,arguments);var k=pKey('english'),P=PERSONAS[k];return '<div class="card wkhead" style="--c:'+P.c+';--b:'+P.bg+'">'+pImg(k,'wkimg')+pImg('scientist','wkimg2')+pImg('traveller','wkimg2')+pImg('pilot','wkimg2')+'<div><h2 style="margin:.1em 0">'+esc(PROFILE.first)+'\'s Growth Story</h2><p class="sub" style="margin:0">Reader · Scientist · Traveller · Pilot — growing every week!</p></div></div>'+h;};
+})();
+
+/* ================= v10b: Cambridge-style English Stage 1 units (original wording) ================= */
+function cOpt(x){return mkOpt(x,'<b class="swd s">'+esc(x)+'</b>');}
+function eOpt(x,e){return mkOpt(x,'<span class="rdo"><i>'+e+'</i><b>'+esc(x)+'</b></span>');}
+function ceCh(r,o){   /* o: topic,prompt,say,visual,answer,wrongs,hint,after,cols,emoji(map word->emoji) */
+  var opts=[o.answer].concat(o.wrongs.slice(0,o.n||2));
+  return {topic:o.topic,domain:'english',kind:'choice',cols:o.cols||3,prompt:o.prompt,say:o.say||o.prompt.replace(/<[^>]+>/g,''),visual:o.visual||'',
+    options:r.shuffle(opts.map(function(x){return o.emoji&&o.emoji[x]?eOpt(x,o.emoji[x]):cOpt(x);})),answer:o.answer,hint:o.hint||'Read slowly. Take your time!',after:o.after||''};
+}
+function ceOrd(o){return {topic:o.topic,domain:'english',kind:'order',tiles:o.tiles.slice(),sol:o.sol.slice(),slots:o.sol.length,cls:o.cls||'',prompt:o.prompt,say:o.say||o.prompt.replace(/<[^>]+>/g,''),visual:o.visual||'',hint:o.hint||'Think about what comes first.',after:o.after||'',sentence:o.sentence||o.sol.join(' ')};}
+function ceBig(e){return '<div class="bigemo">'+e+'</div>';}
+function pickN(r,l,n){return r.fresh(l,n);}
+/* ---------- Phonics+ (Stage 1 extras) ---------- */
+var CE_TR=[['train','🚂'],['trip','🧳'],['tree','🌳'],['truck','🚚'],['trap','🪤'],['tractor','🚜']],CE_NOTR=[['ship','🚢'],['frog','🐸'],['sun','☀️'],['dog','🐶'],['bus','🚌'],['cake','🍰']];
+var CE_ME=[['hid','hide'],['kit','kite'],['bit','bite'],['pin','pine'],['tub','tube'],['cap','cape'],['rob','robe'],['not','note'],['cub','cube'],['mat','mate']];
+var CE_ME_PIC=[['bike','🚲'],['kite','🪁'],['five','5️⃣'],['nine','9️⃣'],['cake','🍰'],['home','🏠'],['hive','🐝'],['rose','🌹']];
+var CE_EE=[['bee','🐝'],['tree','🌳'],['feet','🦶'],['sleep','😴'],['green','🟢'],['sheep','🐑'],['cheese','🧀'],['seed','🌱'],['seek','🔍'],['jeep','🚙']];
+var CE_RH=[['shiver','quiver','river','liver'],['cat','hat','mat','bat'],['sun','fun','run','bun'],['bee','tree','see','knee'],['night','light','kite','bite'],['moon','spoon','soon','noon'],['mouse','house','blouse'],['ball','tall','wall','fall'],['fish','dish','wish'],['rain','train','plane','brain']];
+function ceP(r){
+  var v=r.pick(['tr','me','mepic','ee','eepic','rhyme','rhyme']),q;
+  if(v==='tr'){var a=pk(r,CE_TR),w=pickN(r,CE_NOTR,2);q=ceCh(r,{topic:'English: Sound clusters',prompt:'Which word starts with <b>tr</b>?',say:'Which word starts with t r, like train?',visual:'<div class="bigemo"><span class="ltr dg2">tr</span></div>',answer:a[0],wrongs:w.map(function(x){return x[0];}),emoji:objFrom(CE_TR.concat(CE_NOTR)),hint:'Say "tr-tr-train". Which word starts the same?',after:'<b>'+a[0]+'</b> starts with <b>tr</b>!'});}
+  else if(v==='me'){var m=pk(r,CE_ME),others=pickN(r,CE_ME.filter(function(x){return x!==m;}),1)[0];q=ceCh(r,{topic:'English: Magic e',prompt:'Add the <b>magic e</b>: '+m[0]+' + e = ?',say:'Add the magic e. '+m[0]+' plus e makes what word?',visual:'<div class="bigemo"><span class="ltr">'+m[0]+'<span style="color:#ff5c8a">e</span></span></div>',answer:m[1],wrongs:[m[0],others[1]],hint:'The magic e makes the vowel say its name!',after:'Magic e makes <b>'+m[0]+'</b> → <b>'+m[1]+'</b>!',cols:3});}
+  else if(v==='mepic'){var p=pk(r,CE_ME_PIC),ws=pickN(r,CE_ME_PIC.filter(function(x){return x!==p;}),2);q=ceCh(r,{topic:'English: Magic e',prompt:'Which picture has a <b>magic e</b> word?',say:'Which word has a magic e?',visual:ceBig('🪄'),answer:p[0],wrongs:['hid','sit'].slice(0,2),emoji:null,hint:'Look for the e at the end that stays quiet.',after:'<b>'+p[0]+'</b> has a magic e!'});}
+  else if(v==='ee'){var e=pk(r,CE_EE),nn=pickN(r,[['sun','☀️'],['pig','🐷'],['hat','🎩'],['bed','🛏️']],2);q=ceCh(r,{topic:'English: Double vowels',prompt:'Which word has the double vowel <b>ee</b>?',say:'Which word has the double vowel e e?',visual:'<div class="bigemo"><span class="ltr dg2">ee</span></div>',answer:e[0],wrongs:nn.map(function(x){return x[0];}),emoji:objFrom(CE_EE.concat([['sun','☀️'],['pig','🐷'],['hat','🎩'],['bed','🛏️']])),hint:'ee says "eee" like in bee.',after:'<b>'+e[0]+'</b> has <b>ee</b>!'});}
+  else if(v==='eepic'){var e2=pk(r,CE_EE),ws2=pickN(r,CE_EE.filter(function(x){return x!==e2;}),2);q={topic:'English: Double vowels',domain:'english',kind:'choice',cols:3,prompt:'Read the word. Which picture is it?',say:'Read the word. Which picture is it?',visual:'<div class="sentbox hlbox">'+rdWords(e2[0])+'</div><button type="button" class="btn sm" data-hlsay="1">🔊 Read with me</button>',options:r.shuffle([e2].concat(ws2).map(function(x){return mkOpt(x[0],'<span class="rdo"><i>'+x[1]+'</i></span>');})),answer:e2[0],hint:'Sound it out: '+e2[0].split('').join(' '),after:'<b>'+e2[0]+'</b>!'};}
+  else{var g=pk(r,CE_RH),a2=r.shuffle(g.slice(1))[0],base=g[0],wr=pickN(r,CE_RH.filter(function(x){return x!==g;}),2).map(function(x){return x[0];});
+    if(r.chance(.5)){base=r.shuffle(g)[0];a2=r.shuffle(g.filter(function(x){return x!==base;}))[0];}
+    q=ceCh(r,{topic:'English: Rhymes',prompt:'Which word <b>rhymes</b> with <b>'+base+'</b>?',say:'Which word rhymes with '+base+'?',visual:'<button type="button" class="btn sm" data-say="'+base+'">🔊 '+base+'</button>',answer:a2,wrongs:wr,hint:'Rhymes sound the same at the end: '+base+' … ?',after:'<b>'+base+'</b> and <b>'+a2+'</b> rhyme!'});}
+  return q;
+}
+function objFrom(l){var o={};l.forEach(function(x){o[x[0]]=x[1];});return o;}
+/* ---------- Compound words + joining with "and" ---------- */
+var CE_CW=[['no','where','nowhere'],['some','body','somebody'],['any','way','anyway'],['some','thing','something'],['no','body','nobody'],['some','one','someone'],['sun','shine','sunshine'],['rain','bow','rainbow'],['foot','ball','football'],['cup','cake','cupcake'],['gold','fish','goldfish'],['butter','fly','butterfly'],['bed','room','bedroom'],['rain','coat','raincoat']];
+var CE_AND=[['I can run.','I can jump.','I can run and jump.'],['The cat sat.','The dog sat.','The cat and the dog sat.'],['I like milk.','I like cake.','I like milk and cake.'],['I see a cat.','I see a dog.','I see a cat and a dog.'],['We read.','We play.','We read and play.'],['Fluff is small.','Puff is small.','Fluff and Puff are small.'],['Zara has a hat.','Zara has a bag.','Zara has a hat and a bag.']];
+function ceC(r){
+  var v=r.pick(['pick','order','pick','and','andord']),c=pk(r,CE_CW),q;
+  if(v==='pick'){var wr=pickN(r,CE_CW.filter(function(x){return x!==c;}),2);q=ceCh(r,{topic:'English: Compound words',prompt:'<b>'+c[0]+'</b> + <b>'+c[1]+'</b> = ?',say:c[0]+' plus '+c[1]+' makes what word?',visual:'<div class="train"><span class="car lead">'+c[0]+'</span><span class="stp">＋</span><span class="car">'+c[1]+'</span></div>',answer:c[2],wrongs:[c[1]+c[0],wr[0][2]],hint:'Glue the two words together, first word first.',after:c[0]+' + '+c[1]+' = <b>'+c[2]+'</b>'});}
+  else if(v==='order'){q=ceOrd({topic:'English: Compound words',prompt:'Put the words in order to make <b>'+c[2]+'</b>',visual:'<div class="bigemo"><span class="ltr">'+c[2]+'</span></div>',tiles:[c[1],c[0]],sol:[c[0],c[1]],cls:'train',hint:'Which small word comes first in "'+c[2]+'"?',after:c[0]+' + '+c[1]+' = <b>'+c[2]+'</b>',sentence:c[2]});}
+  else{var a=pk(r,CE_AND);
+    if(v==='and')q=ceCh(r,{topic:'English: Joining with and',prompt:'Join the sentences with <b>and</b>',say:'Join the two sentences with and.',visual:'<div class="sentbox">'+esc(a[0])+'<br>'+esc(a[1])+'</div>',answer:a[2],wrongs:[a[2].replace(' and ',' '),a[0]],n:2,hint:'Use the little word "and" to join the two ideas.',after:'<b>'+esc(a[2])+'</b>',cols:1});
+    else{var ws=a[2].replace(/\.$/,'').split(' ');q=ceOrd({topic:'English: Joining with and',prompt:'Make one sentence with <b>and</b>',visual:'<div class="sentbox">'+esc(a[0])+'<br>'+esc(a[1])+'</div>',tiles:ws,sol:ws,hint:'Start with the capital letter. "and" goes in the middle.',after:'<b>'+esc(a[2])+'</b>',sentence:a[2]});}}
+  return q;
+}
+/* ---------- Writing rules (book + grammar) ---------- */
+var CE_NAMES=['Rudraksh','Zara','Jamal','Penda','Ashraf','Mom','Dad'];
+var CE_WH=[['___ is at the door?','Who'],['___ is your name?','What'],['___ do you live?','Where'],['___ do we eat dinner?','When'],['___ are you laughing?','Why'],['___ do you make a kite?','How'],['___ is your best friend?','Who'],['___ do you eat for lunch?','What'],['___ did you put my shoes?','Where'],['___ do we go to school?','When']];
+var CE_PR=[['Zara is happy. ___ is happy.','She'],['Jamal is five. ___ is five.','He'],['The cat is big. ___ is big.','It'],['Mom and I run. ___ run.','We'],['The chicks peep. ___ peep.','They'],['___ am Rudraksh.','I'],['Penda has milk. ___ is careful.','She'],['Ashraf lost a scarf. ___ was sad.','He']];
+var CE_PAST=[['jump','jumped'],['play','played'],['stay','stayed'],['walk','walked'],['look','looked'],['help','helped'],['go','went'],['see','saw'],['is','was'],['run','ran']];
+var CE_PL=[['dolphin','dolphins','🐬'],['roundabout','roundabouts','🎠'],['girl','girls','👧'],['box','boxes','📦'],['splash','splashes','💦'],['bus','buses','🚌'],['fox','foxes','🦊'],['church','churches','⛪'],['brush','brushes','🪥'],['cat','cats','🐱']];
+var CE_DAYS=['Monday','Tuesday','Wednesday','Thursday','Friday','Saturday','Sunday'];
+var CE_BOOK=[['title','The name of the book is on the front cover. What is it called?'],['author','Who wrote the book?'],['contents','Which page lists what is inside the book?'],['glossary','Which part explains special words?'],['front cover','Which part do we see first, with the picture?'],['back cover','Which part is at the back and tells a little about the book?']];
+var CE_PC=[['Dear …','Which part says who the card is for?'],['See you soon!','Which part says goodbye?'],['P.S.','Which part is a little extra message at the end?'],['stamp','What do we stick on a postcard to post it?'],['address','Which part tells the post person where to take it?']];
+function ceW(r){
+  var v=r.pick(['cap','cap2','stop','wh','pr','past','pl','pl2','seq','days','abc','book','post']),q,n=pk(r,CE_NAMES);
+  if(v==='cap'){var s=['Mom reads a book','The dog can run','We go to the park','Look at the big sun'][r.int(0,3)],low=s.charAt(0).toLowerCase()+s.slice(1);q=ceCh(r,{topic:'English: Capital letters',prompt:'Which sentence starts the <b>right</b> way?',say:'Which sentence starts the right way?',visual:ceBig('🔠'),answer:s+'.',wrongs:[low+'.',s.toUpperCase()+'.'].slice(0,1).concat([low.replace(/ /g,'  ')+'.']).slice(0,1),n:1,hint:'A sentence starts with a capital letter.',after:'A sentence starts with a <b>capital letter</b>.',cols:1});q.options=r.shuffle([cOpt(s+'.'),cOpt(low+'.')]);q.cols=1;}
+  else if(v==='cap2'){var low2=n.toLowerCase();q=ceCh(r,{topic:'English: Capital letters',prompt:'Which one is written the <b>right</b> way?',say:'Which name is written the right way? Names start with a capital letter.',visual:ceBig('✍️'),answer:'My friend is '+n+'.',wrongs:['My friend is '+low2+'.'],n:1,hint:'Names start with a capital letter.',after:'Names start with a <b>capital letter</b>: <b>'+n+'</b>.',cols:1});if(n==='Mom'||n==='Dad')q.answer=q.answer;}
+  else if(v==='stop'){var t=['The cat sat','I see a bus','We can play','Mom is here'][r.int(0,3)];q=ceCh(r,{topic:'English: Full stops',prompt:'Which sentence has a <b>full stop</b> at the end?',say:'Which sentence has a full stop at the end? A full stop tells us to pause and take a breath.',visual:ceBig('⏸️'),answer:t+'.',wrongs:[t,t.replace(/ /,'. ')],n:2,hint:'A full stop is a little dot at the end. Pause and take a breath!',after:'A <b>full stop</b> (.) means pause and take a breath.',cols:1});}
+  else if(v==='wh'){var w=pk(r,CE_WH);q=ceCh(r,{topic:'English: Question words',prompt:'Pick the question word',say:'Pick the question word. '+w[0].replace('___','blank'),visual:'<div class="sentbox">'+blankHtml(w[0])+'</div>',answer:w[1],wrongs:pickN(r,['Who','What','Where','When','Why','How'].filter(function(x){return x!==w[1];}),2),hint:'Who = a person. Where = a place. When = a time.',after:'<b>'+w[1]+'</b> '+w[0].replace('___ ','')});}
+  else if(v==='pr'){var p=pk(r,CE_PR);q=ceCh(r,{topic:'English: Pronouns',prompt:'Pick the pronoun',say:'Pick the pronoun. '+p[0].replace('___','blank'),visual:'<div class="sentbox">'+blankHtml(p[0])+'</div>',answer:p[1],wrongs:pickN(r,['I','He','She','It','We','They'].filter(function(x){return x!==p[1];}),2),hint:'A pronoun takes the place of a name.',after:p[0].replace('___','<b>'+p[1]+'</b>')});}
+  else if(v==='past'){var pa=pk(r,CE_PAST),reg=/ed$/.test(pa[1]);q=ceCh(r,{topic:'English: Past tense',prompt:'Yesterday I <b>___</b>. (today: '+pa[0]+')',say:'Yesterday, I blank. Today I '+pa[0]+'. Which word tells what happened yesterday?',visual:ceBig('⏪'),answer:pa[1],wrongs:[pa[0],pa[0]+'ing'].slice(0,2),hint:reg?'For a finished action we often add -ed.':'Some words change a lot: go→went, see→saw!',after:'Today: <b>'+pa[0]+'</b> → yesterday: <b>'+pa[1]+'</b>'});}
+  else if(v==='pl'){var s2=pk(r,CE_PL);q=ceCh(r,{topic:'English: Plurals',prompt:'One '+s2[0]+', two <b>___</b>',say:'One '+s2[0]+', two what?',visual:ceBig(s2[2]),answer:s2[1],wrongs:[s2[0],s2[0]+(/(ch|sh|s|x|z)$/.test(s2[0])?'s':'es')].filter(function(x,i,a){return x!==s2[1]&&a.indexOf(x)===i;}).slice(0,2).concat(['more '+s2[0]]).slice(0,2),hint:'More than one: add s. After ch, sh, s, x, z add es.',after:'<b>'+s2[0]+'</b> → <b>'+s2[1]+'</b>'});}
+  else if(v==='pl2'){var s3=pk(r,CE_PL),es=/es$/.test(s3[1]);q=ceCh(r,{topic:'English: Plurals',prompt:'Make <b>'+s3[0]+'</b> plural: add…',say:'To make '+s3[0]+' mean more than one, what do we add?',visual:ceBig(s3[2]),answer:es?'es':'s',wrongs:[es?'s':'es','ing'],hint:'Words ending in ch, sh, s, x, z need es.',after:'<b>'+s3[0]+' + '+(es?'es':'s')+' = '+s3[1]+'</b>',cols:3});}
+  else if(v==='seq'){if(r.chance(.5))q=ceOrd({topic:'English: Sequence words',prompt:'Put the sequence words in order',visual:ceBig('🎢'),tiles:['Finally','First','Next','Then'],sol:['First','Then','Next','Finally'],cls:'train',hint:'What do we say at the very start? At the very end?',after:'<b>First, Then, Next, Finally</b>',sentence:'First, then, next, finally'});
+    else{var st=[['___, we got in the queue.','First'],['___, we went on the big ride.','Then'],['___, we ate ice cream.','Next'],['___, we waved goodbye.','Finally']][r.int(0,3)];q=ceCh(r,{topic:'English: Sequence words',prompt:'Which word fits?',say:'Which sequence word fits? '+st[0].replace('___','blank'),visual:'<div class="sentbox">'+blankHtml(st[0])+'</div>',answer:st[1],wrongs:['First','Then','Next','Finally'].filter(function(x){return x!==st[1];}),n:2,hint:'First = start. Finally = the end.',after:'<b>'+st[1]+'</b>'});}}
+  else if(v==='days'){var i=r.int(0,6),k=r.int(0,2);if(k===0)q=ceCh(r,{topic:'English: Days of the week',prompt:'What day comes <b>after '+CE_DAYS[i]+'</b>?',say:'What day comes after '+CE_DAYS[i]+'?',visual:ceBig('📅'),answer:CE_DAYS[(i+1)%7],wrongs:pickN(r,CE_DAYS.filter(function(d){return d!==CE_DAYS[(i+1)%7]&&d!==CE_DAYS[i];}),2),hint:'Say the days: Monday, Tuesday, Wednesday…',after:CE_DAYS[i]+' → <b>'+CE_DAYS[(i+1)%7]+'</b>'});
+    else if(k===1)q=ceCh(r,{topic:'English: Days of the week',prompt:'Today is <b>'+CE_DAYS[i]+'</b>. What day was <b>yesterday</b>?',say:'Today is '+CE_DAYS[i]+'. What day was yesterday?',visual:ceBig('📅'),answer:CE_DAYS[(i+6)%7],wrongs:pickN(r,CE_DAYS.filter(function(d){return d!==CE_DAYS[(i+6)%7]&&d!==CE_DAYS[i];}),2),hint:'Yesterday is the day before today.',after:'Yesterday was <b>'+CE_DAYS[(i+6)%7]+'</b>'});
+    else{var j=r.int(0,3),seq=CE_DAYS.slice(j,j+4);q=ceOrd({topic:'English: Days of the week',prompt:'Put the days in order',visual:ceBig('📅'),tiles:seq,sol:seq,hint:'Start with the earliest day of the week.',after:seq.join(', ')});}}
+  else if(v==='abc'){var A='ABCDEFGHIJKLMNOPQRSTUVWXYZ',x=r.int(0,22);if(r.chance(.5))q=ceCh(r,{topic:'English: A–Z order',prompt:'Which letter comes <b>after '+A[x]+'</b>?',say:'Which letter comes after '+A[x]+'?',visual:'<div class="bigemo"><span class="ltr">'+A[x]+' ?</span></div>',answer:A[x+1],wrongs:pickN(r,A.split('').filter(function(c){return c!==A[x+1]&&c!==A[x];}),2),hint:'Sing the ABC song!',after:A[x]+' → <b>'+A[x+1]+'</b>'});
+    else{var l4=A.substr(x,4).split('');q=ceOrd({topic:'English: A–Z order',prompt:'Put the letters in A–Z order',visual:ceBig('🔤'),tiles:l4,sol:l4,hint:'Sing the ABC song to find the order.',after:l4.join(' '),sentence:l4.join(', ')});}}
+  else if(v==='book'){var b=pk(r,CE_BOOK);q=ceCh(r,{topic:'English: Parts of a book',prompt:b[1],say:b[1],visual:ceBig('📕'),answer:b[0],wrongs:pickN(r,CE_BOOK.map(function(x){return x[0];}).filter(function(x){return x!==b[0];}),2),hint:'Think about the front, the back and the inside.',after:'<b>'+b[0]+'</b>'});}
+  else{var po=pk(r,CE_PC);q=ceCh(r,{topic:'English: Postcards',prompt:po[1],say:po[1],visual:ceBig('💌'),answer:po[0],wrongs:pickN(r,CE_PC.map(function(x){return x[0];}).filter(function(x){return x!==po[0];}),2),hint:'A postcard has Dear…, a message, See you soon!, and sometimes P.S.',after:'<b>'+po[0]+'</b>'});}
+  return q;
+}
+/* ---------- Unit stories (original short texts) ---------- */
+var CE_ST={
+ jamal:{t:'It Is Too Early!',e:'🛴',L:['At five o\'clock Jamal woke up.','He saw a big, shiny, red scooter!','At six o\'clock he rang the noisy bell.','At seven o\'clock Mom said, "Shh! It is too early!"'],qs:[{q:'What did Jamal see?',a:'A shiny red scooter',o:['A shiny red scooter','A blue bus','A tiny kite'],l:1},{q:'What did Jamal do at six o\'clock?',a:'Rang the bell',o:['Rang the bell','Ate lunch','Went to bed'],l:2},{q:'Who said "Shh"?',a:'Mom',o:['Mom','The cat','Zara'],l:3}]},
+ penda:{t:'Don\'t Spill the Milk!',e:'🥛',L:['Penda carried a jug of milk to the grasslands.','She crossed the sand dunes, step by step.','She saw masked dancers and rode a fishing boat on the river.','She met white giraffes and climbed the mountain.','At last, she reached the grasslands. The milk was safe!'],qs:[{q:'What did Penda carry?',a:'A jug of milk',o:['A jug of milk','A big drum','A red scarf'],l:0},{q:'What did she cross first?',a:'Sand dunes',o:['Sand dunes','The river','The mountain'],l:1},{q:'Where did Penda go at the end?',a:'The grasslands',o:['The grasslands','The school','The park'],l:4}]},
+ zara:{t:'Hide and Seek',e:'🐥',L:['Zara and Miss Garcia had three baby chicks in class.','Their names were Fluff, Puff and Scruff.','One day, the chicks hid! Zara heard a scratch and a peep.','She looked under the table and found them all.'],qs:[{q:'Who is Miss Garcia?',a:'Zara\'s teacher',o:['Zara\'s teacher','A baby chick','A farmer'],l:0},{q:'What sounds did Zara hear?',a:'A scratch and a peep',o:['A scratch and a peep','A bark and a moo','A honk and a beep'],l:2},{q:'Where did she find the chicks?',a:'Under the table',o:['Under the table','In the bag','On the roof'],l:3}]},
+ ash:{t:'The Park in the Dark',e:'🧣',L:['Ashraf lost his scarf in the park.','It was dark, and the park looked different.','Rat, Cat and Fox did not help, but Owl was kind.','Owl found the scarf and gave it back to Ashraf.'],qs:[{q:'What did Ashraf lose?',a:'His scarf',o:['His scarf','His hat','His shoe'],l:0},{q:'Who was kind and helpful?',a:'Owl',o:['Owl','Fox','Rat'],l:2},{q:'Why did the park look different?',a:'It was dark',o:['It was dark','It was snowing','It was lunch time'],l:1}]},
+ train:{t:'My First Train Trip',e:'🚆',L:['I went to the station with Mom.','We bought a ticket at the ticket office.','We waited on Platform 5, and the train came.','From the window I saw the city, the fields, and Grandpa!'],qs:[{q:'Where did we buy the ticket?',a:'At the ticket office',o:['At the ticket office','On the train','At school'],l:1},{q:'Which platform was it?',a:'Platform 5',o:['Platform 5','Platform 1','Platform 9'],l:2},{q:'Who did I see at the end?',a:'Grandpa',o:['Grandpa','My teacher','A giraffe'],l:3}]},
+ diary:{t:'My Holiday Diary',e:'📔',L:['On Monday I went to the park.','On Tuesday I played with my kite.','On Wednesday I baked a cake with Dad.','On Thursday I read a book and drew a picture.'],qs:[{q:'What did I do on Tuesday?',a:'Played with my kite',o:['Played with my kite','Baked a cake','Went to the park'],l:1},{q:'Who baked a cake with me?',a:'Dad',o:['Dad','Mom','Zara'],l:2},{q:'When did I go to the park?',a:'On Monday',o:['On Monday','On Friday','On Sunday'],l:0}]},
+ park:{t:'A Trip to the Theme Park',e:'🎡',L:['First, we got in the queue for Cloud Nine.','Then, we sat in a big red car.','Next, we went up, up, up in the sky!','Finally, we waved to Mom and Dad.'],qs:[{q:'What did they do first?',a:'Got in the queue',o:['Got in the queue','Waved goodbye','Ate cake'],l:0},{q:'What came next?',a:'Went up in the sky',o:['Went up in the sky','Got in the queue','Went home'],l:2},{q:'What did they do finally?',a:'Waved to Mom and Dad',o:['Waved to Mom and Dad','Sat in a car','Bought a ticket'],l:3}]}};
+function ceStory(r,key){
+  var st=CE_ST[key||pk(r,Object.keys(CE_ST))],qq=pk(r,st.qs);
+  var vis='<div class="passage"><h4>'+st.e+' '+esc(st.t)+'</h4><div class="hlbox storybox">'+st.L.map(function(l,i){return '<div class="sl" data-l="'+i+'"><b class="ln">'+(i+1)+'</b> '+rdWords(l)+'</div>';}).join('')+'</div><div class="rdsteps"><button type="button" class="btn sm" data-hlsay="1">1️⃣ Listen</button><span class="stp">→</span><b class="stp">2️⃣ Try the answer</b><span class="stp">→</span><b class="stp">3️⃣ Stuck? Tap 💡 Hint</b></div></div>';
+  return {topic:'English: '+st.t,domain:'english',kind:'choice',cols:3,prompt:qq.q,say:qq.q,visual:vis,options:r.shuffle(qq.o).map(cOpt),answer:qq.a,hint:'Read line '+(qq.l+1)+' again. The answer is hiding there!',after:'<b>'+esc(st.L[qq.l])+'</b>',hlLine:qq.l};
+}
+var CE_PENDA=['Penda leaves home with a jug of milk.','Penda walks over the sand dunes.','Penda watches the masked dancers.','Penda rides a fishing boat on the river.','Penda sees the white giraffes.','Penda climbs the mountain.','Penda walks to the grasslands.','Penda gives the milk to Grandma.'];
+var CE_CLOCK=['🕐','🕑','🕒','🕓','🕔','🕕','🕖','🕗','🕘','🕙','🕚','🕛'];
+var CE_ADJ=[['scooter','shiny'],['bell','noisy'],['box','heavy'],['balloon','red'],['kite','new'],['elephant','big'],['drum','noisy'],['rock','heavy']];
+var CE_TF=[['Penda carried a jug of milk.',true],['Penda rode a bus to the grasslands.',false],['Jamal woke up at five o\'clock.',true],['Zara\'s chicks were called Fluff, Puff and Scruff.',true],['Owl was not kind to Ashraf.',false],['A train has wheels.',true],['A cat can drive a car.',false],['Rat found the scarf.',false]];
+var CE_PRET=[['I walk to the station.','I walked to the station.'],['We buy a ticket.','We bought a ticket.'],['I see Grandpa.','I saw Grandpa.'],['The train comes.','The train came.'],['We jump on the bed.','We jumped on the bed.'],['I play in the park.','I played in the park.']];
+var CE_TRAIN=['🎫 buy a ticket','🚉 wait on the platform','🚆 ride the train','👴 meet Grandpa'];
+function ceU(r,unit){
+  var gens;
+  if(unit==='u1')gens=['jamal','penda','zara','ash','clock','adj','tf','pendaord','real'];
+  else gens=['train','diary','park','prt','trainord','tf','tab','post'];
+  var v=pk(r,gens),q;
+  if(CE_ST[v])return ceStory(r,v);
+  if(v==='clock'){var h=r.int(1,12),w=pickN(r,CE_CLOCK.filter(function(c,i){return i!==h-1;}),2);q=ceCh(r,{topic:'English: o\'clock',prompt:'Which clock shows <b>'+h+' o\'clock</b>?',say:'Which clock shows '+h+' o\'clock?',visual:'<div class="bigemo">⏰</div>',answer:CE_CLOCK[h-1],wrongs:w,emoji:null,hint:'The short hand points to the '+h+'. The long hand points to 12.',after:'<b>'+h+' o\'clock</b> '+CE_CLOCK[h-1]});q.options=r.shuffle([CE_CLOCK[h-1]].concat(w).map(function(c){return mkOpt(c,'<span class="rdo"><i>'+c+'</i></span>');}));}
+  else if(v==='adj'){var a=pk(r,CE_ADJ),ws=pickN(r,['big','shiny','noisy','heavy','red','new'].filter(function(x){return x!==a[1];}),2);q=ceCh(r,{topic:'English: Describing words',prompt:'Pick a good describing word: a ___ <b>'+a[0]+'</b>',say:'Pick a good describing word for the '+a[0],visual:ceBig('🖍️'),answer:a[1],wrongs:ws,hint:'Describing words tell us what something is like.',after:'a <b>'+a[1]+'</b> '+a[0]});}
+  else if(v==='tf'){var t=pk(r,CE_TF);q=ceCh(r,{topic:'English: True or false',prompt:'<b>True</b> or <b>False</b>?<br><span style="font-weight:600">'+esc(t[0])+'</span>',say:'True or false? '+t[0],visual:ceBig('🤔'),answer:t[1]?'True':'False',wrongs:[t[1]?'False':'True'],n:1,hint:'Think about the story. Was that what happened?',after:t[1]?'Yes, that is <b>true</b>.':'No, that is <b>false</b>.',cols:2});}
+  else if(v==='pendaord'){var j=r.int(0,4),seq=CE_PENDA.slice(j,j+4);q=ceOrd({topic:'English: Story map',prompt:'Put Penda\'s journey in order',visual:ceBig('🗺️'),tiles:seq,sol:seq,hint:'Where does Penda start? Where does she go next?',after:'<b>'+esc(seq[0])+'</b> … <b>'+esc(seq[3])+'</b>',sentence:seq.join(' ')});}
+  else if(v==='real'){var rp=pk(r,[['A scarf can fly to the moon.','pretend'],['A scarf keeps you warm.','real'],['A cat can talk to an owl.','pretend'],['An owl can fly at night.','real'],['A fox can wear shoes and drive a car.','pretend'],['A chick says peep.','real']]);q=ceCh(r,{topic:'English: Real or pretend',prompt:'Is it <b>real</b> or <b>pretend</b>?<br><span style="font-weight:600">'+esc(rp[0])+'</span>',say:'Is this real or pretend? '+rp[0],visual:ceBig('🧚'),answer:rp[1],wrongs:[rp[1]==='real'?'pretend':'real'],n:1,hint:'Real things can happen. Pretend things are for stories!',after:'It is <b>'+rp[1]+'</b>.',cols:2});}
+  else if(v==='prt'){var pr=pk(r,CE_PRET),wr=pickN(r,CE_PRET.filter(function(x){return x!==pr;}),2);q=ceCh(r,{topic:'English: Past tense',prompt:'Change it to the <b>past</b> (yesterday)',say:'Change it to yesterday. '+pr[0],visual:'<div class="sentbox">'+esc(pr[0])+'</div>',answer:pr[1],wrongs:[pr[0],wr[0][0].replace(/walk|buy|see|come|jump|play/,'')].slice(0,1).concat([wr[0][1]]).slice(0,2),hint:'Yesterday it already happened. Add -ed, or use a new word like saw, went, bought.',after:'<b>'+esc(pr[1])+'</b>',cols:1});}
+  else if(v==='trainord'){q=ceOrd({topic:'English: Recount order',prompt:'Put my train trip in order',visual:ceBig('🚆'),tiles:CE_TRAIN,sol:CE_TRAIN,hint:'First you need a ticket!',after:'<b>Ticket → platform → train → Grandpa</b>',sentence:CE_TRAIN.join(', ').replace(/[^\x00-\x7F]/g,'')});}
+  else if(v==='tab'){var ds=[['Monday','the park','played'],['Tuesday','the zoo','saw a lion'],['Wednesday','Gran\'s house','ate cake'],['Thursday','the beach','built a sandcastle']],d=pk(r,ds),k=r.int(0,2);q=ceCh(r,{topic:'English: Diary table',prompt:['<b>When?</b> I went to '+d[1]+' on ___.','<b>Where?</b> On '+d[0]+' I went to ___.','<b>What?</b> On '+d[0]+' at '+d[1]+' I ___.'][k],say:['When did I go to '+d[1]+'?','Where did I go on '+d[0]+'?','What did I do at '+d[1]+'?'][k],visual:'<table class="dtab"><tr><th>When?</th><th>Where?</th><th>What?</th></tr><tr><td>'+d[0]+'</td><td>'+d[1]+'</td><td>I '+d[2]+'</td></tr></table>',answer:[d[0],d[1],'played'===d[2]?'played':d[2]][k],wrongs:pickN(r,ds.map(function(x){return [x[0],x[1],x[2]][k];}).filter(function(x){return x!==[d[0],d[1],d[2]][k];}),2),hint:'Look at the table. When? Where? What?',after:'Table: <b>'+d[0]+' · '+d[1]+' · '+d[2]+'</b>'});q.answer=[d[0],d[1],d[2]][k];q.options=r.shuffle([q.answer].concat(pickN(r,ds.map(function(x){return x[k];}).filter(function(x){return x!==q.answer;}),2)).map(cOpt));}
+  else{var pc=pk(r,CE_PC);q=ceCh(r,{topic:'English: Postcards',prompt:pc[1],say:pc[1],visual:ceBig('💌'),answer:pc[0],wrongs:pickN(r,CE_PC.map(function(x){return x[0];}).filter(function(x){return x!==pc[0];}),2),hint:'Dear…, message, See you soon!, P.S.',after:'<b>'+pc[0]+'</b>'});}
+  return q;
+}
+/* ---------- Units 3-9 hooks ---------- */
+var CE_FEEL=[['angry','😠'],['sad','😢'],['happy','😀'],['sleepy','😴'],['scared','😨'],['excited','🤩'],['proud','😌'],['cold','🥶']];
+var CE_AAN=[['___ apple','an'],['___ elephant','an'],['___ dragon','a'],['___ castle','a'],['___ egg','an'],['___ unicorn','a'],['___ orange','an'],['___ wizard','a']];
+var CE_BEC=[['Fish can swim ___ they have fins.','because'],['I wear a coat ___ it is cold.','because'],['Birds can fly ___ they have wings.','because'],['We use an umbrella ___ it is raining.','because']];
+var CE_WEA=[['sun','☀️','The ___ is hot and bright.'],['rain','🌧️','The ___ goes drip, drop, drop.'],['wind','💨','The ___ blows my kite.'],['snow','❄️','The ___ is soft and cold.'],['cloud','☁️','A fluffy ___ floats by.']];
+var CE_INS=[['Wash your hands','Dry your hands','Eat your lunch'],['Take the bread','Add the cheese','Close the sandwich'],['Pour the milk','Add the cereal','Eat with a spoon'],['Open the book','Look at the pictures','Read the words']];
+function ceX(r){
+  var v=r.pick(['feel','aan','bec','wea','ins','sign']),q;
+  if(v==='feel'){var f=pk(r,CE_FEEL);q=ceCh(r,{topic:'English: Feelings A–Z',prompt:'How does this face feel? It starts with <b>'+f[0].charAt(0)+'</b>.',say:'How does this face feel? The word starts with '+f[0].charAt(0)+'.',visual:ceBig(f[1]),answer:f[0],wrongs:pickN(r,CE_FEEL.filter(function(x){return x!==f;}),2).map(function(x){return x[0];}),hint:'Look at the face. The first letter helps!',after:'<b>'+f[0]+'</b> '+f[1]});}
+  else if(v==='aan'){var a=pk(r,CE_AAN);q=ceCh(r,{topic:'English: a or an',prompt:'<b>a</b> or <b>an</b>?',say:'Is it a or an? '+a[0].replace('___','blank'),visual:'<div class="sentbox">'+blankHtml(a[0])+'</div>',answer:a[1],wrongs:[a[1]==='a'?'an':'a'],n:1,hint:'Use "an" before the vowel sounds a, e, i, o, u.',after:'<b>'+a[1]+'</b> '+a[0].replace('___ ',''),cols:2});}
+  else if(v==='bec'){var b=pk(r,CE_BEC);q=ceCh(r,{topic:'English: because',prompt:'Pick the word that gives a reason',say:'Pick the word that gives a reason. '+b[0].replace('___','blank'),visual:'<div class="sentbox">'+blankHtml(b[0])+'</div>',answer:'because',wrongs:['and','then'],hint:'"because" tells us why.',after:b[0].replace('___','<b>because</b>')});}
+  else if(v==='wea'){var w=pk(r,CE_WEA);q=ceCh(r,{topic:'English: Weather poem',prompt:'Finish the weather poem',say:'Finish the weather poem. '+w[2].replace('___','blank'),visual:ceBig(w[1])+'<div class="sentbox">'+blankHtml(w[2])+'</div>',answer:w[0],wrongs:pickN(r,CE_WEA.filter(function(x){return x!==w;}),2).map(function(x){return x[0];}),emoji:objFrom(CE_WEA.map(function(x){return [x[0],x[1]];})),hint:'Look at the picture.',after:w[2].replace('___','<b>'+w[0]+'</b>')});}
+  else if(v==='ins'){var s=pk(r,CE_INS);q=ceOrd({topic:'English: Instructions',prompt:'Put the instructions in order',visual:ceBig('🔢'),tiles:s,sol:s,hint:'What do you do first?',after:'<b>1</b> '+esc(s[0])+' <b>2</b> '+esc(s[1])+' <b>3</b> '+esc(s[2]),sentence:s.join('. ')});}
+  else{var sg=pk(r,[['🛑','STOP','stop'],['🚫','NO ENTRY','not go in'],['🚭','NO SMOKING','not smoke'],['⚠️','CAREFUL','be careful'],['🚸','CHILDREN','look out for children']]);q=ceCh(r,{topic:'English: Signs',prompt:'What does this sign tell us?',say:'What does this sign tell us?',visual:ceBig(sg[0]),answer:sg[2],wrongs:pickN(r,['stop','be careful','not go in','run fast','sit down','look out for children'].filter(function(x){return x!==sg[2];}),2),hint:'Signs give short, important instructions.',after:'<b>'+sg[1]+'</b> means '+sg[2]+'.'});}
+  return q;
+}
+/* ---------- Postcard Creator ---------- */
+var PC_TO=['Mom','Dad','Grandpa','Zara','Byte'],PC_MSG=['I am at the zoo.','I saw a big lion.','The sun is hot.','I ate ice cream.','I can see the sea.','We went on a train.'],PC_END=['See you soon!','Love from','Bye for now!'],PC_PS=['P.S. I miss you!','P.S. Look at the stamp!','P.S. Give Fluff a hug!'];
+function postcardUI(q,host,api){
+  var sel={to:null,msg:[],end:null,ps:null};
+  var root=el('<div class="pcwrap"></div>'),form=el('<div class="pcform"></div>'),card=el('<div class="pcard hlbox"></div>');
+  function chips(label,key,list,multi){
+    var w=el('<div class="pcrow"><div class="pcl">'+label+'</div><div class="pcchips"></div></div>'),c=w.querySelector('.pcchips');
+    list.forEach(function(t){var b=el('<button type="button" class="mchip"><span class="nb"></span>'+esc(t)+'</button>');b.addEventListener('click',function(){
+      if(QS.done)return;SFX.pop();
+      if(multi){var i=sel.msg.indexOf(t);if(i>=0)sel.msg.splice(i,1);else if(sel.msg.length<2)sel.msg.push(t);}else sel[key]=(sel[key]===t&&key==='ps')?null:t;
+      [].forEach.call(c.children,function(x){var tx=x.textContent;x.classList.toggle('on',multi?sel.msg.indexOf(tx)>=0:sel[key]===tx);});paint();});c.appendChild(b);});
+    form.appendChild(w);
+  }
+  chips('1️⃣ Who is it for?','to',PC_TO.map(function(x){return 'Dear '+x+',';}));
+  chips('2️⃣ Write 1–2 sentences','msg',PC_MSG,true);
+  chips('3️⃣ Say goodbye','end',PC_END);
+  chips('4️⃣ Add a P.S. (optional)','ps',PC_PS);
+  var foot=el('<div class="dzfoot"></div>'),send=el('<button type="button" class="btn ok" disabled>✉️ Send my postcard!</button>'),hear=el('<button type="button" class="btn ghost sm">🔊 Read it to me</button>');foot.appendChild(send);foot.appendChild(hear);
+  root.appendChild(form);root.appendChild(card);root.appendChild(foot);host.appendChild(root);
+  function text(){return [sel.to||'Dear …',sel.msg.join(' ')||'…',(sel.end||'…')+(sel.end==='Love from'?' Rudraksh':sel.end?' Rudraksh':''),sel.ps||''].filter(Boolean);}
+  function paint(){
+    var t=text();card.innerHTML='<div class="pcstamp">🏷️<br><small>stamp</small></div><div class="pcmsg">'+t.map(function(l,i){return '<div class="pcline">'+rdWords(l)+'</div>';}).join('')+'</div><div class="pcaddr">📮 Rudraksh<br>Pune, India</div>';
+    send.disabled=!(sel.to&&sel.msg.length&&sel.end);
+  }
+  hear.addEventListener('click',function(){ac();hlRead(card.querySelector('.pcmsg'));});
+  send.addEventListener('click',function(){
+    if(QS.done||send.disabled)return;if(!S.postcards)S.postcards=[];S.postcards.unshift({d:todayStr(),t:text()});S.postcards=S.postcards.slice(0,20);save();
+    card.classList.add('fly');SFX.win();party(false);say('Your postcard is on its way!',true);setTimeout(function(){api.right();},900);
+  });
+  setKeys(function(e){if(e.key==='Enter'&&!send.disabled&&!(document.activeElement&&document.activeElement.tagName==='BUTTON')){send.click();return true;}return false;});
+  CL.push(function(){hlStop();});
+  paint();
+  return {hint:function(){fb('info','💡 Pick Dear…, then one or two sentences, then a goodbye!');},reveal:function(){sel={to:'Dear Mom,',msg:[PC_MSG[0]],end:PC_END[0],ps:null};paint();send.disabled=false;}};
+}
+RENDER.postcard=postcardUI;
+function cePost(){return {topic:'English: Postcard Creator',domain:'english',kind:'postcard',prompt:'✉️ <b>Make a postcard</b> for someone you love!',say:'Make a postcard for someone you love!',visual:''};}
+/* ---------- units + session ---------- */
+var CE_UNITS=[
+ {id:'u1',n:'Unit 1: Places we know',e:'🏫',c:'#ff5c8a',d:'Jamal, Penda, Zara & Ashraf',mk:function(r){return ceU(r,'u1');}},
+ {id:'u2',n:'Unit 2: Let me tell you!',e:'🚆',c:'#3d8bff',d:'Trips, diaries, postcards',mk:function(r){return ceU(r,'u2');}},
+ {id:'wr',n:'Writing rules',e:'✏️',c:'#2fbf71',d:'Capitals, full stops, who/what…',mk:ceW},
+ {id:'ph',n:'Sounds & rhymes',e:'🔊',c:'#ff9f43',d:'tr-, magic e, ee, rhymes',mk:ceP},
+ {id:'cw',n:'Compound words',e:'🧩',c:'#7c4dff',d:'nowhere, something… and joining with and',mk:ceC},
+ {id:'u39',n:'Units 3–9 mix',e:'🌈',c:'#12a8b8',d:'Feelings, a/an, because, weather',mk:ceX},
+ {id:'pc',n:'Postcard Creator',e:'💌',c:'#e63946',d:'Dear… See you soon! P.S.',mk:null}];
+function ceCard(){
+  return '<div class="card cecard"><div class="row" style="align-items:center;flex-wrap:nowrap"><div class="vlbot" aria-hidden="true">🎓</div><div style="flex:1;min-width:0"><h3 style="margin:0">English Adventures</h3><p class="sub" style="margin:2px 0 0">Stories, phonics, grammar and postcards for Stage 1.</p></div></div><div class="bkgrid">'+
+   CE_UNITS.map(function(u){return '<button class="btn bku lsb whv" style="--c:'+u.c+'" data-ce="'+u.id+'" type="button"><span>'+u.e+'</span><b>'+u.n+'</b><small>'+u.d+'</small></button>';}).join('')+'</div></div>';
+}
+function ceRandom(r){var u=pk(r,CE_UNITS.filter(function(x){return x.mk;}));return u.mk(r);}
+function startCE(id,origin){
+  ac();origin=origin||(cur==='home'?'home':'lab');var U=CE_UNITS.filter(function(x){return x.id===id;})[0];if(!U)return;
+  var r=makeRng(hashStr('ce|'+id+'|'+Date.now()),mkHist(true)),qs=[],seen={},tries=0;
+  if(id==='pc'){qs.push(cePost());}
+  else while(qs.length<5&&tries++<40){var q=U.mk(r),k=q.topic+'|'+q.prompt+'|'+(q.answer||q.sentence||'');if(seen[k])continue;seen[k]=1;qs.push(q);}
+  qs.forEach(function(q,i){q.id='ce_'+id+'_'+i;q.domain='english';});
+  openSession({kind:'mini',qs:qs,i:0,res:[],back:origin,origin:origin,onDone:function(){
+    var n=SES.qs.length,ok=SES.res.filter(function(x){return x&&x.ok;}).length,good=ok>=Math.ceil(n*.7);evLog('ce',{u:id,n:n,ok:ok});
+    if(good){S.xp+=15;if(S.badges.indexOf('eng')<0)S.badges.push('eng');}save();SFX.win();party(true);
+    var o=openModal('<div class="big">'+U.e+'</div><h2 style="text-align:center">'+esc(U.n)+' done!</h2><p style="text-align:center">'+(id==='pc'?'Your postcard was sent! ✉️':'You got <b>'+ok+' / '+n+'</b>'+(good?' and earned <b>+15 bonus XP</b>!':'. Every try helps you grow! 🌟'))+'</p>'+(good?noteWin('Wonderful English, '+PROFILE.first+'!'):'')+'<div class="row"><button class="btn ok" id="ceAgain" type="button">Play again</button><button class="btn ghost" id="ceBack" type="button">Back</button></div>');
+    $('#ceAgain',o).addEventListener('click',function(){closeModal();startCE(id,origin);});$('#ceBack',o).addEventListener('click',function(){closeModal();go(origin);});
+  }});
+}
+BADGES.push(['eng','🎓','English Explorer']);
+document.addEventListener('click',function(e){var b=e.target.closest&&e.target.closest('[data-ce]');if(b)startCE(b.getAttribute('data-ce'));});
+/* the daily staged-reading item sometimes becomes a Cambridge-style item, so grammar & phonics extras reach the worksheet too */
+(function(){var qa=qReadAdaptive;qReadAdaptive=function(r){if(r.chance(.3)){var q=ceRandom(r);if(q&&q.kind!=='postcard')return q;}return qa(r);};})();
 
 /* ---------- 11. BOOT ---------- */
 applyKbMode();
