@@ -1,5 +1,5 @@
 /* IT Geek Academy service worker: offline-first. Bump VERSION when index.html changes. */
-const VERSION='geek-v4-10';
+const VERSION='geek-v4-11';
 const CORE=['./','./index.html','./manifest.webmanifest','./icon-180.png','./icon-192.png','./icon-512.png'].concat(['reader','scientist','traveller','pilot','astronaut','doctor','cricketer','chef'].map(n=>'./assets/rudraksh/'+n+'.webp'));
 const EXT='geek-ext-v1';
 self.addEventListener('install',e=>{

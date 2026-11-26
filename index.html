@@ -762,6 +762,11 @@ button.bcell{cursor:pointer;font-family:inherit}
 .pcmsg{margin-top:36px;font-size:21px;font-weight:600;line-height:1.5}.pcline{margin:2px 0}.pcaddr{margin-top:10px;text-align:right;font-size:14px;color:#7a5aa8;font-weight:700;border-top:2px solid #eadfc0;padding-top:6px}
 .qavatar{right:78px;top:-30px;width:56px;height:56px}
 .herop .suitlbl{white-space:nowrap;font-size:10px}
+/* ---- v11 ---- */
+.phs.hid{display:none}
+.resumec{background:linear-gradient(135deg,#e8f7ec,#e6f0ff);border:3px solid #2fbf71}.rsbig{font-size:40px}
+/* light motion: calm ambient animations on the iPad Air 2 (hint pulses, mic and cursor stay) */
+body.lite .byte,body.lite .floaty,body.lite .trophy,body.lite .byte2,body.lite .mbox,body.lite .vlbot,body.lite .vbot.talk,body.lite .albyte,body.lite .tapnote,body.lite .wkb,body.lite .wknote,body.lite .welpic,body.lite .doneimg,body.lite .famcredit .hrt,body.lite .qmark,body.lite .warrow,body.lite .wemoji.silly,body.lite .albell,body.lite .alring{animation:none!important}
 </style>
 </head>
 <body>
@@ -800,6 +805,32 @@ var QRCode;!function(){function a(a){this.mode=c.MODE_8BIT_BYTE,this.data=a,this
 </script>
 <script>
 'use strict';
+/* ---- v11: stability layer (runs first): every listener / timer / frame is wrapped so one bad input can never freeze the app ---- */
+var ERRN=0,ERRT=0;
+function reportErr(e,w){try{ERRN++;if(window.console&&console.warn)console.warn('[guard]',w,(e&&e.message)||e);var now=Date.now();if(now-ERRT>20000){ERRT=now;var t=document.getElementById('toast');if(t){t.textContent='Byte fixed a little hiccup 🛠️ Keep going!';t.style.display='block';setTimeout(function(){t.style.display='none';},2200);}}}catch(x){}}
+(function(){
+  try{
+    var _ael=EventTarget.prototype.addEventListener,_rel=EventTarget.prototype.removeEventListener;
+    EventTarget.prototype.addEventListener=function(t,fn,o){
+      if(typeof fn==='function'){
+        var w=fn.__sf;
+        if(!w){w=function(e){try{return fn.call(this,e);}catch(err){reportErr(err,t);}};try{Object.defineProperty(fn,'__sf',{value:w});}catch(x){w=fn;}}
+        return _ael.call(this,t,w,o);
+      }
+      return _ael.call(this,t,fn,o);
+    };
+    EventTarget.prototype.removeEventListener=function(t,fn,o){return _rel.call(this,t,(typeof fn==='function'&&fn.__sf)||fn,o);};
+  }catch(e){}
+  try{
+    var _st=window.setTimeout,_si=window.setInterval,_raf=window.requestAnimationFrame;
+    window.setTimeout=function(f,ms){if(typeof f!=='function')return _st.apply(window,arguments);var a=[].slice.call(arguments,2);return _st.call(window,function(){try{f.apply(null,a);}catch(e){reportErr(e,'timer');}},ms);};
+    window.setInterval=function(f,ms){if(typeof f!=='function')return _si.apply(window,arguments);var a=[].slice.call(arguments,2);return _si.call(window,function(){try{f.apply(null,a);}catch(e){reportErr(e,'interval');}},ms);};
+    if(_raf)window.requestAnimationFrame=function(f){return _raf.call(window,function(t){try{f(t);}catch(e){reportErr(e,'frame');}});};
+  }catch(e){}
+  window.addEventListener('error',function(e){reportErr(e&&(e.error||e.message),'error');});
+  window.addEventListener('unhandledrejection',function(e){reportErr(e&&e.reason,'promise');});
+})();
+
 /* =====================================================================
    RUDRAKSH'S IT GEEK ACADEMY  -  single-file app (vanilla JS, iOS 12+ Safari)
    Sections:  1 CONFIG   2 QUESTION ENGINE   3 STATE   4 UI helpers
@@ -1090,7 +1121,7 @@ function qKey(r){
   return T('Typing: alphabet',q,'Type these letters: <b>'+q.split('').join(' ')+'</b>','Type these letters: '+q.split('').join(', '),'','Find each letter on the keyboard.');
 }
 function qTyping(r){
-  if(r.chance(.35)){var tw=r.pick(TECHW);return T('Typing: tech words',tw[0].toUpperCase(),'Type the tech word <b>'+tw[0]+'</b>','Type the tech word '+tw[0]+'.','<div class="bigemoji">'+tw[1]+'</div><div class="sent" style="font-size:22px">'+tw[2]+'</div>','Follow the colours: each finger has its own colour!');}
+  if(r.chance(.35)){var tw=r.pick(TECHW);return T('Typing: tech words',tw[0].toUpperCase(),'Which <b>tech word</b> is this? Read the clue and type it!','Which tech word is this? '+tw[2]+' Type it.','<div class="bigemoji">'+tw[1]+'</div><div class="sent" style="font-size:22px">'+tw[2]+'</div>','It starts with the letter '+tw[0].charAt(0).toUpperCase()+'. Say it slowly and listen to each sound.',{mode:'recall'});}
   var it=r.pick(PROFILE.typeItems);
   return T('Typing: my world',it.text,'Type <b>'+it.label+'</b>','Type '+it.label,'<div class="bigemoji">'+it.e+'</div>','Follow the glowing keys. You can do it!');
 }
@@ -1293,11 +1324,11 @@ function buildWorksheet(date,n){
 }
 function buildMini(type,seed){
   var r=makeRng(hashStr('mini|'+type+'|'+seed),mkHist(true)),qs=[],i;
-  if(type==='typing'){for(i=0;i<3;i++)qs.push(qKey(r));for(i=0;i<2;i++)qs.push(qTyping(r));var sw=r.pick(RD_SIGHT);qs.push(T('Reading: Sight words',sw.toUpperCase(),'Type the word <b>'+sw+'</b>','Type the word '+sw+'.','<div class="swd big" style="text-align:center">'+sw+'</div>','Say it: "'+sw+'". Follow the glowing keys.',{mode:'guide',rd:2}));qs.push(qKey(r));}
+  if(type==='typing'){for(i=0;i<3;i++)qs.push(qKey(r));for(i=0;i<2;i++)qs.push(qTyping(r));var sw=r.pick(RD_SIGHT);qs.push(T('Reading: Sight words',sw.toUpperCase(),'Listen. <b>Type the word</b> Byte says!','Listen. Type the word '+sw+'.','<div class="bigemo">👂</div><button type="button" class="btn sm" data-say="'+sw+'">🔊 Say it</button>','It starts with the letter "'+sw.charAt(0)+'".',{mode:'recall',rd:2}));qs.push(qKey(r));}
   else if(type==='io'){['sort','type','sort','type'].forEach(function(v){qs.push(qIO(r,v));});}
   else if(type==='net'){['sort','type','sort','type'].forEach(function(v){qs.push(qNetwork(r,v));});}
   else if(type==='defs'){['tech','hw','tech','hw'].forEach(function(v){qs.push(qDefs(r,v));});}
-  else if(type==='spell3'){for(i=0;i<5;i++){if(i===4){var bw=r.pick(RD_BLEND);qs.push(T('Reading: Blending',bw[0].toUpperCase(),'Blend the sounds, then <b>type the word</b>','Blend the sounds, then type the word.',soundVisual(bw[0],bw[1]),'Say it slowly: '+rdSoundTiles(bw[0]).join(' - ')+'.',{mode:'guide',rd:1}));}else qs.push(spellQ(r.pick(i%2?TECHW:W3),i%2?'Tech spelling':'3-letter spelling'));}}
+  else if(type==='spell3'){for(i=0;i<5;i++){if(i===4){var bw=r.pick(RD_BLEND);qs.push(T('Reading: Blending',bw[0].toUpperCase(),'Blend the sounds, then <b>type the word</b>','Blend the sounds, then type the word.',soundVisual(bw[0],bw[1],true),'Say it slowly: '+rdSoundTiles(bw[0]).join(' - ')+'.',{mode:'guide',rd:1}));}else qs.push(spellQ(r.pick(i%2?TECHW:W3),i%2?'Tech spelling':'3-letter spelling'));}}
   else if(type==='numsp'){for(i=0;i<5;i++)qs.push(qSpelling(r));}
   else if(type==='graph'){qs.push(qGraphRead(r));qs.push(qGraphRead(r));qs.push(qGraphBuild(r));qs.push(qGraphBuild(r));}
   else{['match','typename','match','typename'].forEach(function(v){qs.push(qHardware(r,v));});}
@@ -1309,8 +1340,8 @@ const TECHW=[['chip','🔲','A tiny part that thinks inside a computer.'],['byte
 const W3=[['app','📱','A program on a tablet.'],['web','🌐','Pages on the internet.'],['bit','🔹','The tiniest piece of data.'],['usb','🔌','A plug for a memory stick.'],['key','🔑','Press one to type.'],['cat','🐱','It says meow.'],['sun','☀️','It shines in the sky.'],['bus','🚌','It takes us to school.'],['pig','🐷','It says oink.'],['hat','🎩','We wear it on our head.'],['cup','☕','We drink from it.'],['bed','🛏️','We sleep in it.'],['egg','🥚','A chicken lays it.'],['bee','🐝','It makes honey.'],['dog','🐶','It says woof.'],['ant','🐜','A tiny insect.'],['pen','🖊️','We write with it.'],['box','📦','We put things inside it.'],['fox','🦊','A clever orange animal.'],['map','🗺️','It shows us where to go.']];
 function spellQ(w,topic){
   var up=w[0].toUpperCase(),letters=up.split('').join(', ');
-  return T(topic,up,'Spell the word for this picture. Tap 🔊 to hear the letters!','Spell the word '+w[0]+'. '+letters+'.',
-    '<div class="bigemoji">'+w[1]+'</div><div class="sent" style="font-size:22px">'+w[2]+'</div><button type="button" class="sayb" data-say="'+w[0]+'. '+letters+'. '+w[0]+'.">🔊 Say the letters</button>',
+  return T(topic,up,'Spell the word for this picture. Tap 🔊 to hear the word!','Spell the word '+w[0]+'.',
+    '<div class="bigemoji">'+w[1]+'</div><div class="sent" style="font-size:22px">'+w[2]+'</div><button type="button" class="sayb" data-say="'+w[0]+'.">🔊 Say the word</button>',
     'Say it slowly: '+up.split('').join(' - ')+'. Follow the glowing keys!',{ls:1,mode:'guide'});
 }
 const DEFS=[['chip','A tiny part that thinks'],['byte','A small piece of data'],['data','Facts and information'],['code','Instructions for a computer'],['wifi','Internet without wires'],['disk','Where files are kept'],['web','A world of linked pages'],['app','A program on a phone'],['mouse','Moves the pointer'],['icon','A small picture you tap'],['file','Something you save'],['link','An address that opens a page'],['menu','A list of choices'],['mail','A message sent online']];
@@ -1468,6 +1499,7 @@ const DEF={setup:{done:false,momEmail:'phandroshni@gmail.com',dadEmail:'bwagh4@g
 let S=loadState();
 function loadState(){
   var j=null;try{j=JSON.parse(localStorage.getItem(KEY));}catch(e){}
+  if(!j||typeof j!=='object'){try{j=JSON.parse(localStorage.getItem(KEY+'_bak'));}catch(e){}}
   var s=JSON.parse(JSON.stringify(DEF));
   if(j){Object.keys(j).forEach(function(k){if(k==='setup'){Object.keys(j.setup||{}).forEach(function(q){s.setup[q]=j.setup[q];});}else s[k]=j[k];});}
   var ch2={};CHANNELS.forEach(function(c){ch2[c.key]={on:!(s.ch[c.key]&&s.ch[c.key].on===false)};});s.ch=ch2;
@@ -1478,7 +1510,12 @@ function loadState(){
   ['custom','log','sess','vnotes'].forEach(function(k){if(!Array.isArray(s[k]))s[k]=[];});['stat','dom','hist'].forEach(function(k){if(!s[k]||typeof s[k]!=='object'||Array.isArray(s[k]))s[k]={};});if(!s.voice||typeof s.voice!=='object')s.voice={d:'',done:false,days:0,total:0};
   return s;
 }
-function save(){try{localStorage.setItem(KEY,JSON.stringify(S));}catch(e){}}
+var SVN=0;
+function save(){
+  var j;try{j=JSON.stringify(S);}catch(e){return;}
+  try{localStorage.setItem(KEY,j);}catch(e){try{if(S.log&&S.log.length>200)S.log=S.log.slice(-200);if(S.ev&&S.ev.length>300)S.ev=S.ev.slice(-300);localStorage.setItem(KEY,JSON.stringify(S));}catch(e2){}}
+  if(++SVN%6===0){try{localStorage.setItem(KEY+'_bak',j);}catch(e){}}
+}
 function ymd(d){var m=d.getMonth()+1,x=d.getDate();return d.getFullYear()+'-'+(m<10?'0':'')+m+'-'+(x<10?'0':'')+x;}
 function todayStr(){return ymd(new Date());}
 function prune(){var ks=Object.keys(S.days).sort();while(ks.length>21){delete S.days[ks.shift()];}}
@@ -1768,34 +1805,43 @@ function gridUI(q,host,api){
   return {hint:function(){cells[ti].style.outline='5px solid var(--sun)';},reveal:function(){cells[ti].classList.add('ok');cells[ti].textContent='⭐';}};
 }
 function tapKeyUI(q,host,api){
-  var kb=buildKB(press),row=kbRow(q.target),miss=0,nk=el('<div class="nkey"></div>');host.appendChild(nk);host.appendChild(kb.el);if(!(q.lvl>0))kb.hintRow(row);
+  var kb=buildKB(press),row=kbRow(q.target),miss=0,nk=el('<div class="nkey"></div>');host.appendChild(nk);host.appendChild(kb.el);
   var ROWN=['the number row (1 2 3 …)','the top letter row (Q W E R T Y …)','the home row (A S D F G …)','the bottom letter row (Z X C V B …)','the bottom of the keyboard'];
-  nk.innerHTML=(q.lvl>0)?'<small>🚀 Challenge: find the key yourself!</small>':'<small>Press it on your keyboard! It is on <b>'+ROWN[row]+'</b></small>';   /* the right ROW is lit from the start */
+  nk.innerHTML=(q.lvl>0)?'<small>🚀 Challenge: find the key yourself!</small>':'<small>Look at the keyboard and press it. You can do it! ✨</small>';
+  function reveal(){kb.hintRow(row);kb.hint(q.target);nk.innerHTML='A little clue: press <span class="kcap" style="background:'+(FCOL[FING[q.target]]||'#eee')+'">'+(KLAB[q.target]||q.target)+'</span>';}
   function press(k){
     if(QS.done)return;if((k==='ENTER'||k==='BACK'||k==='SHIFT')&&k!==q.target)return;SFX.key();
     if(k===q.target){nk.innerHTML='';kb.flash(k,'ok');kb.unrow();kb.unhint();tone(660,0,.12,'triangle',.18);tone(990,.1,.18,'triangle',.18);api.right();}
-    else{kb.flash(k,'no');miss++;api.miss(miss<2?'Nice try! Look on <b>'+ROWN[row]+'</b> ✨':'Almost! Press the <b>'+(KLAB[q.target]||q.target)+'</b> key ✨');if(miss>=2){kb.hint(q.target);nk.innerHTML='Press <span class="kcap" style="background:'+(FCOL[FING[q.target]]||'#eee')+'">'+(KLAB[q.target]||q.target)+'</span>';}}
+    else{kb.flash(k,'no');miss++;
+      if(miss>=2){reveal();api.miss('Nice try! Here is a little clue for you ✨');}
+      else api.miss('Try another key! Look at the clue and think about where it lives. It is on <b>'+ROWN[row]+'</b> ✨');}
   }
   bindHW(press);
-  return {hint:function(){kb.hint(q.target);},reveal:function(){kb.hint(q.target);}};
+  return {hint:function(){reveal();},reveal:function(){reveal();}};
 }
 function typeUI(q,host,api){
-  var T=q.target,pos=0,mode=q.mode||'recall',ghost=(mode!=='recall');
-  if(q.lvl>0&&mode==='copy'){mode='recall';ghost=false;}
+  var T=q.target,pos=0,mode=q.mode||'recall',tries=0;
+  if(q.lvl>0&&mode==='copy')mode='recall';
   if(mode==='copy')host.appendChild(el('<div class="tcopy">'+T.split('').map(function(c){return '<span>'+(c===' '?'&nbsp;&nbsp;':c)+'</span>';}).join('')+'</div>'));
   var tb=el('<div class="tbox'+(T.length>8?' long':'')+'">'+T.split('').map(function(c){return '<span class="tb'+(c===' '?' sp':'')+'"></span>';}).join('')+'</div>');host.appendChild(tb);
   var nk=el('<div class="nkey"></div>');host.appendChild(nk);
   var boxes=tb.children,kb=buildKB(press);host.appendChild(kb.el);
+  function reveal(){
+    if(pos>=T.length)return;var ck=chKey(T.charAt(pos)),fg=FING[ck];kb.hint(ck);
+    nk.innerHTML='A little clue: press <span class="kcap" style="background:'+(FCOL[fg]||'#eee')+'">'+(ck==='SPACE'?'SPACE BAR':ck)+'</span><small>'+(FNAME[fg]||'')+'</small>';
+  }
   function mark(){[].forEach.call(boxes,function(b,i){b.classList.toggle('cur',i===pos);});
-    if((ghost||pos===0)&&pos<T.length){var ck=chKey(T.charAt(pos)),fg=FING[ck];kb.hint(ck);nk.innerHTML='Press <span class="kcap" style="background:'+(FCOL[fg]||'#eee')+'">'+(ck==='SPACE'?'SPACE BAR':ck)+'</span><small>'+(FNAME[fg]||'')+'</small>';}
-    else{kb.unhint();nk.innerHTML=pos<T.length?'<small>Which key comes next? Think… ✨</small>':'';}}
+    tries=0;kb.unhint();
+    nk.innerHTML=pos>=T.length?'':(pos===0?'<small>Think about the first letter… then press it! ✨</small>':'<small>What letter comes next? ✨</small>');}
   function press(k){
     if(QS.done||pos>=T.length)return;if(k==='ENTER'||k==='BACK'||k==='SHIFT')return;SFX.key();
     if(k===chKey(T.charAt(pos))){boxes[pos].textContent=k==='SPACE'?'␣':k;boxes[pos].classList.add('done','pop');kb.flash(k,'ok');tone(500+pos*55,0,.14,'triangle',.16);if(q.ls&&k.length===1)say(k.toLowerCase());pos++;mark();if(pos>=T.length){[].forEach.call(boxes,function(b,i){setTimeout(function(){b.classList.add('jump');},i*80);});if(q.fill){var bl=document.querySelector('#s-work .blank');if(bl)bl.textContent=(q.show||T).toLowerCase();}api.right();}}
-    else{kb.flash(k,'no');api.miss(ghost?'Oops! Press the glowing key ✨':'Almost! Here comes a clue ✨');ghost=true;mark();}
+    else{kb.flash(k,'no');tries++;
+      if(tries>=2){reveal();api.miss('Nice try! Here is a little clue for you ✨');}
+      else api.miss('Try another letter! Listen to the start sound or check the clue ✨');}
   }
   bindHW(press);mark();
-  return {hint:function(){ghost=true;mark();},reveal:function(){[].forEach.call(boxes,function(b,i){b.textContent=T.charAt(i)===' '?'␣':T.charAt(i);b.classList.add('done');});pos=T.length;kb.unhint();}};
+  return {hint:function(){reveal();},reveal:function(){[].forEach.call(boxes,function(b,i){b.textContent=T.charAt(i)===' '?'␣':T.charAt(i);b.classList.add('done');});pos=T.length;kb.unhint();}};
 }
 function dragUI(q,host,api){
   var multi=!!q.multi,placed={},chips={},sel=null,lastDrop=0;
@@ -2723,7 +2769,7 @@ function renderParent(){
 }
 
 /* ---------- 12. v2 UPGRADE: syllabus, analytics, adaptive, backup, playground ---------- */
-const APP_VER='4.7.0',APP_BUILD='2026-11-24';
+const APP_VER='4.8.0',APP_BUILD='2026-11-26';
 function shuf(a){a=a.slice();for(var i=a.length-1;i>0;i--){var j=Math.floor(Math.random()*(i+1)),t=a[i];a[i]=a[j];a[j]=t;}return a;}
 function lastNDays(n){var a=[],t=Date.now(),i;for(i=n-1;i>=0;i--)a.push(ymd(new Date(t-i*864e5)));return a;}
 function pctOf(f,n){return n?Math.round(f/n*100):0;}
@@ -4959,9 +5005,9 @@ document.addEventListener('click',function(e){
   var f=e.target.closest&&e.target.closest('[data-flashrep]');
   if(f){var fw=document.querySelector('#s-work .flashw');if(fw){fw.style.animation='none';void fw.offsetWidth;fw.style.animation='';}}
 });
-function soundVisual(word,emoji){
+function soundVisual(word,emoji,hide){
   var t=rdSoundTiles(word);
-  return '<div class="soundbox" data-word="'+word+'">'+(emoji?'<div class="bigemo">'+emoji+'</div>':'')+'<div class="phs">'+t.map(function(p){return '<span class="ph" data-p="'+p+'">'+p+'</span>';}).join('<i class="plus">+</i>')+'</div>'+
+  return '<div class="soundbox" data-word="'+word+'">'+(emoji?'<div class="bigemo">'+emoji+'</div>':'')+'<div class="phs'+(hide?' hid':'')+'">'+t.map(function(p){return '<span class="ph" data-p="'+p+'">'+p+'</span>';}).join('<i class="plus">+</i>')+'</div>'+
     '<button type="button" class="btn sm" data-soundsay="1">🔊 Hear the sounds</button></div>';
 }
 
@@ -4984,7 +5030,7 @@ function rdQ1(r){
       options:r.shuffle([mkOpt(W[0],'<span class="rdo"><i>'+W[1]+'</i></span>')].concat(ds2.map(function(x){return mkOpt(x[0],'<span class="rdo"><i>'+x[1]+'</i></span>');}))),answer:W[0],hint:'Push the sounds together slowly: '+rdSoundTiles(W[0]).join(' … ')+'.'};
   }else{
     var W2=pk(r,RD_BLEND);
-    q=T('Reading: Blending',W2[0].toUpperCase(),'Blend the sounds, then <b>type the word</b>','Blend the sounds, then type the word.',soundVisual(W2[0],W2[1]),'Say it slowly: '+rdSoundTiles(W2[0]).join(' - ')+'.',{mode:'guide'});
+    q=T('Reading: Blending',W2[0].toUpperCase(),'Blend the sounds, then <b>type the word</b>','Blend the sounds, then type the word.',soundVisual(W2[0],W2[1],true),'Say it slowly: '+rdSoundTiles(W2[0]).join(' - ')+'.',{mode:'guide'});
   }
   q.rd=1;return q;
 }
@@ -4996,7 +5042,7 @@ function rdQ2(r){
   else if(v==='hear')q={topic:'Reading: Sight words',kind:'choice',cols:2,prompt:'Listen. <b>Tap the word</b> Byte says!',say:w+'.',visual:'<div class="bigemo">👂</div><button type="button" class="btn sm" data-say="'+w+'">🔊 Say it again</button>',options:opts(w),answer:w,hint:'Say the word in your head: "'+w+'".'};
   else if(v==='flash')q={topic:'Reading: Sight words',kind:'choice',cols:2,prompt:'<b>Catch the word!</b> Which word flashed?',say:'Catch the word! Which word flashed?',visual:'<div class="flashbox"><div class="flashw">'+esc(w)+'</div></div><button type="button" class="btn sm" data-flashrep="1">👀 Flash again</button>',options:opts(w),answer:w,hint:'Tap Flash again to look once more.'};
   else if(v==='cloze'){var c=pk(r,RD_CLOZE);q={topic:'Reading: Sight words',kind:'choice',cols:3,fill:1,prompt:'Find the missing word',say:c[0].replace('___','blank')+' Find the missing word.',visual:'<div class="bigemo">'+c[3]+'</div><div class="sent">'+blankHtml(c[0])+'</div>',options:r.shuffle(c[2].map(function(x){return mkOpt(x,'<b class="swd">'+esc(x)+'</b>');})),answer:c[1],hint:'Read the sentence. Which word makes it sound right?'};}
-  else q=T('Reading: Sight words',w.toUpperCase(),'Type the word <b>'+esc(w)+'</b>','Type the word '+w+'.','<div class="flashbox"><div class="swd big">'+esc(w)+'</div></div><button type="button" class="btn sm" data-say="'+w+'">🔊 Say it</button>','Say it: "'+w+'". Follow the glowing keys.',{mode:'guide'});
+  else q=T('Reading: Sight words',w.toUpperCase(),'Listen. <b>Type the word</b> Byte says!','Listen. Type the word '+w+'.','<div class="bigemo">👂</div><button type="button" class="btn sm" data-say="'+w+'">🔊 Say it</button>','It starts with the letter "'+w.charAt(0)+'".',{mode:'recall'});
   q.rd=2;return q;
 }
 /* ---------- stage 3: Train car chunks ---------- */
@@ -5722,8 +5768,92 @@ document.addEventListener('click',function(e){var b=e.target.closest&&e.target.c
 /* the daily staged-reading item sometimes becomes a Cambridge-style item, so grammar & phonics extras reach the worksheet too */
 (function(){var qa=qReadAdaptive;qReadAdaptive=function(r){if(r.chance(.3)){var q=ceRandom(r);if(q&&q.kind!=='postcard')return q;}return qa(r);};})();
 
+/* ================= v11b: safe renders, speech guards, resume ================= */
+/* a render that throws shows a friendly "skip" card instead of a frozen screen */
+(function(){
+  var rq=renderQ;
+  renderQ=function(){
+    try{rq.apply(this,arguments);}
+    catch(e){
+      reportErr(e,'renderQ');
+      try{
+        runCleanups();var host=document.getElementById('s-work');
+        host.innerHTML='<div class="wrap"><div class="card" style="text-align:center"><div class="bigemo">🛠️</div><h2>Byte is fixing this one</h2><p class="sub">No problem! Let\'s jump to the next question.</p><div class="row" style="justify-content:center"><button class="btn big" id="wSkip" type="button">Next ➜</button><button class="btn ghost" id="wSkipX" type="button">Leave</button></div></div></div>';
+        document.getElementById('wSkip').addEventListener('click',function(){SES.i++;try{if(SES.persist)SES.persist();else save();}catch(x){}if(SES.i>=SES.qs.length){SES.onDone();}else renderQ();});
+        document.getElementById('wSkipX').addEventListener('click',function(){go(SES.back||'home');});
+      }catch(x){}
+    }
+  };
+  ['renderHome','renderLab','renderDone','renderParent'].forEach(function(n){
+    try{var f=window[n]||eval(n);if(typeof f!=='function')return;var w=function(){try{return f.apply(this,arguments);}catch(e){reportErr(e,n);}};eval(n+'=w');}catch(e){}
+  });
+})();
+/* speech: never speak the same line twice within half a second, never run two recognizers at once */
+(function(){
+  var s0=say,lastT='',lastAt=0;
+  say=function(t,force,o){
+    var now=Date.now(),key=String(t||'');
+    if(key===lastT&&now-lastAt<500&&!(o&&o.onend))return;
+    lastT=key;lastAt=now;return s0.apply(this,arguments);
+  };
+  var l0=listenOnce,active=null,lastStart=0;
+  listenOnce=function(cb){
+    try{if(active){active.abort();}}catch(e){}active=null;
+    var gap=Date.now()-lastStart;
+    if(gap<450){
+      var stub={real:null,stop:function(){if(this.real)this.real.stop();},abort:function(){this.dead=true;if(this.real)this.real.abort();}};
+      setTimeout(function(){if(stub.dead)return;lastStart=Date.now();stub.real=l0(cb);active=stub.real;},450-gap);
+      return stub;
+    }
+    lastStart=Date.now();var c=l0(cb);active=c;return c;
+  };
+})();
+/* flush saves whenever Safari may kill the page */
+['pagehide','visibilitychange','freeze','beforeunload'].forEach(function(ev){
+  try{(ev==='visibilitychange'?document:window).addEventListener(ev,function(){if(ev==='visibilitychange'&&!document.hidden)return;stopSpeak();save();});}catch(e){}
+});
+/* ---------- Resume where you left off ---------- */
+var LAUNCH=null;
+function rsLabel(name,args){
+  var m={startReading:'📚 Reading Quest',startCE:'🎓 English Adventures',startWheel:'🎡 Word Wheel',startLife:'🧠 Life Skills',startMini:'🎮 Geek Lab game',startBook:'📘 Computing Book'};return m[name]||'Activity';
+}
+['startMini','startReading','startCE','startWheel','startLife','startBook'].forEach(function(n){
+  try{var f=eval(n);if(typeof f!=='function')return;
+    var w=function(){LAUNCH={fn:n,args:[].slice.call(arguments)};return f.apply(this,arguments);};eval(n+'=w');}catch(e){}
+});
+(function(){
+  var os=openSession;
+  openSession=function(ses){
+    try{
+      if(ses&&(ses.kind==='mini')&&LAUNCH){
+        S.resume={t:Date.now(),fn:LAUNCH.fn,args:LAUNCH.args,i:0,n:ses.qs.length,label:rsLabel(LAUNCH.fn)};
+        var od=ses.onDone;ses.onDone=function(){try{S.resume=null;save();}catch(e){}return od.apply(this,arguments);};save();
+      }else if(ses&&ses.kind!=='mini'){/* worksheet & quiz keep their own position */}
+    }catch(e){}
+    return os.apply(this,arguments);
+  };
+  var fq=finishQ;
+  finishQ=function(ok){fq.apply(this,arguments);try{if(S.resume&&SES&&SES.kind==='mini'){S.resume.i=Math.min(SES.i+1,S.resume.n);S.resume.t=Date.now();save();}}catch(e){}};
+  var rh=renderHome;
+  renderHome=function(){
+    rh.apply(this,arguments);
+    try{
+      var d=todayStr(),day=S.days[d],box=null,r=S.resume;
+      var hero=document.querySelector('#s-home .hero');if(!hero||document.getElementById('resumeCard'))return;
+      if(day&&!day.done&&day.i>0&&day.i<day.qs.length){box={t:'📝 Today\'s Worksheet',s:'You were on question '+(day.i+1)+' of '+day.qs.length+' — your answers are saved.',go:function(){startWorksheet();}};}
+      else if(r&&r.fn&&Date.now()-r.t<18*3600*1000&&r.i<r.n){box={t:r.label,s:'You were on question '+(r.i+1)+' of '+r.n+' — your XP is saved. Tap to carry on!',go:function(){var f=window[r.fn]||eval(r.fn);f.apply(null,r.args||[]);}};}
+      if(!box)return;
+      var c=document.createElement('div');c.className='card resumec';c.id='resumeCard';
+      c.innerHTML='<div class="row" style="align-items:center;flex-wrap:nowrap"><div class="rsbig" aria-hidden="true">⏯️</div><div style="flex:1;min-width:0"><b>Resume where you left off</b><div class="sub" style="margin:2px 0 0"><b>'+esc(box.t)+'</b> · '+esc(box.s)+'</div></div><button class="btn ok" id="resumeGo" type="button">▶ Resume</button><button class="btn ghost sm" id="resumeX" type="button" aria-label="Hide">✕</button></div>';
+      hero.parentNode.insertBefore(c,hero.nextSibling);
+      document.getElementById('resumeGo').addEventListener('click',function(){ac();box.go();});
+      document.getElementById('resumeX').addEventListener('click',function(){S.resume=null;save();c.remove();});
+    }catch(e){reportErr(e,'resume');}
+  };
+})();
+
 /* ---------- 11. BOOT ---------- */
-applyKbMode();
+applyKbMode();try{document.body.classList.add('lite');}catch(e){}
 function handleHash(){
   var h=location.hash||'';
   if(h.indexOf('reward=')<0)return;
